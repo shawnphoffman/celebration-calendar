@@ -1,5 +1,6 @@
 {
 	"name": "celebration-calendar",
+	"homepage": "https://shawnphoffman.com/celebration-calendar",
 	"version": "0.1.0",
 	"private": true,
 	"main": "index.js",
