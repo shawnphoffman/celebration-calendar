@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import { memo } from 'react'
+import { NavLink, Route, Routes } from 'react-router-dom'
+import { styled } from 'linaria/react'
+import Test from 'pages/Test'
+
+import Schedule from './pages/Schedule'
+
+const NavBar = styled.div`
+	background: #fff;
+	margin: 0px 16px 8px 16px;
+	border-radius: 8px;
+	padding: 8px 16px;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	font-size: 12px;
+	font-weight: bold;
+`
+
+const Link = styled(NavLink)`
+	margin: 0px 8px;
+`
+
+const Nav = memo(() => {
+	return (
+		<NavBar>
+			<Link to="/">Home</Link>
+			<Link to="test">Test</Link>
+		</NavBar>
+	)
+})
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	return (
+		<div className="wrapper">
+			<header>Celebration Calendar</header>
+			{/* <Nav /> */}
+			<Routes>
+				<Route path="test" element={<Test />} />
+				<Route path="*" element={<Schedule />} />
+			</Routes>
+		</div>
+	)
 }
 
-export default App;
+export default memo(App)
