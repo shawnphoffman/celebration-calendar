@@ -1,6 +1,6 @@
 import 'kalend/dist/styles/index.css'
 
-import { memo, useCallback, useState } from 'react'
+import { memo, useCallback } from 'react'
 import Kalend, { CalendarView } from 'kalend'
 
 const Calendar = ({ events, onSelect }) => {
