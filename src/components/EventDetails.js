@@ -1,8 +1,8 @@
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
 
-import { useEventContext } from 'context/EventContext'
+// import { useEventContext } from 'context/EventContext'
 
 const ActionWrapper = styled.div`
 	display: flex;
