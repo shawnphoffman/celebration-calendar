@@ -83,6 +83,10 @@ button.Kalend__Event-agenda-dark:hover {
 	height: 55px !important;
 }
 
+.Kalend__EventAgenda__container > div > div {
+	filter: none !important;
+}
+
 @media (max-width: 750px) {
 	header {
 		display: none;
