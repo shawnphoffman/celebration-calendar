@@ -1,5 +1,6 @@
 import React, { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import * as Panelbear from '@panelbear/panelbear-js'
+import useLocalStorage from 'hooks/useLocalStorage'
 
 import { processApiData } from 'utils/eventUtils'
 
@@ -15,7 +16,8 @@ const EventContext = createContext(initialState)
 const EventProvider = ({ children }) => {
 	const [events, setEvents] = useState([])
 	const [venues, setVenues] = useState([])
-	const [disabledVenues, setDisabledVenues] = useState([])
+	// const [disabledVenues, setDisabledVenues] = useState([])
+	const [disabledVenues, setDisabledVenues] = useLocalStorage('disabledVenues', [])
 
 	useEffect(() => {
 		// https://api-melupufoagt.stackpathdns.com/api/schedules?key=f4da60d9-7791-4d31-aaf0-5cce46bf1e5d
