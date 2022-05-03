@@ -76,6 +76,12 @@ button.Kalend__Event-agenda-dark:hover {
 	white-space: nowrap;
 	min-width: 80px;
 }
+.Kalend__CalendarDesktopNavigation__container,
+.Kalend__CalendarDesktopNavigation__container-dark,
+.Kalend__CalendarDesktopNavigation__container-mobile,
+.Kalend__CalendarDesktopNavigation__container-mobile-dark {
+	height: 55px !important;
+}
 
 @media (max-width: 750px) {
 	header {

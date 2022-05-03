@@ -1,36 +1,74 @@
-import React, { createContext, useContext, useEffect, useMemo, useState } from 'react'
+import React, { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 import rawEvents from 'data/schedule.json'
 
-import { processEvents } from 'utils/eventUtils'
+import { getVenues, processEvents } from 'utils/eventUtils'
+
+const processedVenues = () => {
+	// () => Array.from(getVenues(rawEvents)).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
+	const v = Array.from(getVenues(rawEvents))
+	const t = v.reduce((memo, curr) => {
+		memo[curr] = true
+		return memo
+	}, {})
+	return t
+}
+
+const processedEvents = processEvents(rawEvents)
 
 const initialState = {
 	events: [],
-	selected: null,
-	setSelected: () => {},
+	venues: {},
+	toggleFilter: () => {},
 }
 
 export const EventContext = createContext(initialState)
 
 const EventProvider = ({ children }) => {
-	const [events, setEvents] = useState()
-	// const [selected, setSelected] = useState()
+	const [events, setEvents] = useState(processedEvents)
+	const [venues, setVenues] = useState(processedVenues())
 
-	const values = useMemo(() => {
-		return {
-			events,
-			// selected,
-			// setSelected,
-		}
-		// }, [events, selected])
-	}, [events])
+	useEffect(() => {}, [events, venues])
 
-	useEffect(() => {
-		console.log('processing events')
-		setEvents(processEvents(rawEvents))
-	}, [])
+	const toggleFilter = useCallback(
+		venue => {
+			const newVenues = {
+				...venues,
+				[venue]: !venues[venue],
+			}
 
-	return <EventContext.Provider value={values}>{children}</EventContext.Provider>
+			setVenues(newVenues)
+
+			const enabledVenues = Object.keys(newVenues).reduce((memo, curr) => {
+				if (newVenues[curr]) {
+					memo.push(curr)
+				}
+				return memo
+			}, [])
+
+			const filteredEvents = processedEvents.filter(e => {
+				return enabledVenues.includes(e.venue)
+			})
+
+			setEvents(filteredEvents)
+		},
+		[venues]
+	)
+
+	// const values = useMemo(() => {
+	// 	return {
+	// 		events,
+	// 		venues,
+	// 		toggleFilter,
+	// 		// filters,
+	// 		// setFilters,
+	// 		// selected,
+	// 		// setSelected,
+	// 	}
+	// }, [events, toggleFilter, venues])
+
+	return <EventContext.Provider value={{ events, venues, toggleFilter }}>{children}</EventContext.Provider>
+	// return <EventContext.Provider value={values}>{children}</EventContext.Provider>
 }
 
 export const useEventContext = () => useContext(EventContext)

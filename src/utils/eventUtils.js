@@ -15,7 +15,7 @@ const convertDate = rawDate => {
 }
 
 export const colorMap = {
-	'209A': '#212121',
+	'209A': '#FF8C00',
 	'Saber Guild Performance Stage': '#ffab00',
 	'Star Wars Celebration LIVE': '#ffd600',
 	'STEAM Classroom': '#aeea00',
