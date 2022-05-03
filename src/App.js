@@ -1,52 +1,27 @@
-import { memo } from 'react'
-// import { NavLink, Route, Routes } from 'react-router-dom'
+import { lazy, memo, Suspense } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Resources from 'pages/Resources'
 import Todo from 'pages/Todo'
 
-// import { styled } from 'linaria/react'
 import EventProvider from 'context/EventContext'
 
-import Schedule from './pages/Schedule'
-
-// const NavBar = styled.div`
-// 	background: #fff;
-// 	margin: 0px 16px 8px 16px;
-// 	border-radius: 8px;
-// 	padding: 8px 16px;
-// 	display: flex;
-// 	flex-direction: row;
-// 	align-items: center;
-// 	font-size: 12px;
-// 	font-weight: bold;
-// `
-
-// const Link = styled(NavLink)`
-// 	margin: 0px 8px;
-// `
-
-// const Nav = memo(() => {
-// 	return (
-// 		<NavBar>
-// 			<Link to="/">Home</Link>
-// 			<Link to="test">Test</Link>
-// 		</NavBar>
-// 	)
-// })
+// import Schedule from './pages/Schedule'
+const Schedule = lazy(() => import('./pages/Schedule'))
 
 function App() {
 	return (
-		<EventProvider>
-			<div className="wrapper">
+		<div className="wrapper">
+			<Suspense fallback={<header>Loading...</header>}>
 				<header>Celebration Calendar</header>
-				{/* <Nav /> */}
-				<Routes>
-					<Route path="todo" element={<Todo />} />
-					<Route path="resources" element={<Resources />} />
-					<Route path="*" element={<Schedule />} />
-				</Routes>
-			</div>
-		</EventProvider>
+				<EventProvider>
+					<Routes>
+						<Route path="todo" element={<Todo />} />
+						<Route path="resources" element={<Resources />} />
+						<Route path="*" element={<Schedule />} />
+					</Routes>
+				</EventProvider>
+			</Suspense>
+		</div>
 	)
 }
 

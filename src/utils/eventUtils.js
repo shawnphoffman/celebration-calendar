@@ -1,13 +1,25 @@
 export const getVenues = raw => {
+	if (!raw) return
 	const temp = new Set(raw.schedules.map(s => s.location))
 	// console.log(temp)
 	return temp
 }
 
 export const processEvents = raw => {
+	if (!raw) return
 	const events = raw.schedules.map(transformEvent)
 	// console.log({ events })
 	return events
+}
+
+export const processVenues = raw => {
+	if (!raw) return
+	const temp = Array.from(new Set(raw.schedules.map(s => s.location)))
+	const t = temp.reduce((memo, curr) => {
+		memo[curr] = true
+		return memo
+	}, {})
+	return t
 }
 
 const convertDate = rawDate => {

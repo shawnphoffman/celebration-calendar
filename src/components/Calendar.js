@@ -10,6 +10,7 @@ const Calendar = ({ onSelect }) => {
 
 	return (
 		<div className="Calendar__wrapper">
+			{/* {!events && <h1>Loading...</h1>} */}
 			<Kalend
 				// kalendRef={kalendRef}
 				onEventClick={onSelect}

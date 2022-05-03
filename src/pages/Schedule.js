@@ -1,8 +1,12 @@
-import { memo, useCallback, useState } from 'react'
+import { lazy, memo, useCallback, useState } from 'react'
 
-import Calendar from 'components/Calendar'
-import EventDetails from 'components/EventDetails'
-import Filters from 'components/Filters'
+// import Calendar from 'components/Calendar'
+// import EventDetails from 'components/EventDetails'
+// import Filters from 'components/Filters'
+
+const Calendar = lazy(() => import('components/Calendar'))
+const EventDetails = lazy(() => import('components/EventDetails'))
+const Filters = lazy(() => import('components/Filters'))
 
 const Schedule = () => {
 	const [selected, setSelected] = useState()

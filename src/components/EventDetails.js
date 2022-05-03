@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react'
 import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
+// import * as Panelbear from '@panelbear/panelbear-js'
 
 // import { buildUrl, downloadBlob, isIOSSafari } from 'utils/icsUtils'
 
@@ -100,6 +101,8 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 	// const handleDismiss = useCallback(() => {
 	// 	setSelected(null)
 	// }, [setSelected])
+
+	// Panelbear.track(`Product-${name.replace(/\s+/g, '-')}_Removed`)
 
 	if (!event) return null
 

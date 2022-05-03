@@ -1,20 +1,7 @@
-import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
-
-import rawEvents from 'data/schedule.json'
+import React, { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
 
 // https://api-melupufoagt.stackpathdns.com/api/schedules?key=f4da60d9-7791-4d31-aaf0-5cce46bf1e5d
-import { getVenues, processEvents } from 'utils/eventUtils'
-
-const processedVenues = () => {
-	const v = Array.from(getVenues(rawEvents))
-	const t = v.reduce((memo, curr) => {
-		memo[curr] = true
-		return memo
-	}, {})
-	return t
-}
-
-const processedEvents = processEvents(rawEvents)
+import { processEvents, processVenues } from 'utils/eventUtils'
 
 const initialState = {
 	events: [],
@@ -22,13 +9,26 @@ const initialState = {
 	toggleFilter: () => {},
 }
 
-export const EventContext = createContext(initialState)
+const EventContext = createContext(initialState)
 
 const EventProvider = ({ children }) => {
-	const [events, setEvents] = useState(processedEvents)
-	const [venues, setVenues] = useState(processedVenues())
+	const [allEvents, setAllEvents] = useState()
+	const [filteredEvents, setFilteredEvents] = useState()
+	const [venues, setVenues] = useState({})
 
-	useEffect(() => {}, [events, venues])
+	useEffect(() => {
+		console.log('fetching...')
+		fetch(process.env.REACT_APP_SCHEDULE_ENDPOINT)
+			.then(res => res.json())
+			.then(data => {
+				console.log('loaded...', data)
+				const events = processEvents(data)
+				setFilteredEvents(events)
+				setAllEvents(events)
+				setVenues(processVenues(data))
+			})
+			.catch(e => console.error(e))
+	}, [])
 
 	const toggleFilter = useCallback(
 		venue => {
@@ -46,31 +46,26 @@ const EventProvider = ({ children }) => {
 				return memo
 			}, [])
 
-			const filteredEvents = processedEvents.filter(e => {
+			const filteredEvents = allEvents.filter(e => {
 				return enabledVenues.includes(e.venue)
 			})
 
-			setEvents(filteredEvents)
+			setFilteredEvents(filteredEvents)
 		},
-		[venues]
+		[allEvents, venues]
 	)
 
-	// const values = useMemo(() => {
-	// 	return {
-	// 		events,
-	// 		venues,
-	// 		toggleFilter,
-	// 		// filters,
-	// 		// setFilters,
-	// 		// selected,
-	// 		// setSelected,
-	// 	}
-	// }, [events, toggleFilter, venues])
+	const value = useMemo(() => {
+		return {
+			events: filteredEvents,
+			venues,
+			toggleFilter,
+		}
+	}, [filteredEvents, toggleFilter, venues])
 
-	return <EventContext.Provider value={{ events, venues, toggleFilter }}>{children}</EventContext.Provider>
-	// return <EventContext.Provider value={values}>{children}</EventContext.Provider>
+	return <EventContext.Provider value={value}>{children}</EventContext.Provider>
 }
 
 export const useEventContext = () => useContext(EventContext)
 
-export default EventProvider
+export default memo(EventProvider)
