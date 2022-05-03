@@ -3,9 +3,17 @@ import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
+import * as Panelbear from '@panelbear/panelbear-js'
 
 import App from './App'
 import reportWebVitals from './reportWebVitals'
+
+// Analytics
+if (process.env.REACT_APP_PANELBEAR_SITE_ID) {
+	Panelbear.load(process.env.REACT_APP_PANELBEAR_SITE_ID)
+	Panelbear.trackPageview()
+	Panelbear.track('PageLoad')
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
