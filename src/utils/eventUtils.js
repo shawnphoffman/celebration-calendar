@@ -11,7 +11,7 @@ export const processEvents = raw => {
 }
 
 const convertDate = rawDate => {
-	return new Date(rawDate).toISOString()
+	return new Date(rawDate.replace(' ', 'T')).toISOString()
 }
 
 export const colorMap = {
