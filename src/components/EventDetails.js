@@ -18,6 +18,7 @@ const Wrapper = styled.div`
 	flex-direction: row;
 	justify-content: space-between;
 	color: black;
+	max-width: 1200px;
 `
 
 const Title = styled.div`

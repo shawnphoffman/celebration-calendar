@@ -1,65 +1,61 @@
 import React, { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import * as Panelbear from '@panelbear/panelbear-js'
 
-// https://api-melupufoagt.stackpathdns.com/api/schedules?key=f4da60d9-7791-4d31-aaf0-5cce46bf1e5d
-import { processEvents, processVenues } from 'utils/eventUtils'
+import { processApiData } from 'utils/eventUtils'
 
 const initialState = {
 	events: [],
-	venues: {},
+	venues: [],
+	disabledVenues: [],
 	toggleFilter: () => {},
 }
 
 const EventContext = createContext(initialState)
 
 const EventProvider = ({ children }) => {
-	const [allEvents, setAllEvents] = useState()
-	const [filteredEvents, setFilteredEvents] = useState()
-	const [venues, setVenues] = useState({})
+	const [events, setEvents] = useState([])
+	const [venues, setVenues] = useState([])
+	const [disabledVenues, setDisabledVenues] = useState([])
 
 	useEffect(() => {
+		// https://api-melupufoagt.stackpathdns.com/api/schedules?key=f4da60d9-7791-4d31-aaf0-5cce46bf1e5d
 		fetch(process.env.REACT_APP_SCHEDULE_ENDPOINT)
 			.then(res => res.json())
 			.then(data => {
-				const events = processEvents(data)
-				setFilteredEvents(events)
-				setAllEvents(events)
-				setVenues(processVenues(data))
+				const { events, venues } = processApiData(data)
+				setEvents(events)
+				setVenues(venues)
 			})
-			.catch(e => console.error(e))
+			.catch(e => {
+				Panelbear.track('Fetch-Failure')
+				import('../data/schedule.json').then(rawEvents => {
+					const { events, venues } = processApiData(rawEvents)
+					setEvents(events)
+					setVenues(venues)
+				})
+			})
 	}, [])
 
+	// TODO Replace this with a reducer to minimize renders
 	const toggleFilter = useCallback(
 		venue => {
-			const newVenues = {
-				...venues,
-				[venue]: !venues[venue],
+			if (disabledVenues.includes(venue)) {
+				setDisabledVenues(disabledVenues.filter(v => v !== venue))
+			} else {
+				setDisabledVenues([...disabledVenues, venue])
 			}
-
-			setVenues(newVenues)
-
-			const enabledVenues = Object.keys(newVenues).reduce((memo, curr) => {
-				if (newVenues[curr]) {
-					memo.push(curr)
-				}
-				return memo
-			}, [])
-
-			const filteredEvents = allEvents.filter(e => {
-				return enabledVenues.includes(e.venue)
-			})
-
-			setFilteredEvents(filteredEvents)
 		},
-		[allEvents, venues]
+		[disabledVenues]
 	)
 
 	const value = useMemo(() => {
 		return {
-			events: filteredEvents,
+			events,
 			venues,
 			toggleFilter,
+			disabledVenues,
 		}
-	}, [filteredEvents, toggleFilter, venues])
+	}, [disabledVenues, events, toggleFilter, venues])
 
 	return <EventContext.Provider value={value}>{children}</EventContext.Provider>
 }

@@ -12,9 +12,10 @@ const Wrapper = styled.div`
 	align-items: center;
 	flex-wrap: wrap;
 	margin-bottom: 8px;
+	max-width: 1200px;
 `
 
-const Venue = styled.div`
+const VenueWrapper = styled.div`
 	background: white;
 	padding: 4px 8px;
 	font-size: 12px;
@@ -26,36 +27,41 @@ const Venue = styled.div`
 	flex-wrap: nowrap;
 	align-items: center;
 	cursor: pointer;
+`
+
+const VenueName = styled.span`
 	text-decoration: ${props => (props.enabled ? 'none' : 'line-through')};
 `
 
 const Indicator = styled.div`
-	width: 16px;
-	height: 16px;
-	border-radius: 50%;
 	margin-right: 8px;
 	filter: none;
-	background-color: ${props => (props.enabled ? colorMap[props.name] : '#333')};
+	color: ${props => (props.enabled ? colorMap[props.name] : '#333')};
 `
 
-const Filters = () => {
-	// const venues = useMemo(() => Array.from(getVenues(rawEvents)).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })), [])
-	const { venues, toggleFilter } = useEventContext()
+const Venue = memo(({ enabled, name, onClick }) => {
+	return (
+		<VenueWrapper onClick={onClick} className="venue">
+			<Indicator name={name} enabled={enabled}>
+				<i className="fa-solid fa-circle"></i>
+			</Indicator>
+			<VenueName enabled={enabled}>{name}</VenueName>
+		</VenueWrapper>
+	)
+})
+
+const Filters = memo(() => {
+	const { venues, disabledVenues, toggleFilter } = useEventContext()
 
 	if (!venues) return null
 
-	// console.log({ venues })
-
 	return (
 		<Wrapper>
-			{Object.keys(venues).map(v => (
-				<Venue key={v} className="venue" enabled={venues[v]} onClick={() => toggleFilter(v)}>
-					<Indicator name={v} enabled={venues[v]} />
-					{v}
-				</Venue>
+			{venues.map(v => (
+				<Venue key={v} enabled={!disabledVenues.includes(v)} name={v} onClick={() => toggleFilter(v)} />
 			))}
 		</Wrapper>
 	)
-}
+})
 
-export default memo(Filters)
+export default Filters

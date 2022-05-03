@@ -1,23 +1,17 @@
-export const getVenues = raw => {
-	if (!raw) return
-	const temp = new Set(raw.schedules.map(s => s.location))
-	return temp
-}
+export const processApiData = data => {
+	if (!data || !data.schedules) return
 
-export const processEvents = raw => {
-	if (!raw) return
-	const events = raw.schedules.map(transformEvent)
-	return events
-}
+	const venueSet = new Set()
 
-export const processVenues = raw => {
-	if (!raw) return
-	const temp = Array.from(new Set(raw.schedules.map(s => s.location)))
-	const t = temp.reduce((memo, curr) => {
-		memo[curr] = true
-		return memo
-	}, {})
-	return t
+	const events = data.schedules.map(s => {
+		venueSet.add(s.location)
+		return transformEvent(s)
+	})
+
+	return {
+		venues: Array.from(venueSet),
+		events,
+	}
 }
 
 const convertDate = rawDate => {
