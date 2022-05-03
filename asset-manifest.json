@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/celebration-calendar/static/css/main.4047ca3c.css",
+    "main.css": "/celebration-calendar/static/css/main.05b1bfcf.css",
     "main.js": "/celebration-calendar/static/js/main.c71b0603.js",
     "static/js/787.a4dc23dc.chunk.js": "/celebration-calendar/static/js/787.a4dc23dc.chunk.js",
     "index.html": "/celebration-calendar/index.html",
-    "main.4047ca3c.css.map": "/celebration-calendar/static/css/main.4047ca3c.css.map",
+    "main.05b1bfcf.css.map": "/celebration-calendar/static/css/main.05b1bfcf.css.map",
     "main.c71b0603.js.map": "/celebration-calendar/static/js/main.c71b0603.js.map",
     "787.a4dc23dc.chunk.js.map": "/celebration-calendar/static/js/787.a4dc23dc.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4047ca3c.css",
+    "static/css/main.05b1bfcf.css",
     "static/js/main.c71b0603.js"
   ]
 }
