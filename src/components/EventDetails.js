@@ -1,6 +1,8 @@
-import { memo } from 'react'
+import { memo, useCallback } from 'react'
 import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
+
+import { useEventContext } from 'context/EventContext'
 
 const ActionWrapper = styled.div`
 	display: flex;
@@ -46,7 +48,13 @@ const Button = styled(ICalendarLink)`
 const formatTime = time =>
 	new Date(time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase().replace(' ', '')
 
-const EventDetails = ({ event, onDismiss }) => {
+const EventDetails = ({ event, onDismiss: handleDismiss }) => {
+	// const { selected: event, setSelected } = useEventContext()
+
+	// const handleDismiss = useCallback(() => {
+	// 	setSelected(null)
+	// }, [setSelected])
+
 	if (!event) return null
 
 	const time = {
@@ -73,7 +81,7 @@ const EventDetails = ({ event, onDismiss }) => {
 				<Description>{event.description}</Description>
 			</div>
 			<ActionWrapper>
-				<IconButton onClick={onDismiss}>
+				<IconButton onClick={handleDismiss}>
 					<i className="fa-regular fa-close"></i>
 				</IconButton>
 				<Button filename="event.ics" event={icsEvent}>

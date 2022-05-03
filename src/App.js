@@ -4,6 +4,8 @@ import { Route, Routes } from 'react-router-dom'
 // import { styled } from 'linaria/react'
 import Test from 'pages/Test'
 
+import EventProvider from 'context/EventContext'
+
 import Schedule from './pages/Schedule'
 
 // const NavBar = styled.div`
@@ -33,14 +35,16 @@ import Schedule from './pages/Schedule'
 
 function App() {
 	return (
-		<div className="wrapper">
-			<header>Celebration Calendar</header>
-			{/* <Nav /> */}
-			<Routes>
-				<Route path="test" element={<Test />} />
-				<Route path="*" element={<Schedule />} />
-			</Routes>
-		</div>
+		<EventProvider>
+			<div className="wrapper">
+				<header>Celebration Calendar</header>
+				{/* <Nav /> */}
+				<Routes>
+					<Route path="test" element={<Test />} />
+					<Route path="*" element={<Schedule />} />
+				</Routes>
+			</div>
+		</EventProvider>
 	)
 }
 

@@ -1,32 +1,18 @@
 import 'kalend/dist/styles/index.css'
 
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import Kalend, { CalendarView } from 'kalend'
 
-const Calendar = ({ events, onSelect }) => {
-	console.log('Calendar.render')
+import { useEventContext } from 'context/EventContext'
 
-	// const [selectedView, setSelectedView] = useState(CalendarView.WEEK)
-	// const [selectedDate, setSelectedDate] = useState()
-
-	const onEventClick = useCallback(
-		data => {
-			onSelect(data)
-			// console.log('onEventClick', data)
-			// console.log(kalendRef.current)
-		},
-		[onSelect]
-	)
-
-	// const onPageChange = useCallback(args => {
-	// 	console.log('onPageChange', args)
-	// }, [])
+const Calendar = ({ onSelect }) => {
+	const { events } = useEventContext()
 
 	return (
 		<div className="Calendar__wrapper">
 			<Kalend
 				// kalendRef={kalendRef}
-				onEventClick={onEventClick}
+				onEventClick={onSelect}
 				events={events}
 				initialDate={'2022-05-26'}
 				hourHeight={60}
