@@ -25,6 +25,7 @@ const Venue = styled.div`
 	flex-direction: row;
 	flex-wrap: nowrap;
 	align-items: center;
+	cursor: pointer;
 	text-decoration: ${props => (props.enabled ? 'none' : 'line-through')};
 `
 

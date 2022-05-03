@@ -1,6 +1,8 @@
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
+
+// import { buildUrl, downloadBlob, isIOSSafari } from 'utils/icsUtils'
 
 // import { useEventContext } from 'context/EventContext'
 
@@ -48,7 +50,50 @@ const Button = styled(ICalendarLink)`
 const formatTime = time =>
 	new Date(time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase().replace(' ', '')
 
+const filename = 'event.ics'
+
 const EventDetails = ({ event, onDismiss: handleDismiss }) => {
+	const icsEvent = useMemo(() => {
+		if (!event) return {}
+		return {
+			title: event.summary,
+			description: event.description,
+			startTime: event.startAt,
+			endTime: event.endAt,
+			location: event.venue,
+			url: `https://www.starwarscelebration.com/en-us/panels/panel-information.html?gtID=${event.id}`,
+		}
+	}, [event])
+
+	// const handleChromeiOS = useCallback(() => {
+	// 	console.log('Chrome iOS Click')
+	// 	// const { event, filename, rawContent } = this.props;
+	// 	const url = buildUrl(icsEvent, isIOSSafari(), 'TEST')
+	// 	const blob = new Blob([url], {
+	// 		type: 'text/calendar;charset=utf-8',
+	// 	})
+
+	// 	console.log({
+	// 		url,
+	// 		blob,
+	// 	})
+
+	// 	// // IE
+	// 	// if (this.isCrappyIE) {
+	// 	//   window.navigator.msSaveOrOpenBlob(blob, filename);
+	// 	//   return;
+	// 	// }
+
+	// 	// // Safari
+	// 	// if (isIOSSafari()) {
+	// 	//   window.open(url, "_blank");
+	// 	//   return;
+	// 	// }
+
+	// 	// // Desktop
+	// 	downloadBlob(blob, filename)
+	// }, [icsEvent])
+
 	// const { selected: event, setSelected } = useEventContext()
 
 	// const handleDismiss = useCallback(() => {
@@ -62,14 +107,7 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 		end: formatTime(event.endAt),
 	}
 
-	const icsEvent = {
-		title: event.summary,
-		description: event.description,
-		startTime: event.startAt,
-		endTime: event.endAt,
-		location: event.venue,
-		url: `https://www.starwarscelebration.com/en-us/panels/panel-information.html?gtID=${event.id}`,
-	}
+	const isSupported = ICalendarLink.isSupported()
 
 	return (
 		<Wrapper>
@@ -84,9 +122,11 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 				<IconButton onClick={handleDismiss}>
 					<i className="fa-regular fa-close"></i>
 				</IconButton>
-				<Button filename="event.ics" event={icsEvent}>
-					<i className="fa-regular fa-calendar-arrow-down"></i>
-				</Button>
+				{isSupported ? (
+					<Button filename={filename} event={icsEvent}>
+						<i className="fa-regular fa-calendar-arrow-down"></i>
+					</Button>
+				) : null}
 			</ActionWrapper>
 		</Wrapper>
 	)
