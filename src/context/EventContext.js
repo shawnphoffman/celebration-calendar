@@ -1,4 +1,4 @@
-import React, { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { createContext, useCallback, useContext, useEffect, useState } from 'react'
 
 import rawEvents from 'data/schedule.json'
 

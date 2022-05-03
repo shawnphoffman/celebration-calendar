@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react'
+import { memo } from 'react'
 import { styled } from 'linaria/react'
 
 import { useEventContext } from 'context/EventContext'
