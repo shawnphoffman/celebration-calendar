@@ -56,7 +56,7 @@ header {
 .Kalend__Calendar__root,
 .Kalend__Calendar__root-dark {
 	width: 100% !important;
-	border-radius: 20px;
+	border-radius: 12px;
 }
 
 .Kalend__main * {
@@ -96,20 +96,20 @@ button.Kalend__Event-agenda-dark:hover {
 	}
 }
 
-@media (prefers-color-scheme: dark) {
-	html body {
-		background: #1d1c40;
-	}
-	.Calendar__wrapper {
-		background: #1d1f26;
-	}
-	.venue {
-		background: #1d1f26 !important;
-		/* background: #3e498c !important; */
-		color: white !important;
-	}
-	.Kalend__Event-agenda-dark,
-	.Kalend__Event-agenda-dark:hover {
-		filter: none !important	;
-	}
+/* @media (prefers-color-scheme: dark) { */
+html body {
+	background: #1d1c40;
 }
+.Calendar__wrapper {
+	background: #1d1f26;
+}
+.venue {
+	background: #1d1f26 !important;
+	/* background: #3e498c !important; */
+	color: white !important;
+}
+.Kalend__Event-agenda-dark,
+.Kalend__Event-agenda-dark:hover {
+	filter: none !important	;
+}
+/* } */

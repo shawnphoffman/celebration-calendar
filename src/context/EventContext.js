@@ -2,10 +2,10 @@ import React, { createContext, useCallback, useContext, useEffect, useState } fr
 
 import rawEvents from 'data/schedule.json'
 
+// https://api-melupufoagt.stackpathdns.com/api/schedules?key=f4da60d9-7791-4d31-aaf0-5cce46bf1e5d
 import { getVenues, processEvents } from 'utils/eventUtils'
 
 const processedVenues = () => {
-	// () => Array.from(getVenues(rawEvents)).sort((a, b) => a.localeCompare(b, undefined, { sensitivity: 'base' })),
 	const v = Array.from(getVenues(rawEvents))
 	const t = v.reduce((memo, curr) => {
 		memo[curr] = true
