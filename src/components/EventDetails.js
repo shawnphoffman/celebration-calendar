@@ -1,11 +1,7 @@
-import { memo, useMemo } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
-// import * as Panelbear from '@panelbear/panelbear-js'
-
-// import { buildUrl, downloadBlob, isIOSSafari } from 'utils/icsUtils'
-
-// import { useEventContext } from 'context/EventContext'
+import * as Panelbear from '@panelbear/panelbear-js'
 
 const ActionWrapper = styled.div`
 	display: flex;
@@ -55,6 +51,10 @@ const formatTime = time =>
 const filename = 'event.ics'
 
 const EventDetails = ({ event, onDismiss: handleDismiss }) => {
+	const logDownload = useCallback(() => {
+		Panelbear.track('Event-Downloaded')
+	}, [])
+
 	const icsEvent = useMemo(() => {
 		if (!event) return {}
 		return {
@@ -66,43 +66,6 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 			url: `https://www.starwarscelebration.com/en-us/panels/panel-information.html?gtID=${event.id}`,
 		}
 	}, [event])
-
-	// const handleChromeiOS = useCallback(() => {
-	// 	console.log('Chrome iOS Click')
-	// 	// const { event, filename, rawContent } = this.props;
-	// 	const url = buildUrl(icsEvent, isIOSSafari(), 'TEST')
-	// 	const blob = new Blob([url], {
-	// 		type: 'text/calendar;charset=utf-8',
-	// 	})
-
-	// 	console.log({
-	// 		url,
-	// 		blob,
-	// 	})
-
-	// 	// // IE
-	// 	// if (this.isCrappyIE) {
-	// 	//   window.navigator.msSaveOrOpenBlob(blob, filename);
-	// 	//   return;
-	// 	// }
-
-	// 	// // Safari
-	// 	// if (isIOSSafari()) {
-	// 	//   window.open(url, "_blank");
-	// 	//   return;
-	// 	// }
-
-	// 	// // Desktop
-	// 	downloadBlob(blob, filename)
-	// }, [icsEvent])
-
-	// const { selected: event, setSelected } = useEventContext()
-
-	// const handleDismiss = useCallback(() => {
-	// 	setSelected(null)
-	// }, [setSelected])
-
-	// Panelbear.track(`Product-${name.replace(/\s+/g, '-')}_Removed`)
 
 	if (!event) return null
 
@@ -127,9 +90,11 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 					<i className="fa-regular fa-close"></i>
 				</IconButton>
 				{isSupported ? (
-					<Button filename={filename} event={icsEvent}>
-						<i className="fa-regular fa-calendar-arrow-down"></i>
-					</Button>
+					<div onClickCapture={logDownload}>
+						<Button filename={filename} event={icsEvent}>
+							<i className="fa-regular fa-calendar-arrow-down"></i>
+						</Button>
+					</div>
 				) : null}
 			</ActionWrapper>
 		</Wrapper>

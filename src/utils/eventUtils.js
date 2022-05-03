@@ -1,14 +1,12 @@
 export const getVenues = raw => {
 	if (!raw) return
 	const temp = new Set(raw.schedules.map(s => s.location))
-	// console.log(temp)
 	return temp
 }
 
 export const processEvents = raw => {
 	if (!raw) return
 	const events = raw.schedules.map(transformEvent)
-	// console.log({ events })
 	return events
 }
 

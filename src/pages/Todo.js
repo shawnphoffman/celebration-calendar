@@ -7,7 +7,7 @@ const Todo = () => {
 		<Wrapper>
 			<Header>Improvements</Header>
 			<List>
-				<li>Fetch events</li>
+				<li>Caching API</li>
 				<li>Search</li>
 				<li>Navigation</li>
 				<li>Resource Links</li>

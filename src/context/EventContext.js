@@ -17,11 +17,9 @@ const EventProvider = ({ children }) => {
 	const [venues, setVenues] = useState({})
 
 	useEffect(() => {
-		console.log('fetching...')
 		fetch(process.env.REACT_APP_SCHEDULE_ENDPOINT)
 			.then(res => res.json())
 			.then(data => {
-				console.log('loaded...', data)
 				const events = processEvents(data)
 				setFilteredEvents(events)
 				setAllEvents(events)
