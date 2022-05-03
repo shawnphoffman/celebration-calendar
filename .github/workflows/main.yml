@@ -18,6 +18,7 @@ jobs:
           yarn build
         env:
           IMAGE_INLINE_SIZE_LIMIT: 0
+          REACT_APP_PANELBEAR_SITE_ID: ${{ secrets.REACT_APP_PANELBEAR_SITE_ID }}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
