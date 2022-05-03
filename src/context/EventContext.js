@@ -47,7 +47,7 @@ const EventProvider = ({ children }) => {
 				setDisabledVenues([...disabledVenues, venue])
 			}
 		},
-		[disabledVenues]
+		[disabledVenues, setDisabledVenues]
 	)
 
 	const value = useMemo(() => {
