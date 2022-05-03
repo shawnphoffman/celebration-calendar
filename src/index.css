@@ -8,6 +8,7 @@ html body {
 	/* font-family: MONOSPACE; */
 	font-family: 'Open Sans', sans-serif;
 	background: dodgerblue;
+	color: white;
 }
 
 #root {

@@ -20,6 +20,7 @@ const Wrapper = styled.div`
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
+	color: black;
 `
 
 const Title = styled.div`

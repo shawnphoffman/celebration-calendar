@@ -1,9 +1,10 @@
 import { memo } from 'react'
 // import { NavLink, Route, Routes } from 'react-router-dom'
 import { Route, Routes } from 'react-router-dom'
-// import { styled } from 'linaria/react'
-import Test from 'pages/Test'
+import Resources from 'pages/Resources'
+import Todo from 'pages/Todo'
 
+// import { styled } from 'linaria/react'
 import EventProvider from 'context/EventContext'
 
 import Schedule from './pages/Schedule'
@@ -40,7 +41,8 @@ function App() {
 				<header>Celebration Calendar</header>
 				{/* <Nav /> */}
 				<Routes>
-					<Route path="test" element={<Test />} />
+					<Route path="todo" element={<Todo />} />
+					<Route path="resources" element={<Resources />} />
 					<Route path="*" element={<Schedule />} />
 				</Routes>
 			</div>
