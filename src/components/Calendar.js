@@ -31,7 +31,8 @@ const Calendar = ({ events, onSelect }) => {
 				initialDate={'2022-05-26'}
 				hourHeight={60}
 				initialView={CalendarView.AGENDA}
-				disabledViews={[CalendarView.MONTH, CalendarView.WEEK, CalendarView.THREE_DAYS]}
+				// disabledViews={[CalendarView.MONTH, CalendarView.WEEK, CalendarView.THREE_DAYS]}
+				disabledViews={[CalendarView.MONTH, CalendarView.WEEK, CalendarView.THREE_DAYS, CalendarView.DAY]}
 				// onSelectView={onSelectView}
 				// selectedView={selectedView}
 				// onPageChange={onPageChange}
@@ -41,7 +42,8 @@ const Calendar = ({ events, onSelect }) => {
 				focusHour={10}
 				language={'en'}
 				showTimeLine
-				// isDark
+				isDark
+				autoScroll
 			/>
 		</div>
 	)

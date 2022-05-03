@@ -17,9 +17,13 @@ const Schedule = () => {
 		setSelected(event)
 	}, [])
 
+	const handleDismiss = useCallback(() => {
+		setSelected(null)
+	}, [])
+
 	return (
 		<>
-			<EventDetails event={selected} />
+			<EventDetails event={selected} onDismiss={handleDismiss} />
 			<Filters />
 			<Calendar events={events} onSelect={handleSelect} />
 		</>

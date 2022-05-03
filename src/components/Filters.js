@@ -41,7 +41,7 @@ const Filters = () => {
 	return (
 		<Wrapper>
 			{venues.map(v => (
-				<Venue key={v}>
+				<Venue key={v} className="venue">
 					<Indicator name={v} />
 					{v}
 				</Venue>

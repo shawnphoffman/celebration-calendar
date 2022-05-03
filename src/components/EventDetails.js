@@ -2,6 +2,12 @@ import { memo } from 'react'
 import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
 
+const ActionWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+`
+
 const Wrapper = styled.div`
 	background: #fff;
 	margin: 0px 16px 8px 16px;
@@ -27,6 +33,11 @@ const Description = styled.div`
 	margin: 8px 0;
 `
 
+const IconButton = styled.div`
+	font-size: 26px;
+	margin-left: 26px;
+`
+
 const Button = styled(ICalendarLink)`
 	font-size: 26px;
 	margin-left: 26px;
@@ -35,7 +46,7 @@ const Button = styled(ICalendarLink)`
 const formatTime = time =>
 	new Date(time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase().replace(' ', '')
 
-const EventDetails = ({ event }) => {
+const EventDetails = ({ event, onDismiss }) => {
 	if (!event) return null
 
 	const time = {
@@ -61,11 +72,14 @@ const EventDetails = ({ event }) => {
 				</Details>
 				<Description>{event.description}</Description>
 			</div>
-			<div>
+			<ActionWrapper>
+				<IconButton onClick={onDismiss}>
+					<i className="fa-regular fa-close"></i>
+				</IconButton>
 				<Button filename="event.ics" event={icsEvent}>
 					<i className="fa-regular fa-calendar-arrow-down"></i>
 				</Button>
-			</div>
+			</ActionWrapper>
 		</Wrapper>
 	)
 }
