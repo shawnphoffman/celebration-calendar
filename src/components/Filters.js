@@ -1,4 +1,4 @@
-import { memo } from 'react'
+import { memo, useMemo } from 'react'
 import { styled } from 'linaria/react'
 
 import { useEventContext } from 'context/EventContext'
@@ -40,12 +40,15 @@ const Indicator = styled.div`
 `
 
 const Venue = memo(({ enabled, name, onClick }) => {
+	const cleanName = useMemo(() => {
+		return name.replace('The ', '')
+	}, [name])
 	return (
 		<VenueWrapper onClick={onClick} className="venue">
 			<Indicator name={name} enabled={enabled}>
 				<i className="fa-solid fa-circle"></i>
 			</Indicator>
-			<VenueName enabled={enabled}>{name}</VenueName>
+			<VenueName enabled={enabled}>{cleanName}</VenueName>
 		</VenueWrapper>
 	)
 })
