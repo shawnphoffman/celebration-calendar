@@ -22,6 +22,8 @@ const InputWrapper = styled.div`
 	border-radius: 8px;
 	user-select: none;
 	margin-bottom: 16px;
+	max-width: 1200px;
+	width: 100%;
 
 	&:hover {
 		opacity: 0.8;
@@ -94,11 +96,10 @@ const Search = () => {
 
 	useEffect(() => {
 		const output = fuse.search(search, { limit: 20 })
-		console.log({
-			output,
-			search,
-		})
-		// setResults(output.reverse())
+		// console.log({
+		// 	output,
+		// 	search,
+		// })
 		setResults(output)
 	}, [fuse, search])
 

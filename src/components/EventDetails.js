@@ -21,6 +21,7 @@ const Wrapper = styled.div`
 	justify-content: space-between;
 	color: black;
 	max-width: 1200px;
+	width: 100%;
 `
 
 const Title = styled.div`

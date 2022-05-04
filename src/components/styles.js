@@ -7,6 +7,7 @@ export const Wrapper = styled.div`
 	margin: 0;
 	padding: 0 16px;
 	width: 100%;
+	align-items: center;
 `
 
 export const Header = styled.h2`
