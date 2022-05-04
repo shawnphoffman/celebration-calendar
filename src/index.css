@@ -1,3 +1,9 @@
+@import-normalize;
+
+* {
+	box-sizing: border-box;
+}
+
 html body {
 	font-size: 16px;
 	padding: 0;

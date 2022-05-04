@@ -11,7 +11,6 @@ const Todo = () => {
 				<li>Search</li>
 				<li>Navigation</li>
 				<li>Resource Links</li>
-				<li>Persist filters to localstorage</li>
 				<li>Sentry</li>
 			</List>
 		</Wrapper>

@@ -10,6 +10,7 @@
 		"@testing-library/react": "^13.0.0",
 		"@testing-library/user-event": "^13.2.1",
 		"craco-linaria": "^1.1.2",
+		"fuse.js": "^6.6.0",
 		"ics": "^2.35.0",
 		"kalend": "^0.14.2",
 		"linaria": "^3.0.0-beta.1",

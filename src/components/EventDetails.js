@@ -3,6 +3,8 @@ import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
 import * as Panelbear from '@panelbear/panelbear-js'
 
+const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
 const ActionWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -46,6 +48,11 @@ const Button = styled(ICalendarLink)`
 	margin-left: 26px;
 `
 
+const Day = styled.span`
+	margin-left: 8px;
+	margin-right: 8px;
+`
+
 const formatTime = time =>
 	new Date(time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase().replace(' ', '')
 
@@ -77,19 +84,23 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 
 	const isSupported = ICalendarLink.isSupported()
 
+	const weekday = dayName[new Date(event.startAt).getDay()]
+
 	return (
 		<Wrapper>
 			<div>
 				<Title>{event.summary}</Title>
 				<Details>
-					{event.venue} ({time.start} - {time.end})
+					{event.venue}:{!handleDismiss && <Day>{weekday}</Day>}({time.start} - {time.end})
 				</Details>
 				<Description>{event.description}</Description>
 			</div>
 			<ActionWrapper>
-				<IconButton onClick={handleDismiss}>
-					<i className="fa-regular fa-close"></i>
-				</IconButton>
+				{handleDismiss && (
+					<IconButton onClick={handleDismiss}>
+						<i className="fa-regular fa-close"></i>
+					</IconButton>
+				)}
 				{isSupported ? (
 					<div onClickCapture={logDownload}>
 						<Button filename={filename} event={icsEvent}>
