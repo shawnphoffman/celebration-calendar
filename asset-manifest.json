@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/celebration-calendar/static/css/main.d4352091.css",
-    "main.js": "/celebration-calendar/static/js/main.c1b096a4.js",
+    "main.js": "/celebration-calendar/static/js/main.af56155b.js",
     "static/js/799.080e059e.chunk.js": "/celebration-calendar/static/js/799.080e059e.chunk.js",
     "static/js/166.47b7796a.chunk.js": "/celebration-calendar/static/js/166.47b7796a.chunk.js",
     "static/js/787.a4dc23dc.chunk.js": "/celebration-calendar/static/js/787.a4dc23dc.chunk.js",
@@ -9,22 +9,22 @@
     "static/css/190.c33c1027.chunk.css": "/celebration-calendar/static/css/190.c33c1027.chunk.css",
     "static/js/190.78893ceb.chunk.js": "/celebration-calendar/static/js/190.78893ceb.chunk.js",
     "static/css/804.3b09d4fe.chunk.css": "/celebration-calendar/static/css/804.3b09d4fe.chunk.css",
-    "static/js/804.51ff5a9d.chunk.js": "/celebration-calendar/static/js/804.51ff5a9d.chunk.js",
+    "static/js/804.6bc41d98.chunk.js": "/celebration-calendar/static/js/804.6bc41d98.chunk.js",
     "static/css/845.33c88203.chunk.css": "/celebration-calendar/static/css/845.33c88203.chunk.css",
     "index.html": "/celebration-calendar/index.html",
     "main.d4352091.css.map": "/celebration-calendar/static/css/main.d4352091.css.map",
-    "main.c1b096a4.js.map": "/celebration-calendar/static/js/main.c1b096a4.js.map",
+    "main.af56155b.js.map": "/celebration-calendar/static/js/main.af56155b.js.map",
     "799.080e059e.chunk.js.map": "/celebration-calendar/static/js/799.080e059e.chunk.js.map",
     "787.a4dc23dc.chunk.js.map": "/celebration-calendar/static/js/787.a4dc23dc.chunk.js.map",
     "55.0d775413.chunk.js.map": "/celebration-calendar/static/js/55.0d775413.chunk.js.map",
     "190.c33c1027.chunk.css.map": "/celebration-calendar/static/css/190.c33c1027.chunk.css.map",
     "190.78893ceb.chunk.js.map": "/celebration-calendar/static/js/190.78893ceb.chunk.js.map",
     "804.3b09d4fe.chunk.css.map": "/celebration-calendar/static/css/804.3b09d4fe.chunk.css.map",
-    "804.51ff5a9d.chunk.js.map": "/celebration-calendar/static/js/804.51ff5a9d.chunk.js.map",
+    "804.6bc41d98.chunk.js.map": "/celebration-calendar/static/js/804.6bc41d98.chunk.js.map",
     "845.33c88203.chunk.css.map": "/celebration-calendar/static/css/845.33c88203.chunk.css.map"
   },
   "entrypoints": [
     "static/css/main.d4352091.css",
-    "static/js/main.c1b096a4.js"
+    "static/js/main.af56155b.js"
   ]
 }
