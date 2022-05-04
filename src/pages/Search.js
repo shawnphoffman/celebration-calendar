@@ -71,7 +71,16 @@ const options = {
 	// ignoreLocation: false,
 	// ignoreFieldNorm: false,
 	// fieldNormWeight: 1,
-	keys: ['summary', 'description'],
+	keys: [
+		{
+			name: 'summary',
+			weight: 0.7,
+		},
+		{
+			name: 'description',
+			weight: 0.3,
+		},
+	],
 }
 
 const Search = () => {
@@ -85,11 +94,12 @@ const Search = () => {
 
 	useEffect(() => {
 		const output = fuse.search(search, { limit: 20 })
-		// console.log({
-		// 	output,
-		// 	search,
-		// })
-		setResults(output.reverse())
+		console.log({
+			output,
+			search,
+		})
+		// setResults(output.reverse())
+		setResults(output)
 	}, [fuse, search])
 
 	const handleChange = useCallback(e => {
