@@ -10,7 +10,7 @@ export const Wrapper = styled.div`
 `
 
 export const Header = styled.h2`
-	margin: 8px 0px 16px 0px;
+	margin: 8px 0px 32px 0px;
 `
 
 export const List = styled.ul`
@@ -23,4 +23,9 @@ export const List = styled.ul`
 export const ListItem = styled.li`
 	margin-bottom: 16px;
 	list-style: none;
+`
+
+export const Section = styled.div`
+	margin-bottom: 32px;
+	text-align: center;
 `

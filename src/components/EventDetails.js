@@ -43,6 +43,10 @@ const Description = styled.div`
 const IconButton = styled.div`
 	font-size: 26px;
 	margin-left: 26px;
+
+	&:hover {
+		color: #328dc3;
+	}
 `
 
 const Button = styled(ICalendarLink)`
@@ -59,6 +63,12 @@ const NoWrap = styled.span`
 	white-space: nowrap;
 `
 
+const EventLink = styled.a`
+	color: #3e498c;
+	font-size: 12px;
+	font-weight: bold;
+`
+
 const formatTime = time =>
 	new Date(time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase().replace(' ', '')
 
@@ -71,6 +81,13 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 		Panelbear.track('Event-Downloaded')
 	}, [])
 
+	// eslint-disable-next-line no-unused-vars
+	const handleFavorite = useCallback(() => {
+		console.log('Temp Favorite', {
+			event,
+		})
+	}, [event])
+
 	const icsEvent = useMemo(() => {
 		if (!event) return {}
 		return {
@@ -79,7 +96,7 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 			startTime: event.startAt,
 			endTime: event.endAt,
 			location: event.venue,
-			url: `https://www.starwarscelebration.com/en-us/panels/panel-information.html?gtID=${event.id}`,
+			url: event.url,
 		}
 	}, [event])
 
@@ -106,13 +123,23 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 					</NoWrap>
 				</Details>
 				<Description>{event.description}</Description>
+				<EventLink href={event.url} target="_blank" rel="noreferrer">
+					View details on the official site <i className="fa-solid fa-up-right-from-square"></i>
+				</EventLink>
 			</div>
 			<ActionWrapper>
+				{/* Dismiss */}
 				{handleDismiss && (
 					<IconButton onClick={handleDismiss}>
 						<i className="fa-regular fa-close"></i>
 					</IconButton>
 				)}
+				{/* Favorite */}
+				{/* <i className="fa-solid fa-heart"></i> */}
+				{/* <IconButton onClick={handleFavorite}>
+					<i className="fa-regular fa-heart"></i>
+				</IconButton> */}
+				{/* Download */}
 				{isSupported ? (
 					<div onClickCapture={logDownload}>
 						<Button filename={filename} event={icsEvent}>

@@ -1,6 +1,8 @@
 import { lazy, memo, useCallback, useState } from 'react'
 import * as Panelbear from '@panelbear/panelbear-js'
 
+import { Wrapper } from 'components/styles'
+
 const Calendar = lazy(() => import('components/Calendar'))
 const EventDetails = lazy(() => import('components/EventDetails'))
 const Filters = lazy(() => import('components/Filters'))
@@ -20,7 +22,9 @@ const Schedule = () => {
 
 	return (
 		<>
-			<EventDetails event={selected} onDismiss={handleDismiss} />
+			<Wrapper>
+				<EventDetails event={selected} onDismiss={handleDismiss} />
+			</Wrapper>
 			<Filters />
 			<Calendar onSelect={handleSelect} />
 		</>

@@ -48,6 +48,7 @@ const transformEvent = rawEvent => {
 		description: decodeEntities(rawEvent.description),
 		venue: rawEvent.location,
 		color: colorMap[rawEvent.location] ?? undefined,
+		url: `https://www.starwarscelebration.com/en-us/panels/panel-information.html?gtID=${rawEvent.id}`,
 	}
 }
 

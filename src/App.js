@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom'
 import * as Panelbear from '@panelbear/panelbear-js'
 import { styled } from 'linaria/react'
 import Faq from 'pages/Faq'
+import Favorites from 'pages/Favorites'
 import Resources from 'pages/Resources'
 import Search from 'pages/Search'
 
@@ -53,6 +54,7 @@ const AppRoutes = {
 	faq: 'faq',
 	search: 'search',
 	resources: 'resources',
+	favorites: 'favorites',
 }
 
 const Loading = memo(() => {
@@ -74,13 +76,18 @@ function App() {
 		<div className="wrapper">
 			<Suspense fallback={<Loading />}>
 				<Header>
-					<Title>SWC 2022</Title>
+					{/* <Title>SWC 2022</Title> */}
 					<Nav>
 						<NavIcon to={AppRoutes.home} title="Home">
 							<i className="fa-solid fa-house"></i>
 						</NavIcon>
 						<NavIcon to={AppRoutes.search} title="Search">
 							<i className="fa-solid fa-magnifying-glass"></i>
+						</NavIcon>
+						<NavIcon to={AppRoutes.favorites} title="Favorites">
+							<i className="fa-solid fa-heart"></i>
+							{/* <i className="fa-solid fa-heart-circle-minus"></i> */}
+							{/* <i className="fa-solid fa-heart-circle-plus"></i> */}
 						</NavIcon>
 						<NavIcon to={AppRoutes.resources} title="Resources">
 							<i className="fa-solid fa-link"></i>
@@ -93,6 +100,7 @@ function App() {
 				<EventProvider>
 					<Routes>
 						<Route path={AppRoutes.faq} element={<Faq />} />
+						<Route path={AppRoutes.favorites} element={<Favorites />} />
 						<Route path={AppRoutes.resources} element={<Resources />} />
 						<Route path={AppRoutes.search} element={<Search />} />
 						<Route path="*" element={<Schedule />} />
