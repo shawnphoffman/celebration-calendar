@@ -9,7 +9,7 @@ const Resources = () => {
 			<List>
 				<ListItem>
 					<a href="https://www.starwarscelebration.com/en-us/explore-the-show.html" target="_blank" rel="noreferrer">
-						Official Show Info <i class="fa-solid fa-up-right-from-square"></i>
+						Official Show Info <i className="fa-solid fa-up-right-from-square"></i>
 					</a>
 				</ListItem>
 				{/* <ListItem>Resource 2</ListItem>
