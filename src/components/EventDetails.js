@@ -3,10 +3,6 @@ import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
 import * as Panelbear from '@panelbear/panelbear-js'
 
-const NoWrap = styled.span`
-	white-space: nowrap;
-`
-
 const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 const ActionWrapper = styled.div`
@@ -57,8 +53,11 @@ const Button = styled(ICalendarLink)`
 `
 
 const Day = styled.span`
-	margin-left: 8px;
 	margin-right: 8px;
+`
+const NoWrap = styled.span`
+	margin-right: 8px;
+	white-space: nowrap;
 `
 
 const formatTime = time =>
