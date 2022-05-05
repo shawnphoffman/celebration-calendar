@@ -80,7 +80,7 @@ button.Kalend__Event-agenda-dark:hover {
 
 .Kalend__Event__time {
 	white-space: nowrap;
-	min-width: 55px;
+	min-width: 65px;
 }
 .Kalend__CalendarDesktopNavigation__container,
 .Kalend__CalendarDesktopNavigation__container-dark,
@@ -95,6 +95,7 @@ button.Kalend__Event-agenda-dark:hover {
 .Kalend__Event__summary__type-agenda,
 .Kalend__Event__summary__type-agenda-dark {
 	padding: 0px 8px !important;
+	flex: 1;
 }
 
 @media (max-width: 750px) {
