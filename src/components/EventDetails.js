@@ -48,6 +48,7 @@ const IconButton = styled.div`
 `
 
 const Button = styled(ICalendarLink)`
+	color: red;
 	font-size: 26px;
 	margin-left: 26px;
 `
