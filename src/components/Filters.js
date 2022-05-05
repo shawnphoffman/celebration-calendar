@@ -45,7 +45,7 @@ const Venue = memo(({ enabled, name, onClick }) => {
 	}, [name])
 	return (
 		<VenueWrapper onClick={onClick} className="venue">
-			<Indicator name={name} enabled={enabled}>
+			<Indicator name={cleanName} enabled={enabled}>
 				<i className="fa-solid fa-circle"></i>
 			</Indicator>
 			<VenueName enabled={enabled}>{cleanName}</VenueName>

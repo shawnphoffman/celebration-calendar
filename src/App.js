@@ -9,6 +9,7 @@ import Resources from 'pages/Resources'
 import Search from 'pages/Search'
 
 import EventProvider from 'context/EventContext'
+import FavoritesProvider from 'context/FavoritesContext'
 
 const Header = styled.div`
 	display: flex;
@@ -98,13 +99,15 @@ function App() {
 					</Nav>
 				</Header>
 				<EventProvider>
-					<Routes>
-						<Route path={AppRoutes.faq} element={<Faq />} />
-						<Route path={AppRoutes.favorites} element={<Favorites />} />
-						<Route path={AppRoutes.resources} element={<Resources />} />
-						<Route path={AppRoutes.search} element={<Search />} />
-						<Route path="*" element={<Schedule />} />
-					</Routes>
+					<FavoritesProvider>
+						<Routes>
+							<Route path={AppRoutes.faq} element={<Faq />} />
+							<Route path={AppRoutes.favorites} element={<Favorites />} />
+							<Route path={AppRoutes.resources} element={<Resources />} />
+							<Route path={AppRoutes.search} element={<Search />} />
+							<Route path="*" element={<Schedule />} />
+						</Routes>
+					</FavoritesProvider>
 				</EventProvider>
 			</Suspense>
 		</div>

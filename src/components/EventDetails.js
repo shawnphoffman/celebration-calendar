@@ -3,29 +3,30 @@ import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
 import * as Panelbear from '@panelbear/panelbear-js'
 
+import { useFavoritesContext } from 'context/FavoritesContext'
+import colors from 'utils/colors'
+
+// Styled Components
 const ActionWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
 `
-
 const Wrapper = styled.div`
-	background: #fff;
+	background: ${colors.containerBg};
 	margin: 0px 16px 8px 16px;
 	border-radius: 8px;
 	padding: 8px 16px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	color: black;
+	color: ${colors.black};
 	max-width: 1200px;
 	width: 100%;
 `
-
 const Title = styled.div`
 	font-weight: bold;
 `
-
 const Details = styled.div`
 	font-style: italic;
 	font-size: 14px;
@@ -34,27 +35,24 @@ const Details = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 `
-
 const Description = styled.div`
 	font-size: 12px;
 	margin: 8px 0;
 `
-
 const IconButton = styled.div`
 	font-size: 26px;
 	margin-left: 26px;
+	color: ${props => props.color ?? 'inherit'};
 
 	&:hover {
-		color: #328dc3;
+		color: ${colors.iconHover};
 	}
 `
-
 const Button = styled(ICalendarLink)`
-	color: red;
+	color: ${colors.blue};
 	font-size: 26px;
 	margin-left: 26px;
 `
-
 const Day = styled.span`
 	margin-right: 8px;
 `
@@ -62,31 +60,50 @@ const NoWrap = styled.span`
 	margin-right: 8px;
 	white-space: nowrap;
 `
-
 const EventLink = styled.a`
-	color: #3e498c;
+	color: ${colors.link};
 	font-size: 12px;
 	font-weight: bold;
 `
 
+// Utils
 const formatTime = time =>
 	new Date(time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase().replace(' ', '')
-
 const filename = 'event.ics'
-
 const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
+// SubComponents
+const FavoriteIcon = memo(({ event }) => {
+	const { addFavorite, removeFavorite, favorites } = useFavoritesContext()
+
+	const isFavorite = useMemo(() => {
+		return favorites.some(f => f.id === event.id)
+	}, [event.id, favorites])
+
+	if (isFavorite) {
+		return (
+			<IconButton key={`${event.id}.heart-solid`} onClick={() => removeFavorite(event)} color={colors.pink} title="Remove Favorite">
+				<i className="fa-solid fa-heart"></i>
+			</IconButton>
+		)
+	}
+
+	return (
+		<IconButton key={`${event.id}-heart`} onClick={() => addFavorite(event)} title="Add Favorite">
+			<i className="fa-regular fa-heart"></i>
+		</IconButton>
+	)
+})
+
+// Component
 const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 	const logDownload = useCallback(() => {
 		Panelbear.track('Event-Downloaded')
 	}, [])
 
-	// eslint-disable-next-line no-unused-vars
-	const handleFavorite = useCallback(() => {
-		console.log('Temp Favorite', {
-			event,
-		})
-	}, [event])
+	// const handleFavorite = useCallback(() => {
+	// 	addFavorite(event)
+	// }, [addFavorite, event])
 
 	const icsEvent = useMemo(() => {
 		if (!event) return {}
@@ -135,10 +152,7 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 					</IconButton>
 				)}
 				{/* Favorite */}
-				{/* <i className="fa-solid fa-heart"></i> */}
-				{/* <IconButton onClick={handleFavorite}>
-					<i className="fa-regular fa-heart"></i>
-				</IconButton> */}
+				<FavoriteIcon event={event} />
 				{/* Download */}
 				{isSupported ? (
 					<div onClickCapture={logDownload}>

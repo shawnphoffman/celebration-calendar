@@ -65,11 +65,6 @@ export function downloadBlob(blob, filename) {
 	linkEl.href = window.URL.createObjectURL(blob).replace('blob:http', 'webcal')
 	linkEl.setAttribute('download', filename)
 
-	console.log({
-		href: linkEl.href,
-		linkEl,
-	})
-
 	document.body.appendChild(linkEl)
 	linkEl.click()
 	document.body.removeChild(linkEl)
