@@ -30,6 +30,10 @@ const VenueWrapper = styled.div`
 	cursor: pointer;
 	background: ${colors.darkBg};
 	color: white !important;
+
+	&:hover {
+		text-decoration: ${props => (props.enabled ? 'underline' : 'none')};
+	}
 `
 
 const VenueName = styled.span`
@@ -47,7 +51,7 @@ const Venue = memo(({ enabled, name, onClick }) => {
 		return name.replace('The ', '')
 	}, [name])
 	return (
-		<VenueWrapper onClick={onClick} className="venue">
+		<VenueWrapper onClick={onClick} enabled={enabled}>
 			<Indicator name={cleanName} enabled={enabled} key={`i-${name}-${enabled}`}>
 				<i className={`fa-solid ${enabled ? 'fa-circle' : 'fa-circle-dashed'}`}></i>
 			</Indicator>
