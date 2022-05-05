@@ -53,7 +53,6 @@ const NavIcon = styled(NavLink)`
 `
 
 const Schedule = lazy(() => import('./pages/Schedule'))
-// const ScheduleNew = lazy(() => import('./pages/ScheduleNew'))
 const Faq = lazy(() => import('./pages/Faq'))
 const Favorites = lazy(() => import('./pages/Favorites'))
 const Resources = lazy(() => import('./pages/Resources'))
@@ -74,6 +73,8 @@ const Loading = memo(() => {
 		</Header>
 	)
 })
+
+// TODO - Preload dynamic imports!!!
 
 function App() {
 	let location = useLocation()
@@ -102,22 +103,51 @@ function App() {
 						<NavIcon to={AppRoutes.faq} title="FAQ">
 							<i className="fa-solid fa-messages-question"></i>
 						</NavIcon>
-						{/* {process.env.NODE_ENV !== 'production' && (
-							<NavIcon to="v2">
-								<i className="fa-solid fa-circle-2"></i>
-							</NavIcon>
-						)} */}
 					</Nav>
 				</Header>
 				<EventProvider>
 					<FavoritesProvider>
 						<Routes>
-							<Route path={AppRoutes.faq} element={<Faq />} />
-							<Route path={AppRoutes.favorites} element={<Favorites />} />
-							<Route path={AppRoutes.resources} element={<Resources />} />
-							<Route path={AppRoutes.search} element={<Search />} />
-							{/* <Route path="v2" element={<ScheduleNew />} /> */}
-							<Route path="*" element={<Schedule />} />
+							<Route
+								path={AppRoutes.faq}
+								element={
+									<Suspense fallback={null}>
+										<Faq />
+									</Suspense>
+								}
+							/>
+							<Route
+								path={AppRoutes.favorites}
+								element={
+									<Suspense fallback={null}>
+										<Favorites />
+									</Suspense>
+								}
+							/>
+							<Route
+								path={AppRoutes.resources}
+								element={
+									<Suspense fallback={null}>
+										<Resources />
+									</Suspense>
+								}
+							/>
+							<Route
+								path={AppRoutes.search}
+								element={
+									<Suspense fallback={null}>
+										<Search />
+									</Suspense>
+								}
+							/>
+							<Route
+								path="*"
+								element={
+									<Suspense fallback={null}>
+										<Schedule />
+									</Suspense>
+								}
+							/>
 						</Routes>
 					</FavoritesProvider>
 				</EventProvider>
