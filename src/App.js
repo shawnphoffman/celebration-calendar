@@ -3,10 +3,6 @@ import { NavLink, Route, Routes } from 'react-router-dom'
 import { useLocation } from 'react-router-dom'
 import * as Panelbear from '@panelbear/panelbear-js'
 import { styled } from 'linaria/react'
-import Faq from 'pages/Faq'
-import Favorites from 'pages/Favorites'
-import Resources from 'pages/Resources'
-import Search from 'pages/Search'
 
 import EventProvider from 'context/EventContext'
 import FavoritesProvider from 'context/FavoritesContext'
@@ -49,6 +45,11 @@ const NavIcon = styled(NavLink)`
 `
 
 const Schedule = lazy(() => import('./pages/Schedule'))
+const ScheduleNew = lazy(() => import('./pages/ScheduleNew'))
+const Faq = lazy(() => import('./pages/Faq'))
+const Favorites = lazy(() => import('./pages/Favorites'))
+const Resources = lazy(() => import('./pages/Resources'))
+const Search = lazy(() => import('./pages/Search'))
 
 const AppRoutes = {
 	home: '',
@@ -70,7 +71,7 @@ function App() {
 	let location = useLocation()
 
 	useEffect(() => {
-		Panelbear.track(`Page-${location.hash}`)
+		Panelbear.track(`Page-${location.pathname.replace('/', '')}`)
 	}, [location])
 
 	return (
@@ -87,8 +88,6 @@ function App() {
 						</NavIcon>
 						<NavIcon to={AppRoutes.favorites} title="Favorites">
 							<i className="fa-solid fa-heart"></i>
-							{/* <i className="fa-solid fa-heart-circle-minus"></i> */}
-							{/* <i className="fa-solid fa-heart-circle-plus"></i> */}
 						</NavIcon>
 						<NavIcon to={AppRoutes.resources} title="Resources">
 							<i className="fa-solid fa-link"></i>
@@ -105,6 +104,7 @@ function App() {
 							<Route path={AppRoutes.favorites} element={<Favorites />} />
 							<Route path={AppRoutes.resources} element={<Resources />} />
 							<Route path={AppRoutes.search} element={<Search />} />
+							<Route path="v2" element={<ScheduleNew />} />
 							<Route path="*" element={<Schedule />} />
 						</Routes>
 					</FavoritesProvider>
