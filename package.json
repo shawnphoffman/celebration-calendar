@@ -1,6 +1,6 @@
 {
 	"name": "celebration-calendar",
-	"homepage": "https://shawnphoffman.github.io/celebration-calendar",
+	"homepage": "http://swc.events",
 	"version": "0.1.0",
 	"private": true,
 	"main": "index.js",
