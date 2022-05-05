@@ -1,9 +1,9 @@
 import { lazy, memo, Suspense } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
 import { styled } from 'linaria/react'
+import Faq from 'pages/Faq'
 import Resources from 'pages/Resources'
 import Search from 'pages/Search'
-import Todo from 'pages/Todo'
 
 import EventProvider from 'context/EventContext'
 
@@ -48,7 +48,7 @@ const Schedule = lazy(() => import('./pages/Schedule'))
 
 const AppRoutes = {
 	home: '',
-	todo: 'todo',
+	faq: 'faq',
 	search: 'search',
 	resources: 'resources',
 }
@@ -77,11 +77,14 @@ function App() {
 						<NavIcon to={AppRoutes.resources} title="Resources">
 							<i className="fa-solid fa-link"></i>
 						</NavIcon>
+						<NavIcon to={AppRoutes.faq} title="FAQ">
+							<i class="fa-solid fa-messages-question"></i>
+						</NavIcon>
 					</Nav>
 				</Header>
 				<EventProvider>
 					<Routes>
-						<Route path={AppRoutes.todo} element={<Todo />} />
+						<Route path={AppRoutes.faq} element={<Faq />} />
 						<Route path={AppRoutes.resources} element={<Resources />} />
 						<Route path={AppRoutes.search} element={<Search />} />
 						<Route path="*" element={<Schedule />} />

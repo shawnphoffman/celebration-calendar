@@ -26,6 +26,15 @@ p {
 
 a {
 	text-decoration: none;
+	color: white;
+}
+a:hover {
+	color: #328dc3;
+}
+
+h3 {
+	margin-bottom: 16px;
+	margin-top: 32px;
 }
 
 .wrapper {

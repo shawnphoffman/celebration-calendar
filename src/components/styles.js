@@ -10,12 +10,16 @@ export const Wrapper = styled.div`
 `
 
 export const Header = styled.h2`
-	margin: 8px 0px;
+	margin: 8px 0px 16px 0px;
 `
+
 export const List = styled.ul`
-	margin: 16px 0px;
+	/* margin: 16px 0px; */
+	margin: 0px;
 	padding-inline-start: 0px;
+	text-align: center;
 `
+
 export const ListItem = styled.li`
 	margin-bottom: 16px;
 	list-style: none;
