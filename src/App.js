@@ -8,10 +8,19 @@ import EventProvider from 'context/EventContext'
 import FavoritesProvider from 'context/FavoritesContext'
 import colors from 'utils/colors'
 
+const AppWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100vh;
+	align-items: center;
+`
+
 const Header = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: center;
+	flex: 0;
 `
 
 const Title = styled.h1`
@@ -21,14 +30,9 @@ const Title = styled.h1`
 	color: white;
 	margin: 12px 0 12px 48px;
 	white-space: nowrap;
-
-	@media (max-width: 750px) {
-		display: none;
-	}
 `
 
 const Nav = styled.div`
-	/* flex: 1; */
 	margin: 16px;
 	flex-direction: row;
 	align-items: center;
@@ -49,7 +53,7 @@ const NavIcon = styled(NavLink)`
 `
 
 const Schedule = lazy(() => import('./pages/Schedule'))
-const ScheduleNew = lazy(() => import('./pages/ScheduleNew'))
+// const ScheduleNew = lazy(() => import('./pages/ScheduleNew'))
 const Faq = lazy(() => import('./pages/Faq'))
 const Favorites = lazy(() => import('./pages/Favorites'))
 const Resources = lazy(() => import('./pages/Resources'))
@@ -79,10 +83,9 @@ function App() {
 	}, [location])
 
 	return (
-		<div className="wrapper">
+		<AppWrapper>
 			<Suspense fallback={<Loading />}>
 				<Header>
-					{/* <Title>SWC 2022</Title> */}
 					<Nav>
 						<NavIcon to={AppRoutes.home} title="Home">
 							<i className="fa-solid fa-house"></i>
@@ -99,11 +102,11 @@ function App() {
 						<NavIcon to={AppRoutes.faq} title="FAQ">
 							<i className="fa-solid fa-messages-question"></i>
 						</NavIcon>
-						{process.env.NODE_ENV !== 'production' && (
+						{/* {process.env.NODE_ENV !== 'production' && (
 							<NavIcon to="v2">
 								<i className="fa-solid fa-circle-2"></i>
 							</NavIcon>
-						)}
+						)} */}
 					</Nav>
 				</Header>
 				<EventProvider>
@@ -113,13 +116,13 @@ function App() {
 							<Route path={AppRoutes.favorites} element={<Favorites />} />
 							<Route path={AppRoutes.resources} element={<Resources />} />
 							<Route path={AppRoutes.search} element={<Search />} />
-							<Route path="v2" element={<ScheduleNew />} />
+							{/* <Route path="v2" element={<ScheduleNew />} /> */}
 							<Route path="*" element={<Schedule />} />
 						</Routes>
 					</FavoritesProvider>
 				</EventProvider>
 			</Suspense>
-		</div>
+		</AppWrapper>
 	)
 }
 

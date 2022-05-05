@@ -2,6 +2,7 @@ import { memo, useMemo } from 'react'
 import { styled } from 'linaria/react'
 
 import { useEventContext } from 'context/EventContext'
+import colors from 'utils/colors'
 
 import { colorMap } from '../utils/eventUtils'
 
@@ -13,10 +14,10 @@ const Wrapper = styled.div`
 	flex-wrap: wrap;
 	margin-bottom: 8px;
 	max-width: 1200px;
+	flex: 0;
 `
 
 const VenueWrapper = styled.div`
-	background: white;
 	padding: 4px 8px;
 	font-size: 12px;
 	white-space: nowrap;
@@ -27,6 +28,8 @@ const VenueWrapper = styled.div`
 	flex-wrap: nowrap;
 	align-items: center;
 	cursor: pointer;
+	background: ${colors.darkBg};
+	color: white !important;
 `
 
 const VenueName = styled.span`
@@ -36,7 +39,7 @@ const VenueName = styled.span`
 const Indicator = styled.div`
 	margin-right: 8px;
 	filter: none;
-	color: ${props => (props.enabled ? colorMap[props.name] : '#333')};
+	color: ${props => (props.enabled ? colorMap[props.name] : colors.darkInactive)};
 `
 
 const Venue = memo(({ enabled, name, onClick }) => {
@@ -45,8 +48,8 @@ const Venue = memo(({ enabled, name, onClick }) => {
 	}, [name])
 	return (
 		<VenueWrapper onClick={onClick} className="venue">
-			<Indicator name={cleanName} enabled={enabled}>
-				<i className="fa-solid fa-circle"></i>
+			<Indicator name={cleanName} enabled={enabled} key={`i-${name}-${enabled}`}>
+				<i className={`fa-solid ${enabled ? 'fa-circle' : 'fa-circle-dashed'}`}></i>
 			</Indicator>
 			<VenueName enabled={enabled}>{cleanName}</VenueName>
 		</VenueWrapper>

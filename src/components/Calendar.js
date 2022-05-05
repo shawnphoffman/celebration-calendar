@@ -2,8 +2,25 @@ import 'kalend/dist/styles/index.css'
 
 import { memo, useMemo } from 'react'
 import Kalend, { CalendarView } from 'kalend'
+import { styled } from 'linaria/react'
 
 import { useEventContext } from 'context/EventContext'
+
+const Wrapper = styled.div`
+	background: none;
+	overflow: hidden;
+	margin-bottom: 8px;
+	padding-left: 8px;
+	padding-right: 8px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	max-width: 1200px;
+	border-radius: 12px;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+`
 
 const Calendar = ({ onSelect }) => {
 	const { events, disabledVenues } = useEventContext()
@@ -15,7 +32,7 @@ const Calendar = ({ onSelect }) => {
 	}, [disabledVenues, events])
 
 	return (
-		<div className="Calendar__wrapper">
+		<Wrapper>
 			<Kalend
 				onEventClick={onSelect}
 				events={filteredEvents}
@@ -31,7 +48,7 @@ const Calendar = ({ onSelect }) => {
 				isDark
 				autoScroll
 			/>
-		</div>
+		</Wrapper>
 	)
 }
 

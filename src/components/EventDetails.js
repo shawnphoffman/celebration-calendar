@@ -7,22 +7,26 @@ import { useFavoritesContext } from 'context/FavoritesContext'
 import colors from 'utils/colors'
 
 // Styled Components
-const ActionWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-`
 const Wrapper = styled.div`
 	background: ${colors.containerBg};
 	margin: 0px 16px 8px 16px;
 	border-radius: 8px;
-	padding: 8px 16px;
+	padding: 8px 8px 8px 16px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
 	color: ${colors.black};
 	max-width: 1200px;
 	width: 100%;
+`
+const ActionWrapper = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-left: 8px;
+`
+const ContentWrapper = styled.div`
+	flex: 1;
 `
 const Title = styled.div`
 	font-weight: bold;
@@ -41,7 +45,6 @@ const Description = styled.div`
 `
 const IconButton = styled.div`
 	font-size: 26px;
-	margin-left: 26px;
 	color: ${props => props.color ?? 'inherit'};
 
 	&:hover {
@@ -49,9 +52,12 @@ const IconButton = styled.div`
 	}
 `
 const Button = styled(ICalendarLink)`
-	color: ${colors.blue};
+	color: ${colors.download};
 	font-size: 26px;
-	margin-left: 26px;
+
+	&:hover {
+		color: ${colors.iconHover};
+	}
 `
 const Day = styled.span`
 	margin-right: 8px;
@@ -64,6 +70,10 @@ const EventLink = styled.a`
 	color: ${colors.link};
 	font-size: 12px;
 	font-weight: bold;
+
+	&:hover {
+		color: ${colors.iconHover};
+	}
 `
 
 // Utils
@@ -89,7 +99,7 @@ const FavoriteIcon = memo(({ event }) => {
 	}
 
 	return (
-		<IconButton key={`${event.id}-heart`} onClick={() => addFavorite(event)} title="Add Favorite">
+		<IconButton key={`${event.id}-heart`} onClick={() => addFavorite(event)} title="Add Favorite" color={colors.pink}>
 			<i className="fa-regular fa-heart"></i>
 		</IconButton>
 	)
@@ -100,10 +110,6 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 	const logDownload = useCallback(() => {
 		Panelbear.track('Event-Downloaded')
 	}, [])
-
-	// const handleFavorite = useCallback(() => {
-	// 	addFavorite(event)
-	// }, [addFavorite, event])
 
 	const icsEvent = useMemo(() => {
 		if (!event) return {}
@@ -130,7 +136,7 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 
 	return (
 		<Wrapper>
-			<div>
+			<ContentWrapper>
 				<Title>{event.summary}</Title>
 				<Details>
 					<NoWrap>{event.venue}:</NoWrap>
@@ -143,7 +149,7 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 				<EventLink href={event.url} target="_blank" rel="noreferrer">
 					View details on the official site <i className="fa-solid fa-up-right-from-square"></i>
 				</EventLink>
-			</div>
+			</ContentWrapper>
 			<ActionWrapper>
 				{/* Dismiss */}
 				{handleDismiss && (

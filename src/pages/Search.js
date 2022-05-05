@@ -5,12 +5,13 @@ import { styled } from 'linaria/react'
 import EventDetails from 'components/EventDetails'
 import { Wrapper } from 'components/styles'
 import { useEventContext } from 'context/EventContext'
+import colors from 'utils/colors'
 
 const InputWrapper = styled.div`
 	display: flex;
 	flex-direction: row;
 	position: relative;
-	background-color: #fff;
+	background-color: ${colors.containerBg};
 	border-color: none;
 	border-width: 1px;
 	border-style: solid;
@@ -29,7 +30,7 @@ const InputWrapper = styled.div`
 	}
 
 	&:focus-within {
-		border-color: #3e498c;
+		border-color: ${colors.link};
 		box-shadow: 0 0 0 2px white;
 		opacity: 1;
 	}
@@ -47,14 +48,14 @@ const Input = styled.input`
 	border-color: black;
 	border-style: solid;
 	border-width: 0;
-	background-color: #0000;
+	background-color: ${colors.transparent};
 	opacity: 1;
 	flex: 1;
 
 	&:focus {
 		outline-style: none;
 		box-shadow: none;
-		border-color: #0000;
+		border-color: ${colors.transparent};
 	}
 `
 

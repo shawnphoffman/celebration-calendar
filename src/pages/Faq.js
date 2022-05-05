@@ -1,17 +1,23 @@
 import { memo } from 'react'
+import { styled } from 'linaria/react'
 
 import { Header, List, ListItem, Section, Wrapper } from 'components/styles'
+
+const SectionTitle = styled.h3`
+	margin-bottom: 16px;
+	margin-top: 0px;
+`
 
 const Faq = () => {
 	return (
 		<Wrapper>
 			<Header>FAQ</Header>
 			<Section>
-				<h3>Why can't I download events on Chrome iOS?</h3>
+				<SectionTitle>Why can't I download events on Chrome iOS?</SectionTitle>
 				<div>This is an open bug with Chromium. They won't fix it. 😩</div>
 			</Section>
 			<Section>
-				<h3>What are the show hours?</h3>
+				<SectionTitle>What are the show hours?</SectionTitle>
 				<List>
 					<ListItem>Thursday, May 26: 10:00 AM* – 7:00 PM</ListItem>
 					<ListItem>Friday, May 27: 10:00 AM* – 7:00 PM</ListItem>
