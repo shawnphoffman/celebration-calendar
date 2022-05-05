@@ -6,6 +6,7 @@ import { styled } from 'linaria/react'
 
 import EventProvider from 'context/EventContext'
 import FavoritesProvider from 'context/FavoritesContext'
+import colors from 'utils/colors'
 
 const Header = styled.div`
 	display: flex;
@@ -40,7 +41,10 @@ const NavIcon = styled(NavLink)`
 	margin-right: 16px;
 
 	&:hover {
-		color: #328dc3;
+		color: ${colors.iconHover};
+	}
+	&.active {
+		color: ${colors.blue};
 	}
 `
 
@@ -95,6 +99,11 @@ function App() {
 						<NavIcon to={AppRoutes.faq} title="FAQ">
 							<i className="fa-solid fa-messages-question"></i>
 						</NavIcon>
+						{process.env.NODE_ENV !== 'production' && (
+							<NavIcon to="v2">
+								<i className="fa-solid fa-circle-2"></i>
+							</NavIcon>
+						)}
 					</Nav>
 				</Header>
 				<EventProvider>
