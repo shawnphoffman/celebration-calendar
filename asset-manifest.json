@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/celebration-calendar/static/css/main.0e8f8ec3.css",
-    "main.js": "/celebration-calendar/static/js/main.7262f4bc.js",
+    "main.css": "/celebration-calendar/static/css/main.d0332555.css",
+    "main.js": "/celebration-calendar/static/js/main.e02d6bf9.js",
     "static/js/799.3379188a.chunk.js": "/celebration-calendar/static/js/799.3379188a.chunk.js",
     "static/js/166.47b7796a.chunk.js": "/celebration-calendar/static/js/166.47b7796a.chunk.js",
     "static/js/787.a4dc23dc.chunk.js": "/celebration-calendar/static/js/787.a4dc23dc.chunk.js",
@@ -10,8 +10,8 @@
     "static/js/804.6bc41d98.chunk.js": "/celebration-calendar/static/js/804.6bc41d98.chunk.js",
     "static/css/845.33c88203.chunk.css": "/celebration-calendar/static/css/845.33c88203.chunk.css",
     "index.html": "/celebration-calendar/index.html",
-    "main.0e8f8ec3.css.map": "/celebration-calendar/static/css/main.0e8f8ec3.css.map",
-    "main.7262f4bc.js.map": "/celebration-calendar/static/js/main.7262f4bc.js.map",
+    "main.d0332555.css.map": "/celebration-calendar/static/css/main.d0332555.css.map",
+    "main.e02d6bf9.js.map": "/celebration-calendar/static/js/main.e02d6bf9.js.map",
     "799.3379188a.chunk.js.map": "/celebration-calendar/static/js/799.3379188a.chunk.js.map",
     "787.a4dc23dc.chunk.js.map": "/celebration-calendar/static/js/787.a4dc23dc.chunk.js.map",
     "55.0d775413.chunk.js.map": "/celebration-calendar/static/js/55.0d775413.chunk.js.map",
@@ -20,7 +20,7 @@
     "845.33c88203.chunk.css.map": "/celebration-calendar/static/css/845.33c88203.chunk.css.map"
   },
   "entrypoints": [
-    "static/css/main.0e8f8ec3.css",
-    "static/js/main.7262f4bc.js"
+    "static/css/main.d0332555.css",
+    "static/js/main.e02d6bf9.js"
   ]
 }
