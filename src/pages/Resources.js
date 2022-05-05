@@ -1,13 +1,17 @@
 import { memo } from 'react'
 
-import { Header, List, Wrapper } from 'components/styles'
+import { Header, List, ListItem, Wrapper } from 'components/styles'
 
 const Resources = () => {
 	return (
 		<Wrapper>
-			<Header>Resources</Header>
+			<Header>Additional Resources</Header>
 			<List>
-				<li></li>
+				<ListItem>Resource 1</ListItem>
+				<ListItem>Resource 2</ListItem>
+				<ListItem>Resource 3</ListItem>
+				<ListItem>Resource 4</ListItem>
+				<ListItem>Resource 5</ListItem>
 			</List>
 		</Wrapper>
 	)

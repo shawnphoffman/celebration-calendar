@@ -8,8 +8,6 @@ const Todo = () => {
 			<Header>Improvements</Header>
 			<List>
 				<li>Caching API</li>
-				<li>Search</li>
-				<li>Navigation</li>
 				<li>Resource Links</li>
 				<li>Sentry</li>
 			</List>

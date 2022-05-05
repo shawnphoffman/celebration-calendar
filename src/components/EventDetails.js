@@ -3,6 +3,10 @@ import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
 import * as Panelbear from '@panelbear/panelbear-js'
 
+const NoWrap = styled.span`
+	white-space: nowrap;
+`
+
 const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 const ActionWrapper = styled.div`
@@ -32,6 +36,9 @@ const Details = styled.div`
 	font-style: italic;
 	font-size: 14px;
 	margin: 8px 0;
+
+	display: flex;
+	flex-wrap: wrap;
 `
 
 const Description = styled.div`
@@ -92,7 +99,11 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 			<div>
 				<Title>{event.summary}</Title>
 				<Details>
-					{event.venue}:{!handleDismiss && <Day>{weekday}</Day>}({time.start} - {time.end})
+					<NoWrap>{event.venue}:</NoWrap>
+					{!handleDismiss && <Day>{weekday}</Day>}
+					<NoWrap>
+						({time.start} - {time.end})
+					</NoWrap>
 				</Details>
 				<Description>{event.description}</Description>
 			</div>

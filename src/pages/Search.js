@@ -1,9 +1,8 @@
-import { memo, useCallback, useEffect, useMemo, useState } from 'react'
+import { memo, useCallback, useEffect, useMemo, useState, useTransition } from 'react'
 import Fuse from 'fuse.js'
 import { styled } from 'linaria/react'
 
 import EventDetails from 'components/EventDetails'
-// import { Header, Wrapper } from 'components/styles'
 import { Wrapper } from 'components/styles'
 import { useEventContext } from 'context/EventContext'
 
@@ -60,19 +59,10 @@ const Input = styled.input`
 `
 
 const options = {
-	// isCaseSensitive: false,
 	includeScore: true,
 	shouldSort: true,
-	// includeMatches: false,
-	// findAllMatches: false,
-	minMatchCharLength: 2,
-	// location: 0,
+	minMatchCharLength: 3,
 	threshold: 0.6,
-	// distance: 100,
-	// useExtendedSearch: false,
-	// ignoreLocation: false,
-	// ignoreFieldNorm: false,
-	// fieldNormWeight: 1,
 	keys: [
 		{
 			name: 'summary',
@@ -88,30 +78,29 @@ const options = {
 const Search = () => {
 	const { events } = useEventContext()
 	const [search, setSearch] = useState('')
-	const [results, setResults] = useState(events)
+	const [results, setResults] = useState([])
+	const [, startTransition] = useTransition()
+	// const deferredSearch = useDeferredValue(search);
 
 	const fuse = useMemo(() => {
 		return new Fuse(events, options)
 	}, [events])
 
 	useEffect(() => {
+		// const output = fuse.search(deferredSearch, { limit: 20 })
 		const output = fuse.search(search, { limit: 20 })
-		// console.log({
-		// 	output,
-		// 	search,
-		// })
-		setResults(output)
+		startTransition(() => setResults(output))
+		// setResults(output)
+		// }, [fuse, deferredSearch])
 	}, [fuse, search])
 
 	const handleChange = useCallback(e => {
 		const value = e.target.value
 		setSearch(value)
-		// console.log({ value })
 	}, [])
 
 	return (
 		<Wrapper>
-			{/* <Header>Search</Header> */}
 			<InputWrapper>
 				<Input onChange={handleChange} type="text" placeholder="Search panels..." />
 			</InputWrapper>
