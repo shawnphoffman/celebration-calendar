@@ -1,5 +1,7 @@
-import { lazy, memo, Suspense } from 'react'
+import { lazy, memo, Suspense, useEffect } from 'react'
 import { NavLink, Route, Routes } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import * as Panelbear from '@panelbear/panelbear-js'
 import { styled } from 'linaria/react'
 import Faq from 'pages/Faq'
 import Resources from 'pages/Resources'
@@ -62,6 +64,12 @@ const Loading = memo(() => {
 })
 
 function App() {
+	let location = useLocation()
+
+	useEffect(() => {
+		Panelbear.track(`Page-${location.hash}`)
+	}, [location])
+
 	return (
 		<div className="wrapper">
 			<Suspense fallback={<Loading />}>
@@ -78,7 +86,7 @@ function App() {
 							<i className="fa-solid fa-link"></i>
 						</NavIcon>
 						<NavIcon to={AppRoutes.faq} title="FAQ">
-							<i class="fa-solid fa-messages-question"></i>
+							<i className="fa-solid fa-messages-question"></i>
 						</NavIcon>
 					</Nav>
 				</Header>
