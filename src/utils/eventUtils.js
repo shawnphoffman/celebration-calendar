@@ -1,3 +1,23 @@
+const convertDate = rawDate => {
+	return new Date(rawDate.replace(' ', 'T')).toISOString()
+}
+
+const customEvents = [
+	// {
+	// 	id: 'custom-1',
+	// 	summary: 'Test Event',
+	// 	description: 'Test Description.',
+	// 	venue: 'Test Venue',
+	// 	timezoneStartAt: 'America/Los_Angeles',
+	// 	startDate: new Date('2022-05-26T17:30:00'),
+	// 	endDate: new Date('2022-05-26T18:30:00'),
+	// 	startAt: convertDate(new Date('2022-05-26T17:30:00').toISOString()),
+	// 	endAt: convertDate(new Date('2022-05-26T18:30:00').toISOString()),
+	// 	color: '#FFF',
+	// 	url: 'https://google.com',
+	// },
+]
+
 export const processApiData = data => {
 	if (!data || !data.schedules) return
 
@@ -8,14 +28,15 @@ export const processApiData = data => {
 		return transformEvent(s)
 	})
 
+	customEvents.forEach(event => {
+		events.push(event)
+		venueSet.add(event.venue)
+	})
+
 	return {
 		venues: Array.from(venueSet).sort((a, b) => (a.replace('The ', '') > b.replace('The ', '') ? 1 : -1)),
 		events,
 	}
-}
-
-const convertDate = rawDate => {
-	return new Date(rawDate.replace(' ', 'T')).toISOString()
 }
 
 export const colorMap = {
@@ -45,7 +66,7 @@ const transformEvent = rawEvent => {
 		summary: decodeEntities(rawEvent.title),
 		description: decodeEntities(rawEvent.description),
 		venue: rawEvent.location,
-		color: colorMap[rawEvent.location.replace('The ', '')] ?? undefined,
+		color: colorMap[rawEvent.location.replace('The ', '')] ?? '#FFF',
 		url: `https://www.starwarscelebration.com/en-us/panels/panel-information.html?gtID=${rawEvent.id}`,
 	}
 }
