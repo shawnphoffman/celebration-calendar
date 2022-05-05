@@ -10,8 +10,8 @@ const Wrapper = styled.div`
 	background: none;
 	overflow: hidden;
 	margin-bottom: 8px;
-	padding-left: 8px;
-	padding-right: 8px;
+	padding-left: 16px;
+	padding-right: 16px;
 	width: 100%;
 	height: 100%;
 	display: flex;
