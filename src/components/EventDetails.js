@@ -3,8 +3,6 @@ import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
 import * as Panelbear from '@panelbear/panelbear-js'
 
-const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-
 const ActionWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -65,6 +63,8 @@ const formatTime = time =>
 	new Date(time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase().replace(' ', '')
 
 const filename = 'event.ics'
+
+const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 	const logDownload = useCallback(() => {
