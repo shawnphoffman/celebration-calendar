@@ -2,6 +2,7 @@ import { memo } from 'react'
 import { styled } from 'linaria/react'
 
 import { Header, List, ListItem, Section, Wrapper } from 'components/styles'
+import Event from 'utils/events'
 
 const SectionTitle = styled.h3`
 	margin-bottom: 16px;
@@ -25,6 +26,13 @@ const Faq = () => {
 					<ListItem>Sunday, May 29: 10:00 AM* – 5:00 PM</ListItem>
 					<ListItem>*Jedi Master VIP tickets may access the Exhibit Hall at 9:30 AM.</ListItem>
 				</List>
+			</Section>
+			<Section>
+				<SectionTitle>What events does this site capture?</SectionTitle>
+				<div>
+					This site doesn't capture personal information. The only data that is recorded is event data based on usage. We use PanelBear to
+					track the following events without PII attached. <strong>{Object.keys(Event).join(', ')}</strong>
+				</div>
 			</Section>
 		</Wrapper>
 	)

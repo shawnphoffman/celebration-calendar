@@ -5,6 +5,8 @@ import ReactDOM from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
 import * as Panelbear from '@panelbear/panelbear-js'
 
+import Event from 'utils/events'
+
 import App from './App'
 import reportWebVitals from './reportWebVitals'
 
@@ -12,7 +14,7 @@ import reportWebVitals from './reportWebVitals'
 if (process.env.REACT_APP_PANELBEAR_SITE_ID) {
 	Panelbear.load(process.env.REACT_APP_PANELBEAR_SITE_ID)
 	Panelbear.trackPageview()
-	Panelbear.track('PageLoad')
+	Panelbear.track(Event.PageLoad)
 }
 
 const root = ReactDOM.createRoot(document.getElementById('root'))

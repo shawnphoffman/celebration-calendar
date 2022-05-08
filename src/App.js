@@ -7,6 +7,7 @@ import { styled } from 'linaria/react'
 import EventProvider from 'context/EventContext'
 import FavoritesProvider from 'context/FavoritesContext'
 import colors from 'utils/colors'
+import Event from 'utils/events'
 
 const AppWrapper = styled.div`
 	display: flex;
@@ -80,7 +81,7 @@ function App() {
 	let location = useLocation()
 
 	useEffect(() => {
-		Panelbear.track(`Page-${location.pathname.replace('/', '')}`)
+		Panelbear.track(`${Event.PageRender}-${location.pathname.replace('/', '')}`)
 	}, [location])
 
 	return (

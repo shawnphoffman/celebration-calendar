@@ -2,6 +2,8 @@ import React, { createContext, memo, useCallback, useContext, useMemo } from 're
 import * as Panelbear from '@panelbear/panelbear-js'
 import useLocalStorage from 'hooks/useLocalStorage'
 
+import Event from 'utils/events'
+
 const initialState = {
 	favorites: [],
 	addFavorite: () => {},
@@ -16,7 +18,7 @@ const FavoritesProvider = ({ children }) => {
 
 	const addFavorite = useCallback(
 		event => {
-			Panelbear.track('Favorite-Add')
+			Panelbear.track(Event.AddFavorite)
 			setFavorites(
 				[...favorites, event].sort((a, b) =>
 					a.startDate > b.startDate ? 1 : a.startDate === b.startDate ? (a.endDate > b.endDate ? 1 : -1) : -1
@@ -28,7 +30,7 @@ const FavoritesProvider = ({ children }) => {
 
 	const removeFavorite = useCallback(
 		event => {
-			Panelbear.track('Favorite-Remove')
+			Panelbear.track(Event.RemoveFavorite)
 			setFavorites(favorites.filter(f => f !== event))
 		},
 		[favorites, setFavorites]

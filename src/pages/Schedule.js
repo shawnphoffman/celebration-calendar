@@ -2,6 +2,7 @@ import { lazy, memo, useCallback, useState } from 'react'
 import * as Panelbear from '@panelbear/panelbear-js'
 
 import { Wrapper } from 'components/styles'
+import Event from 'utils/events'
 
 const Calendar = lazy(() => import('components/Calendar'))
 const EventDetails = lazy(() => import('components/EventDetails'))
@@ -11,12 +12,12 @@ const Schedule = () => {
 	const [selected, setSelected] = useState()
 
 	const handleSelect = useCallback(event => {
-		Panelbear.track('Event-Selected')
+		Panelbear.track(Event.EventSelected)
 		setSelected(event)
 	}, [])
 
 	const handleDismiss = useCallback(() => {
-		Panelbear.track('Event-Dismissed')
+		Panelbear.track(Event.EventDismissed)
 		setSelected(null)
 	}, [])
 

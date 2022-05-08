@@ -5,6 +5,7 @@ import * as Panelbear from '@panelbear/panelbear-js'
 
 import { useFavoritesContext } from 'context/FavoritesContext'
 import colors from 'utils/colors'
+import Event from 'utils/events'
 
 // Styled Components
 const Wrapper = styled.div`
@@ -108,7 +109,7 @@ const FavoriteIcon = memo(({ event }) => {
 // Component
 const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 	const logDownload = useCallback(() => {
-		Panelbear.track('Event-Downloaded')
+		Panelbear.track(Event.EventDownload)
 	}, [])
 
 	const icsEvent = useMemo(() => {

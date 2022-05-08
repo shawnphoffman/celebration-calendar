@@ -2,6 +2,7 @@ import React, { createContext, memo, useCallback, useContext, useEffect, useMemo
 import * as Panelbear from '@panelbear/panelbear-js'
 import useLocalStorage from 'hooks/useLocalStorage'
 
+import Event from 'utils/events'
 import { processApiData } from 'utils/eventUtils'
 
 const initialState = {
@@ -29,7 +30,7 @@ const EventProvider = ({ children }) => {
 				setVenues(venues)
 			})
 			.catch(e => {
-				Panelbear.track('Fetch-Failure')
+				Panelbear.track(Event.FetchFailure)
 				import('../data/schedule.json').then(rawEvents => {
 					const { events, venues } = processApiData(rawEvents)
 					setEvents(events)
