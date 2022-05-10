@@ -1,21 +1,10 @@
-import { memo, useMemo } from 'react'
+import React, { memo, useMemo } from 'react'
 import { styled } from 'linaria/react'
 
+import Loading from 'components/Loading'
 import { useEventContext } from 'context/EventContext'
 
-const Event = styled.div`
-	padding: 16px;
-	border-bottom: 1px solid black;
-`
-
-const Box = styled.div`
-	font-size: 2rem;
-	background-color: lightgreen;
-	color: black;
-	width: 100%;
-	margin: 0 8px 8px 8px;
-	overflow-y: scroll;
-`
+import EventListItem from './EventListItem'
 
 const Container = styled.div`
 	flex: 1;
@@ -24,8 +13,14 @@ const Container = styled.div`
 	justify-content: center;
 	overflow-x: hidden;
 `
+const ScrollBox = styled.div`
+	color: black;
+	width: 100%;
+	margin: 0 8px 8px 8px;
+	overflow-y: scroll;
+`
 
-const Agenda = ({ onSelect }) => {
+const Agenda = () => {
 	const { events, disabledVenues } = useEventContext()
 
 	const filteredEvents = useMemo(() => {
@@ -34,13 +29,19 @@ const Agenda = ({ onSelect }) => {
 		})
 	}, [disabledVenues, events])
 
+	const hasEvents = useMemo(() => {
+		return filteredEvents.length > 0
+	}, [filteredEvents])
+
+	if (!hasEvents) return <Loading />
+
 	return (
 		<Container>
-			<Box>
+			<ScrollBox>
 				{filteredEvents.map(e => (
-					<Event key={e.id}>{e.summary}</Event>
+					<EventListItem key={e.id} event={e} />
 				))}
-			</Box>
+			</ScrollBox>
 		</Container>
 	)
 }

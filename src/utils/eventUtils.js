@@ -55,6 +55,18 @@ export const colorMap = {
 	'University Stage': '#d50000',
 }
 
+export const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+
+export const dayColor = {
+	Thursday: '#666',
+	Friday: '#444',
+	Saturday: '#222',
+	Sunday: '#000',
+}
+
+export const formatTime = time =>
+	new Date(time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase().replace(' ', '')
+
 const transformEvent = rawEvent => {
 	return {
 		id: rawEvent.id,

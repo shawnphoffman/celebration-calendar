@@ -10,6 +10,7 @@
 		"@testing-library/react": "^13.0.0",
 		"@testing-library/user-event": "^13.2.1",
 		"craco-linaria": "^1.1.2",
+		"firebase": "^9.8.0",
 		"fuse.js": "^6.6.0",
 		"ics": "^2.35.0",
 		"kalend": "^0.14.2",
@@ -19,6 +20,7 @@
 		"react-icalendar-link": "^3.0.2",
 		"react-router-dom": "6",
 		"react-scripts": "5.0.1",
+		"reactfire": "^4.2.1",
 		"web-vitals": "^2.1.0"
 	},
 	"scripts": {

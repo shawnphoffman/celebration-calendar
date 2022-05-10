@@ -1,106 +1,53 @@
 import { memo, useCallback, useMemo } from 'react'
 import ICalendarLink from 'react-icalendar-link'
-import { styled } from '@linaria/react'
 import * as Panelbear from '@panelbear/panelbear-js'
 
 import { useFavoritesContext } from 'context/FavoritesContext'
 import colors from 'utils/colors'
 import Event from 'utils/events'
+import { dayName, formatTime } from 'utils/eventUtils'
 
-// Styled Components
-const Wrapper = styled.div`
-	background: ${colors.containerBg};
-	margin: 0px 16px 8px 16px;
-	border-radius: 8px;
-	padding: 8px 8px 8px 16px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
-	color: ${colors.black};
-	max-width: 1200px;
-	width: 100%;
-`
-const ActionWrapper = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	margin-left: 8px;
-`
-const ContentWrapper = styled.div`
-	flex: 1;
-`
-const Title = styled.div`
-	font-weight: bold;
-`
-const Details = styled.div`
-	font-style: italic;
-	font-size: 14px;
-	margin: 8px 0;
-
-	display: flex;
-	flex-wrap: wrap;
-`
-const Description = styled.div`
-	font-size: 12px;
-	margin: 8px 0;
-`
-const IconButton = styled.div`
-	font-size: 26px;
-	color: ${props => props.color ?? 'inherit'};
-
-	&:hover {
-		color: ${colors.iconHover};
-	}
-`
-const Button = styled(ICalendarLink)`
-	color: ${colors.download};
-	font-size: 26px;
-
-	&:hover {
-		color: ${colors.iconHover};
-	}
-`
-const Day = styled.span`
-	margin-right: 8px;
-`
-const NoWrap = styled.span`
-	margin-right: 8px;
-	white-space: nowrap;
-`
-const EventLink = styled.a`
-	color: ${colors.link};
-	font-size: 12px;
-	font-weight: bold;
-
-	&:hover {
-		color: ${colors.iconHover};
-	}
-`
-
-// Utils
-const formatTime = time =>
-	new Date(time).toLocaleTimeString([], { hour: 'numeric', minute: '2-digit', hour12: true }).toLowerCase().replace(' ', '')
-const filename = 'event.ics'
-const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+import {
+	ActionWrapper,
+	Button,
+	ContentWrapper,
+	Day,
+	Description,
+	Details,
+	EventLink,
+	IconButton,
+	NoWrap,
+	Title,
+	Wrapper,
+} from './EventDetails.styles'
 
 // SubComponents
 const FavoriteIcon = memo(({ event }) => {
 	const { addFavorite, removeFavorite, favorites } = useFavoritesContext()
 
+	const handleAdd = useCallback(() => {
+		addFavorite(event)
+	}, [addFavorite, event])
+
+	const handleRemove = useCallback(() => {
+		removeFavorite(event)
+	}, [event, removeFavorite])
+
 	const isFavorite = useMemo(() => {
+		console.log('isFavorite.2', event.id)
 		return favorites.some(f => f.id === event.id)
 	}, [event.id, favorites])
 
 	if (isFavorite) {
 		return (
-			<IconButton key={`${event.id}.heart-solid`} onClick={() => removeFavorite(event)} color={colors.pink} title="Remove Favorite">
+			<IconButton key={`${event.id}.heart-solid`} onClick={handleRemove} color={colors.pink} title="Remove Favorite">
 				<i className="fa-solid fa-heart"></i>
 			</IconButton>
 		)
 	}
 
 	return (
-		<IconButton key={`${event.id}-heart`} onClick={() => addFavorite(event)} title="Add Favorite" color={colors.pink}>
+		<IconButton key={`${event.id}-heart`} onClick={handleAdd} title="Add Favorite" color={colors.pink}>
 			<i className="fa-regular fa-heart"></i>
 		</IconButton>
 	)
@@ -125,6 +72,8 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 	}, [event])
 
 	if (!event) return null
+
+	const icsFilename = `event-${event.id}.ics`
 
 	const time = {
 		start: formatTime(event.startAt),
@@ -163,7 +112,7 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 				{/* Download */}
 				{isSupported ? (
 					<div onClickCapture={logDownload}>
-						<Button filename={filename} event={icsEvent}>
+						<Button filename={icsFilename} event={icsEvent}>
 							<i className="fa-regular fa-calendar-arrow-down"></i>
 						</Button>
 					</div>

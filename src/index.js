@@ -3,7 +3,9 @@ import './index.css'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
+import { FirebaseAppProvider } from 'reactfire'
 import * as Panelbear from '@panelbear/panelbear-js'
+import { firebaseConfig } from 'config/firebaseConfig'
 
 import Event from 'utils/events'
 
@@ -20,9 +22,11 @@ if (process.env.REACT_APP_PANELBEAR_SITE_ID) {
 const root = ReactDOM.createRoot(document.getElementById('root'))
 root.render(
 	<React.StrictMode>
-		<HashRouter>
-			<App />
-		</HashRouter>
+		<FirebaseAppProvider firebaseConfig={firebaseConfig}>
+			<HashRouter>
+				<App />
+			</HashRouter>
+		</FirebaseAppProvider>
 	</React.StrictMode>
 )
 

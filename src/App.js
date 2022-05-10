@@ -1,13 +1,14 @@
-import { lazy, memo, Suspense, useEffect } from 'react'
-import { NavLink, Route, Routes } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
-import * as Panelbear from '@panelbear/panelbear-js'
+import { memo, Suspense } from 'react'
+import { AuthProvider, DatabaseProvider, useFirebaseApp } from 'reactfire'
+import { getAuth } from 'firebase/auth'
+import { getDatabase } from 'firebase/database'
 import { styled } from 'linaria/react'
 
+import AppRoutes from 'components/AppRoutes'
+import Loading from 'components/Loading'
+import Nav from 'components/Nav'
 import EventProvider from 'context/EventContext'
 import FavoritesProvider from 'context/FavoritesContext'
-import colors from 'utils/colors'
-import Event from 'utils/events'
 
 const AppWrapper = styled.div`
 	display: flex;
@@ -24,134 +25,26 @@ const Header = styled.div`
 	flex: 0;
 `
 
-const Title = styled.h1`
-	text-align: center;
-	font-weight: bold;
-	font-size: 2rem;
-	color: white;
-	margin: 12px 0 12px 48px;
-	white-space: nowrap;
-`
-
-const Nav = styled.div`
-	margin: 16px;
-	flex-direction: row;
-	align-items: center;
-`
-
-const NavIcon = styled(NavLink)`
-	color: white;
-	font-size: 24px;
-	margin-left: 16px;
-	margin-right: 16px;
-
-	&:hover {
-		color: ${colors.iconHover};
-	}
-	&.active {
-		color: ${colors.blue};
-	}
-`
-
-const Schedule = lazy(() => import('./pages/Schedule'))
-const Faq = lazy(() => import('./pages/Faq'))
-const Favorites = lazy(() => import('./pages/Favorites'))
-const Resources = lazy(() => import('./pages/Resources'))
-const Search = lazy(() => import('./pages/Search'))
-
-const AppRoutes = {
-	home: '',
-	faq: 'faq',
-	search: 'search',
-	resources: 'resources',
-	favorites: 'favorites',
-}
-
-const Loading = memo(() => {
-	return (
-		<Header>
-			<Title>Loading...</Title>
-		</Header>
-	)
-})
-
-// TODO - Preload dynamic imports!!!
-
 function App() {
-	let location = useLocation()
-
-	useEffect(() => {
-		Panelbear.track(`${Event.PageRender}-${location.pathname.replace('/', '')}`)
-	}, [location])
-
+	// Firebase
+	const firebaseApp = useFirebaseApp()
+	const auth = getAuth(firebaseApp)
+	const database = getDatabase(firebaseApp)
 	return (
 		<AppWrapper>
 			<Suspense fallback={<Loading />}>
-				<Header>
-					<Nav>
-						<NavIcon to={AppRoutes.home} title="Home">
-							<i className="fa-solid fa-house"></i>
-						</NavIcon>
-						<NavIcon to={AppRoutes.search} title="Search">
-							<i className="fa-solid fa-magnifying-glass"></i>
-						</NavIcon>
-						<NavIcon to={AppRoutes.favorites} title="Favorites">
-							<i className="fa-solid fa-heart"></i>
-						</NavIcon>
-						<NavIcon to={AppRoutes.resources} title="Resources">
-							<i className="fa-solid fa-link"></i>
-						</NavIcon>
-						<NavIcon to={AppRoutes.faq} title="FAQ">
-							<i className="fa-solid fa-messages-question"></i>
-						</NavIcon>
-					</Nav>
-				</Header>
-				<EventProvider>
-					<FavoritesProvider>
-						<Routes>
-							<Route
-								path={AppRoutes.faq}
-								element={
-									<Suspense fallback={null}>
-										<Faq />
-									</Suspense>
-								}
-							/>
-							<Route
-								path={AppRoutes.favorites}
-								element={
-									<Suspense fallback={null}>
-										<Favorites />
-									</Suspense>
-								}
-							/>
-							<Route
-								path={AppRoutes.resources}
-								element={
-									<Suspense fallback={null}>
-										<Resources />
-									</Suspense>
-								}
-							/>
-							<Route
-								path={AppRoutes.search}
-								element={
-									<Suspense fallback={null}>
-										<Search />
-									</Suspense>
-								}
-							/>
-							<Route
-								path="*"
-								element={
-									<Suspense fallback={null}>
-										<Schedule />
-									</Suspense>
-								}
-							/>
-						</Routes>
-					</FavoritesProvider>
-				</EventProvider>
+				<AuthProvider sdk={auth}>
+					<DatabaseProvider sdk={database}>
+						<Header>
+							<Nav />
+						</Header>
+						<EventProvider>
+							<FavoritesProvider>
+								<AppRoutes />
+							</FavoritesProvider>
+						</EventProvider>
+					</DatabaseProvider>
+				</AuthProvider>
 			</Suspense>
 		</AppWrapper>
 	)
