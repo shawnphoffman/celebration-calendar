@@ -1,7 +1,9 @@
-import React, { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { useDatabase, useDatabaseListData, useUser } from 'reactfire'
+// import React, { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import React, { createContext, memo, useCallback, useContext, useMemo } from 'react'
+// import { useDatabase, useDatabaseListData, useUser } from 'reactfire'
+import { useDatabase, useUser } from 'reactfire'
 import * as Panelbear from '@panelbear/panelbear-js'
-import { /*increment, */ query, ref, set } from 'firebase/database'
+import { /*increment,  query, */ ref, set } from 'firebase/database'
 
 import useLocalStorage from 'hooks/useLocalStorage'
 import Event from 'utils/events'
@@ -16,13 +18,13 @@ const initialState = {
 const FavoritesContext = createContext(initialState)
 
 const FavoritesProvider = ({ children }) => {
-	const [updated, setUpdated] = useState(false)
+	// const [updated, setUpdated] = useState(false)
 	// Storage
 	const [favorites, setFavorites] = useLocalStorage('favorites', [])
 	// Firebase
 	const { data: user } = useUser()
 	const database = useDatabase()
-	const userFavoritesRef = ref(database, `favorites/${user?.uid}`)
+	// const userFavoritesRef = ref(database, `favorites/${user?.uid}`)
 	// const allCountsRef = ref(database, 'counts')
 	// const getEventCountsRef = useCallback(
 	// 	id => {
@@ -31,10 +33,10 @@ const FavoritesProvider = ({ children }) => {
 	// 	[database]
 	// )
 	// const allCountsResponse = useDatabaseObjectData(allCountsRef)
-	const userFavoritesQuery = query(userFavoritesRef)
-	const { status, data: favoritesListResponse } = useDatabaseListData(userFavoritesQuery, {
-		idField: 'id',
-	})
+	// const userFavoritesQuery = query(userFavoritesRef)
+	// const { status, data: favoritesListResponse } = useDatabaseListData(userFavoritesQuery, {
+	// 	idField: 'id',
+	// })
 
 	//
 	//
@@ -80,11 +82,13 @@ const FavoritesProvider = ({ children }) => {
 	const addFavorite = useCallback(
 		event => {
 			Panelbear.track(Event.AddFavorite)
-			const tRef = ref(database, `favorites/${user?.uid}/${event.id}`)
-			set(tRef, {
-				id: event.id,
-				favorited: true,
-			})
+			if (user?.uid) {
+				const tRef = ref(database, `favorites/${user?.uid}/${event.id}`)
+				set(tRef, {
+					id: event.id,
+					favorited: true,
+				})
+			}
 			// set(getEventCountsRef(event.id), increment(1))
 			setFavorites(
 				[...favorites, event].sort((a, b) =>
@@ -98,8 +102,10 @@ const FavoritesProvider = ({ children }) => {
 	const removeFavorite = useCallback(
 		event => {
 			Panelbear.track(Event.RemoveFavorite)
-			const tRef = ref(database, `favorites/${user?.uid}/${event.id}`)
-			set(tRef, null)
+			if (user?.uid) {
+				const tRef = ref(database, `favorites/${user?.uid}/${event.id}`)
+				set(tRef, null)
+			}
 			// set(getEventCountsRef(event.id), increment(-1))
 			setFavorites(favorites.filter(f => f !== event))
 		},

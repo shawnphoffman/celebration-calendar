@@ -68,7 +68,7 @@ const NavBar = () => {
 					<i className={`fa-solid ${r.icon}`}></i>
 				</NavIcon>
 			))}
-			{/* <AuthNavIcon /> */}
+			{process.env.NODE_ENV !== 'production' && <AuthNavIcon />}
 		</Nav>
 	)
 }
