@@ -8,9 +8,8 @@ module.exports = {
 				groups: [
 					['^\\u0000'],
 					['^react$', '^react', '^@?\\w'],
-					['^(.data-landing)(/.*)'],
 					['^(@root|types|data)(/.*)'],
-					['^(components|enums|images|loaders|utils|context)(/.*)'],
+					['^(components|utils|context|config|pages|hooks)(/.*)'],
 					[('^\\.\\.(?!/?$)', '^\\.\\./?$')],
 					['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
 				],

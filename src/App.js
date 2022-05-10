@@ -16,6 +16,7 @@ const AppWrapper = styled.div`
 	width: 100%;
 	height: 100vh;
 	align-items: center;
+	padding: 0 8px 8px 8px;
 `
 
 const Header = styled.div`
@@ -30,14 +31,15 @@ function App() {
 	const firebaseApp = useFirebaseApp()
 	const auth = getAuth(firebaseApp)
 	const database = getDatabase(firebaseApp)
+
 	return (
 		<AppWrapper>
 			<Suspense fallback={<Loading />}>
 				<AuthProvider sdk={auth}>
+					<Header>
+						<Nav />
+					</Header>
 					<DatabaseProvider sdk={database}>
-						<Header>
-							<Nav />
-						</Header>
 						<EventProvider>
 							<FavoritesProvider>
 								<AppRoutes />

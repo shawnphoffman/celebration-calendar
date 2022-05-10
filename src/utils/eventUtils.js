@@ -55,13 +55,13 @@ export const colorMap = {
 	'University Stage': '#d50000',
 }
 
-export const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+export const dayName = ['Sunday', 'x', 'x', 'x', 'Thursday', 'Friday', 'Saturday']
 
 export const dayColor = {
-	Thursday: '#666',
-	Friday: '#444',
-	Saturday: '#222',
-	Sunday: '#000',
+	[dayName[4]]: '#042940',
+	[dayName[5]]: '#174001',
+	[dayName[6]]: '#400A40',
+	[dayName[0]]: '#40290A',
 }
 
 export const formatTime = time =>

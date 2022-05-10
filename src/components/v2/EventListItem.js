@@ -1,4 +1,4 @@
-import React, { memo, useMemo } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { styled } from 'linaria/react'
 
 import colors from 'utils/colors'
@@ -11,11 +11,12 @@ const Container = styled.div`
 	display: flex;
 	flex-direction: row;
 	border-bottom: 1px solid black;
-	background-color: white;
+	cursor: pointer;
 `
 const Event = styled.div`
 	padding: 16px;
 	flex: 1;
+	background: white;
 `
 const DayName = styled.div`
 	background-color: ${p => p.bg};
@@ -25,7 +26,8 @@ const DayName = styled.div`
 	justify-content: center;
 	transform: rotate(180deg);
 	padding: 8px;
-	font-size: 14px;
+	font-size: 12px;
+	font-weight: bold;
 	flex: 0;
 `
 
@@ -34,7 +36,8 @@ const Title = styled.div`
 	font-size: 16px;
 `
 const ColorBlock = styled.div`
-	width: 20px;
+	/* width: 20px; */
+	width: 12px;
 	background-color: ${e => e.color};
 `
 const Description = styled.div`
@@ -44,7 +47,7 @@ const Description = styled.div`
 const Details = styled.div`
 	font-style: italic;
 	font-size: 14px;
-	margin: 8px 0;
+	margin-top: 8px;
 
 	display: flex;
 	flex-wrap: wrap;
@@ -66,13 +69,22 @@ const ActionWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 8px;
+	background: white;
+	padding: 8px;
+	/* Accommodate scroll bars */
+	padding-right: 12px;
 `
 
 const EventListItem = ({ event }) => {
+	const [expanded, setExpanded] = useState(false)
+
 	const eventDay = useMemo(() => {
 		return dayName[new Date(event.startAt).getDay()]
 	}, [event.startAt])
+
+	const handleClick = useCallback(() => {
+		setExpanded(!expanded)
+	}, [expanded])
 
 	const time = useMemo(
 		() => ({
@@ -82,21 +94,25 @@ const EventListItem = ({ event }) => {
 		[event.endAt, event.startAt]
 	)
 	return (
-		<Container>
+		<Container onClick={handleClick}>
 			<DayName bg={dayColor[eventDay]}>{eventDay}</DayName>
 			<ColorBlock color={event.color} />
 			<Event onClick={() => {}}>
 				<Title>{event.summary}</Title>
 				<Details>
-					<NoWrap>{event.venue}:</NoWrap>
 					<NoWrap>
-						({time.start} - {time.end})
+						{time.start} - {time.end}
 					</NoWrap>
+					<NoWrap>({event.venue})</NoWrap>
 				</Details>
-				<Description>{event.description}</Description>
-				<EventLink href={event.url} target="_blank" rel="noreferrer">
-					View details on the official site <i className="fa-solid fa-up-right-from-square"></i>
-				</EventLink>
+				{expanded && (
+					<>
+						<Description>{event.description}</Description>
+						<EventLink href={event.url} target="_blank" rel="noreferrer">
+							View details on the official site <i className="fa-solid fa-up-right-from-square"></i>
+						</EventLink>
+					</>
+				)}
 			</Event>
 
 			<ActionWrapper>

@@ -1,7 +1,8 @@
-import { memo, useMemo } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { styled } from 'linaria/react'
 
-import { useEventContext } from 'context/EventContext'
+// import { useEventContext } from 'context/EventContext'
+import { EventAction, useEventContext } from 'context/EventContext'
 import colors from 'utils/colors'
 
 import { colorMap } from '../utils/eventUtils'
@@ -46,12 +47,13 @@ const Indicator = styled.div`
 	color: ${props => (props.enabled ? colorMap[props.name] : colors.darkInactive)};
 `
 
-const Venue = memo(({ enabled, name, onClick }) => {
+const Venue = memo(({ enabled, name }) => {
 	const cleanName = useMemo(() => {
 		return name.replace('The ', '')
 	}, [name])
+
 	return (
-		<VenueWrapper onClick={onClick} enabled={enabled}>
+		<VenueWrapper enabled={enabled}>
 			<Indicator name={cleanName} enabled={enabled} key={`i-${name}-${enabled}`}>
 				<i className={`fa-solid ${enabled ? 'fa-circle' : 'fa-circle-dashed'}`}></i>
 			</Indicator>
@@ -59,19 +61,27 @@ const Venue = memo(({ enabled, name, onClick }) => {
 		</VenueWrapper>
 	)
 })
+Venue.displayName = 'Venue'
 
 const Filters = memo(() => {
-	const { venues, disabledVenues, toggleFilter } = useEventContext()
+	const [state, dispatch] = useEventContext()
 
-	if (!venues) return null
+	const handleClick = useCallback(name => () => dispatch({ type: EventAction.TOGGLE_VENUE, name }), [dispatch])
+
+	if (!state?.allVenues) return null
+
+	console.log('Filters.Render')
 
 	return (
 		<Wrapper>
-			{venues.map(v => (
-				<Venue key={v} enabled={!disabledVenues.includes(v)} name={v} onClick={() => toggleFilter(v)} />
+			{state.allVenues.map(v => (
+				<div key={v} onClick={handleClick(v)}>
+					<Venue enabled={!state.disabledVenues.includes(v)} name={v} />
+				</div>
 			))}
 		</Wrapper>
 	)
 })
+Filters.displayName = 'Filters'
 
 export default Filters

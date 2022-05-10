@@ -2,8 +2,8 @@ import React, { createContext, memo, useCallback, useContext, useEffect, useMemo
 import { useDatabase, useDatabaseListData, useUser } from 'reactfire'
 import * as Panelbear from '@panelbear/panelbear-js'
 import { /*increment, */ query, ref, set } from 'firebase/database'
-import useLocalStorage from 'hooks/useLocalStorage'
 
+import useLocalStorage from 'hooks/useLocalStorage'
 import Event from 'utils/events'
 
 const initialState = {
@@ -39,32 +39,32 @@ const FavoritesProvider = ({ children }) => {
 	//
 	//
 	//
-	useEffect(() => {
-		if (status !== 'success' || updated) {
-			return
-		}
-		const storageIds = favorites.map(x => x.id).sort()
-		const fireIds = favoritesListResponse.map(x => x.id).sort()
-		const shouldUpdate = storageIds.some(x => !fireIds.includes(x))
+	// useEffect(() => {
+	// 	if (status !== 'success' || updated) {
+	// 		return
+	// 	}
+	// 	const storageIds = favorites.map(x => x.id).sort()
+	// 	const fireIds = favoritesListResponse.map(x => x.id).sort()
+	// 	const shouldUpdate = storageIds.some(x => !fireIds.includes(x))
 
-		if (!shouldUpdate) {
-			console.log('SHOULD NOT UPDATE')
-			return
-		}
+	// 	if (!shouldUpdate) {
+	// 		console.log('SHOULD NOT UPDATE')
+	// 		return
+	// 	}
 
-		const finalFireIds = [...new Set([...storageIds, ...fireIds].sort())]
-		console.log('wow', { storageIds, fireIds, finalFireIds, status, favoritesListResponse })
+	// 	const finalFireIds = [...new Set([...storageIds, ...fireIds].sort())]
+	// 	console.log('wow', { storageIds, fireIds, finalFireIds, status, favoritesListResponse })
 
-		const pending = {}
-		finalFireIds.forEach(id => {
-			pending[id] = {
-				id,
-				favorited: true,
-			}
-		})
-		set(userFavoritesRef, pending)
-		setUpdated(true)
-	}, [favorites, favoritesListResponse, status, updated, userFavoritesRef])
+	// 	const pending = {}
+	// 	finalFireIds.forEach(id => {
+	// 		pending[id] = {
+	// 			id,
+	// 			favorited: true,
+	// 		}
+	// 	})
+	// 	set(userFavoritesRef, pending)
+	// 	setUpdated(true)
+	// }, [favorites, favoritesListResponse, status, updated, userFavoritesRef])
 
 	// useEffect(() => {
 	// 	if (allCountsResponse.status === 'success') {

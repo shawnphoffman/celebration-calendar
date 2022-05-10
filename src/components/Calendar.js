@@ -1,10 +1,12 @@
 import 'kalend/dist/styles/index.css'
 
-import { memo, useMemo } from 'react'
+import { memo } from 'react'
 import Kalend, { CalendarView } from 'kalend'
 import { styled } from 'linaria/react'
 
 import { useEventContext } from 'context/EventContext'
+
+import Loading from './Loading'
 
 const Wrapper = styled.div`
 	background: none;
@@ -23,19 +25,19 @@ const Wrapper = styled.div`
 `
 
 const Calendar = ({ onSelect }) => {
-	const { events, disabledVenues } = useEventContext()
+	const [state] = useEventContext()
 
-	const filteredEvents = useMemo(() => {
-		return events.filter(e => {
-			return !disabledVenues.includes(e.venue)
-		})
-	}, [disabledVenues, events])
+	if (!state) return <Loading />
+
+	console.log('Calendar.render', {
+		state,
+	})
 
 	return (
 		<Wrapper>
 			<Kalend
 				onEventClick={onSelect}
-				events={filteredEvents}
+				events={state.filteredEvents}
 				initialDate={'2022-05-26'}
 				hourHeight={60}
 				initialView={CalendarView.AGENDA}

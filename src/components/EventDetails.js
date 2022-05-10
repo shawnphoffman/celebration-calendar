@@ -34,7 +34,7 @@ const FavoriteIcon = memo(({ event }) => {
 	}, [event, removeFavorite])
 
 	const isFavorite = useMemo(() => {
-		console.log('isFavorite.2', event.id)
+		// console.log('isFavorite.2', event.id)
 		return favorites.some(f => f.id === event.id)
 	}, [event.id, favorites])
 

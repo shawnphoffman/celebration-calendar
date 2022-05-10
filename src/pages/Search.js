@@ -77,27 +77,23 @@ const options = {
 }
 
 const Search = () => {
-	const { events } = useEventContext()
+	const [state] = useEventContext()
 	const [search, setSearch] = useState('')
 	const [results, setResults] = useState([])
 	const [, startTransition] = useTransition()
-	// const deferredSearch = useDeferredValue(search);
 
 	const fuse = useMemo(() => {
-		return new Fuse(events, options)
-	}, [events])
+		return new Fuse(state.allEvents, options)
+	}, [state.allEvents])
 
 	useEffect(() => {
-		// const output = fuse.search(deferredSearch, { limit: 20 })
 		const output = fuse.search(search, { limit: 20 })
 		startTransition(() => setResults(output))
-		// setResults(output)
-		// }, [fuse, deferredSearch])
 	}, [fuse, search])
 
 	const handleChange = useCallback(e => {
 		const value = e.target.value
-		setSearch(value)
+		startTransition(() => setSearch(value))
 	}, [])
 
 	return (

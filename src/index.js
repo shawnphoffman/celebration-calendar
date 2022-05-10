@@ -5,8 +5,8 @@ import ReactDOM from 'react-dom/client'
 import { HashRouter } from 'react-router-dom'
 import { FirebaseAppProvider } from 'reactfire'
 import * as Panelbear from '@panelbear/panelbear-js'
-import { firebaseConfig } from 'config/firebaseConfig'
 
+import { firebaseConfig } from 'config/firebaseConfig'
 import Event from 'utils/events'
 
 import App from './App'

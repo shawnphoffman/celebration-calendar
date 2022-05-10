@@ -7,6 +7,7 @@ import colors from 'utils/colors'
 const IconButton = styled.div`
 	font-size: 26px;
 	color: ${props => props.color ?? 'inherit'};
+	cursor: pointer;
 
 	&:hover {
 		color: ${colors.iconHover};
@@ -16,16 +17,23 @@ const IconButton = styled.div`
 const FavoriteIcon = ({ event }) => {
 	const { addFavorite, removeFavorite, favorites } = useFavoritesContext()
 
-	const handleAdd = useCallback(() => {
-		addFavorite(event)
-	}, [addFavorite, event])
+	const handleAdd = useCallback(
+		e => {
+			e.stopPropagation()
+			addFavorite(event)
+		},
+		[addFavorite, event]
+	)
 
-	const handleRemove = useCallback(() => {
-		removeFavorite(event)
-	}, [event, removeFavorite])
+	const handleRemove = useCallback(
+		e => {
+			e.stopPropagation()
+			removeFavorite(event)
+		},
+		[event, removeFavorite]
+	)
 
 	const isFavorite = useMemo(() => {
-		console.log('isFavorite.1', event.id)
 		return favorites.some(f => f.id === event.id)
 	}, [event.id, favorites])
 
