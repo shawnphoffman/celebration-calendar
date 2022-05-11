@@ -15,11 +15,10 @@ const Container = styled.div`
 	border-radius: 8px;
 `
 const ScrollBox = styled.div`
-	/* color: black; */
 	width: 100%;
 	overflow-y: scroll;
 	::-webkit-scrollbar-corner {
-		background: rgba(0, 0, 0, 0);
+		background: var(--transparent);
 	}
 `
 

@@ -82,16 +82,18 @@ const ActionWrapper = styled.div`
 	}
 `
 
-const EventListItem = ({ event }) => {
-	const [expanded, setExpanded] = useState(false)
+const EventListItem = ({ event, forceOpen = false }) => {
+	const [expanded, setExpanded] = useState(forceOpen)
 
 	const eventDay = useMemo(() => {
 		return dayName[new Date(event.startAt).getDay()]
 	}, [event.startAt])
 
 	const handleClick = useCallback(() => {
-		setExpanded(!expanded)
-	}, [expanded])
+		if (!forceOpen) {
+			setExpanded(!expanded)
+		}
+	}, [expanded, forceOpen])
 
 	const time = useMemo(
 		() => ({

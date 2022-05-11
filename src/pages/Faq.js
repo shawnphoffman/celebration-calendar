@@ -1,7 +1,7 @@
 import { memo } from 'react'
 import { styled } from 'linaria/react'
 
-import { Header, List, ListItem, Section, Wrapper } from 'components/styles'
+import { List, ListItem, NonScrollWrapper, PageTitle, Section } from 'components/styles'
 import Event from 'utils/events'
 
 const SectionTitle = styled.h3`
@@ -11,8 +11,8 @@ const SectionTitle = styled.h3`
 
 const Faq = () => {
 	return (
-		<Wrapper>
-			<Header>FAQ</Header>
+		<NonScrollWrapper>
+			<PageTitle>FAQ</PageTitle>
 			<Section>
 				<SectionTitle>Why can't I download events on Chrome iOS?</SectionTitle>
 				<div>This is an open bug with Chromium. They won't fix it. 😩</div>
@@ -34,7 +34,7 @@ const Faq = () => {
 					track the following events without PII attached. <strong>{Object.keys(Event).join(', ')}</strong>
 				</div>
 			</Section>
-		</Wrapper>
+		</NonScrollWrapper>
 	)
 }
 

@@ -1,6 +1,6 @@
 import { styled } from 'linaria/react'
 
-export const Wrapper = styled.div`
+export const NonScrollWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	margin: 0;
@@ -10,12 +10,11 @@ export const Wrapper = styled.div`
 	flex: 0;
 `
 
-export const Header = styled.h2`
+export const PageTitle = styled.h2`
 	margin: 8px 0px 16px 0px;
 `
 
 export const List = styled.ul`
-	/* margin: 16px 0px; */
 	margin: 0px;
 	padding-inline-start: 0px;
 	text-align: center;

@@ -25,13 +25,6 @@ const AppWrapper = styled.div`
 	background: var(--bg);
 `
 
-const Header = styled.div`
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	flex: 0;
-`
-
 function App() {
 	// Firebase
 	const firebaseApp = useFirebaseApp()
@@ -41,16 +34,12 @@ function App() {
 	const theme = useDeviceTheme()
 	const themeClass = themeConditional(theme)
 
-	// TODO Add background to html
-
 	return (
 		<ThemeProvider>
 			<AppWrapper className={themeClass}>
 				<Suspense fallback={<Loading />}>
 					<AuthProvider sdk={auth}>
-						<Header>
-							<Nav />
-						</Header>
+						<Nav />
 						<DatabaseProvider sdk={database}>
 							<EventProvider>
 								<FavoritesProvider>

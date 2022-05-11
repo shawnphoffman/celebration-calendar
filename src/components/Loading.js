@@ -1,27 +1,24 @@
 import { memo } from 'react'
 import { styled } from 'linaria/react'
 
-// Refactor
-const Header = styled.div`
+const Wrapper = styled.div`
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	align-items: center;
 	flex: 0;
 `
-
-const Title = styled.h1`
-	text-align: center;
-	font-weight: bold;
-	font-size: 2rem;
-	color: var(---text);
-	white-space: nowrap;
+const Spinner = styled.div`
+	font-size: 46px;
+	margin: 16px;
 `
 
 const Loading = memo(() => {
 	return (
-		<Header>
-			<Title>Loading...</Title>
-		</Header>
+		<Wrapper>
+			<Spinner>
+				<i className="fa-brands fa-galactic-republic fa-beat"></i>
+			</Spinner>
+		</Wrapper>
 	)
 })
 

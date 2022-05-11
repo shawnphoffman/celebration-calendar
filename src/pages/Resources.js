@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-import { Header, List, ListItem, Section, Wrapper } from 'components/styles'
+import { List, ListItem, NonScrollWrapper, PageTitle, Section } from 'components/styles'
 
 const Link = memo(({ url, children }) => {
 	return (
@@ -14,8 +14,8 @@ const Link = memo(({ url, children }) => {
 
 const Resources = () => {
 	return (
-		<Wrapper>
-			<Header>Additional Resources</Header>
+		<NonScrollWrapper>
+			<PageTitle>Additional Resources</PageTitle>
 			<Section>
 				<List>
 					<Link href="https://www.starwarscelebration.com/en-us/explore-the-show.html">Official Show Info</Link>
@@ -25,7 +25,7 @@ const Resources = () => {
 					</Link>
 				</List>
 			</Section>
-		</Wrapper>
+		</NonScrollWrapper>
 	)
 }
 

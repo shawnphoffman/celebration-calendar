@@ -1,7 +1,6 @@
 import { memo, useCallback, useMemo } from 'react'
 import { styled } from 'linaria/react'
 
-// import { useEventContext } from 'context/EventContext'
 import { EventAction, useEventContext } from 'context/EventContext'
 
 import { cleanVenueName, colorMap } from '../utils/eventUtils'
@@ -29,7 +28,6 @@ const VenueWrapper = styled.div`
 	align-items: center;
 	cursor: pointer;
 	background: var(--outline);
-	/* color: white !important; */
 
 	&:hover {
 		text-decoration: ${props => (props.enabled ? 'underline' : 'none')};

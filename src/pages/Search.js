@@ -2,7 +2,7 @@ import { memo, useCallback, useEffect, useMemo, useState, useTransition } from '
 import Fuse from 'fuse.js'
 import { styled } from 'linaria/react'
 
-import EventDetails from 'components/EventDetails'
+import EventListItem from 'components/v2/EventListItem'
 import { useEventContext } from 'context/EventContext'
 
 const InputWrapper = styled.div`
@@ -84,11 +84,10 @@ const Container = styled.div`
 	align-items: center;
 `
 const ScrollBox = styled.div`
-	/* color: black; */
 	width: 100%;
 	overflow-y: scroll;
 	::-webkit-scrollbar-corner {
-		background: rgba(0, 0, 0, 0);
+		background: var(--transparent);
 	}
 `
 
@@ -119,7 +118,7 @@ const Search = () => {
 			</InputWrapper>
 			<ScrollBox>
 				{results.map(r => (
-					<EventDetails event={r.item} key={r.item.id} />
+					<EventListItem event={r.item} key={r.item.id} forceOpen />
 				))}
 			</ScrollBox>
 		</Container>

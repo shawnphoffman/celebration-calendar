@@ -1,8 +1,9 @@
 import { memo, useMemo } from 'react'
 import { styled } from 'linaria/react'
 
-import EventDetails from 'components/EventDetails'
-import { Header } from 'components/styles'
+import Loading from 'components/Loading'
+import { PageTitle } from 'components/styles'
+import EventListItem from 'components/v2/EventListItem'
 import { useFavoritesContext } from 'context/FavoritesContext'
 
 const Container = styled.div`
@@ -16,16 +17,20 @@ const Container = styled.div`
 	align-items: center;
 `
 const ScrollBox = styled.div`
-	/* color: black; */
 	width: 100%;
 	overflow-y: scroll;
 	::-webkit-scrollbar-corner {
-		background: rgba(0, 0, 0, 0);
+		background: var(--transparent);
 	}
 `
 
 const Favorites = () => {
 	const { favorites } = useFavoritesContext()
+
+	// NOTE This shouldn't be necessary after moving to Firebase
+	const sortedFavorites = useMemo(() => {
+		return favorites.sort((a, b) => (a.startDate > b.startDate ? 1 : a.startDate === b.startDate ? (a.endDate > b.endDate ? 1 : -1) : -1))
+	}, [favorites])
 
 	const hasFavorites = useMemo(() => {
 		return !!favorites.length
@@ -33,11 +38,11 @@ const Favorites = () => {
 
 	return (
 		<Container>
-			<Header>Favorites</Header>
+			<PageTitle>Favorites</PageTitle>
 			<ScrollBox>
 				{!hasFavorites && <div>No favorites to display</div>}
-				{favorites.map(event => (
-					<EventDetails event={event} key={event.id} />
+				{sortedFavorites.map(event => (
+					<EventListItem event={event} key={event.id} forceOpen />
 				))}
 			</ScrollBox>
 		</Container>
