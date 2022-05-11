@@ -6,11 +6,12 @@ import { query, ref, set } from 'firebase/database'
 import useLocalStorage from 'hooks/useLocalStorage'
 import Event from 'utils/events'
 
+const favoritesStorageKey = 'SWC.Favorites'
+
 const initialState = {
 	favorites: [],
 	addFavorite: () => {},
 	removeFavorite: () => {},
-	isFavorite: () => {},
 }
 
 const FavoritesContext = createContext(initialState)
@@ -19,7 +20,7 @@ const FavoritesProvider = ({ children }) => {
 	const [updated, setUpdated] = useState(false)
 
 	// Non-Auth Storage
-	const [favorites, setFavorites] = useLocalStorage('favorites', [])
+	const [favorites, setFavorites] = useLocalStorage(favoritesStorageKey, [])
 
 	// Firebase
 	const { data: user } = useUser()
@@ -34,86 +35,70 @@ const FavoritesProvider = ({ children }) => {
 	// SYNC FIREBASE WITH LOCALSTORAGE
 	useEffect(() => {
 		if (!user || status !== 'success' || updated) {
-			// console.log('SKIP', { user, status, updated })
+			// console.log('Effect.SKIP', { status, updated })
 			return
 		}
-		// console.log('GO!', { user, status, updated })
-		const storageIds = favorites.map(x => x.id)
-		const fireIds = favoritesListResponse.map(x => x.id)
-		// const shouldUpdate = storageIds.some(x => !fireIds.includes(x)) || fireIds.some(x => !storageIds.includes(x))
-		const shouldUpdate = storageIds.some(x => !fireIds.includes(x))
-
-		// TODO We need to sync back to localstorage if firebase has more IDs persisted
+		// console.log('Effect.GO')
+		const initStorageIds = favorites
+		const initFireIds = favoritesListResponse.map(x => x.id)
+		const shouldUpdate =
+			initStorageIds.length !== initFireIds.length ||
+			initStorageIds.some(x => !initFireIds.includes(x)) ||
+			initFireIds.some(x => !initStorageIds.includes(x))
 
 		if (!shouldUpdate) {
-			console.log('IN SYNC. NO UPDATE')
+			// console.log('IN SYNC. NO UPDATE')
 			return
 		}
 
-		const finalFireIds = [...new Set([...storageIds, ...fireIds])]
-		console.log('OUT OF SYNC. UPDATING', { storageIds, fireIds, finalFireIds, status, favoritesListResponse })
-		// console.log('OUT OF SYNC. UPDATING')
+		const finalFavoriteIds = [...new Set([...initStorageIds, ...initFireIds])]
+		// console.log('OUT OF SYNC. UPDATING', { initStorageIds, initFireIds, finalFavoriteIds })
 
 		const pending = {}
-		finalFireIds.forEach(id => {
+		finalFavoriteIds.forEach(id => {
 			pending[id] = {
 				id,
 				favorited: true,
 			}
 		})
 		set(userFavoritesRef, pending)
+		setFavorites(finalFavoriteIds)
 		setUpdated(true)
-	}, [favorites, favoritesListResponse, status, updated, user, userFavoritesRef])
+	}, [favorites, favoritesListResponse, setFavorites, status, updated, user, userFavoritesRef])
 
 	//
 	const addFavorite = useCallback(
-		event => {
+		id => {
 			//
 			Panelbear.track(Event.AddFavorite)
 			//
 			if (user?.uid) {
-				const tRef = ref(database, `favorites/${user?.uid}/${event.id}`)
+				const tRef = ref(database, `favorites/${user?.uid}/${id}`)
 				set(tRef, {
-					id: event.id,
+					id: id,
 					favorited: true,
 				})
 			}
-			//
-			setFavorites(
-				[...favorites, event].sort((a, b) => {
-					const aStart = new Date(a.startDate)
-					const bStart = new Date(b.startDate)
-					const aEnd = new Date(a.endDate)
-					const bEnd = new Date(b.endDate)
-					return aStart > bStart ? 1 : aStart === bStart ? (aEnd > bEnd ? 1 : -1) : -1
-				})
-			)
+
+			setFavorites([...favorites, id])
 		},
 		[database, user?.uid, setFavorites, favorites]
 	)
 
 	//
 	const removeFavorite = useCallback(
-		event => {
+		id => {
 			//
 			Panelbear.track(Event.RemoveFavorite)
 			//
 			if (user?.uid) {
-				const tRef = ref(database, `favorites/${user?.uid}/${event.id}`)
+				const tRef = ref(database, `favorites/${user?.uid}/${id}`)
 				set(tRef, null)
 			}
 			//
-			setFavorites(favorites.filter(f => f.id !== event.id))
+			setFavorites(favorites.filter(f => f !== id))
 		},
 		[database, user?.uid, setFavorites, favorites]
-	)
-
-	//
-	const isFavorite = useCallback(
-		id => {
-			return favorites.some(f => f.id === id)
-		},
-		[favorites]
 	)
 
 	const value = useMemo(() => {
@@ -121,9 +106,8 @@ const FavoritesProvider = ({ children }) => {
 			favorites,
 			addFavorite,
 			removeFavorite,
-			isFavorite,
 		}
-	}, [addFavorite, favorites, isFavorite, removeFavorite])
+	}, [addFavorite, favorites, removeFavorite])
 
 	return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>
 }

@@ -5,7 +5,7 @@ const Event = {
 	FetchFailure: 'FetchFailure',
 	AddFavorite: 'FavoriteAdd',
 	RemoveFavorite: 'RemoveFavorite',
-	EventSelected: 'EventSelected',
-	EventDismissed: 'EventDismissed',
+	LogIn: 'LogIn',
+	LogOut: 'LogOut',
 }
 export default Event

@@ -1,6 +1,7 @@
 import React, { createContext, memo, useContext, useEffect, useReducer } from 'react'
 import * as Panelbear from '@panelbear/panelbear-js'
 
+import Event from 'utils/events'
 import { processApiData } from 'utils/eventUtils'
 
 const disabledVenueStorageKey = 'SWC.DisabledVenues'
@@ -75,7 +76,7 @@ const EventProvider = ({ children }) => {
 				dispatch({ type: EventAction.SET_EVENTS, name: events, venues: venues, disabled: disabledVenues })
 			})
 			.catch(e => {
-				Panelbear.track('Fetch-Failure')
+				Panelbear.track(Event.FetchFailure)
 				import('../data/schedule.json').then(rawEvents => {
 					const { events, venues } = processApiData(rawEvents)
 					dispatch({ type: EventAction.SET_EVENTS, name: events, venues: venues, disabled: disabledVenues })

@@ -6,6 +6,7 @@ import { styled } from 'linaria/react'
 import { PageTitle } from 'components/styles'
 import EventListItem from 'components/v2/EventListItem'
 import Routes from 'config/routes'
+import { useEventContext } from 'context/EventContext'
 import { useFavoritesContext } from 'context/FavoritesContext'
 
 const NoFavorites = styled.div`
@@ -50,16 +51,24 @@ const Link = styled(NavLink)`
 // TODO Change favorites context to store IDs and not the object
 
 const Favorites = () => {
-	const { favorites } = useFavoritesContext()
+	const [state] = useEventContext()
+	const { favorites: ids } = useFavoritesContext()
 	const { status, data: signInCheckResult } = useSigninCheck()
 
 	const hasFavorites = useMemo(() => {
-		return !!favorites.length
-	}, [favorites])
+		return !!ids.length
+	}, [ids])
 
 	const showLoginPrompt = useMemo(() => {
 		return status === 'success' && !signInCheckResult.signedIn
 	}, [status, signInCheckResult])
+
+	const favorites = useMemo(() => {
+		if (!state?.allEvents) return []
+		return state.allEvents.filter(e => {
+			return ids.includes(e.id)
+		})
+	}, [ids, state.allEvents])
 
 	return (
 		<Container>

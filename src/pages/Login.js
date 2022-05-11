@@ -1,12 +1,15 @@
 import { memo, useCallback } from 'react'
 import { useAuth, useSigninCheck, useUser } from 'reactfire'
+import * as Panelbear from '@panelbear/panelbear-js'
 import { RecaptchaVerifier, signInWithPhoneNumber, signInWithPopup, TwitterAuthProvider } from 'firebase/auth'
 
 import UserProfile from 'components/auth/UserProfile'
 import Button from 'components/Button'
 import Loading from 'components/Loading'
+import Event from 'utils/events'
 
 const signInTwitter = async auth => {
+	Panelbear.track(Event.LogIn)
 	const provider = new TwitterAuthProvider()
 	await signInWithPopup(auth, provider)
 }
@@ -26,7 +29,7 @@ const signInPhone = async auth => {
 							.then(result => {
 								// User signed in successfully.
 								console.log({ result })
-								const user = result.user
+								// const user = result.user
 								debugger
 								// ...
 							})

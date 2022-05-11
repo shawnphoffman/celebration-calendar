@@ -1,7 +1,9 @@
 import { memo, useCallback, useMemo } from 'react'
 import { styled } from '@linaria/react'
+import * as Panelbear from '@panelbear/panelbear-js'
 
 import { useFavoritesContext } from 'context/FavoritesContext'
+import Event from 'utils/events'
 
 const IconButton = styled.div`
 	color: var(--heart);
@@ -19,7 +21,8 @@ const FavoriteIcon = ({ event }) => {
 	const handleAdd = useCallback(
 		e => {
 			e.stopPropagation()
-			addFavorite(event)
+			addFavorite(event.id)
+			Panelbear.track(Event.AddFavorite)
 		},
 		[addFavorite, event]
 	)
@@ -27,13 +30,14 @@ const FavoriteIcon = ({ event }) => {
 	const handleRemove = useCallback(
 		e => {
 			e.stopPropagation()
-			removeFavorite(event)
+			removeFavorite(event.id)
+			Panelbear.track(Event.RemoveFavorite)
 		},
 		[event, removeFavorite]
 	)
 
 	const isFavorite = useMemo(() => {
-		return favorites.some(f => f.id === event.id)
+		return favorites.includes(event.id)
 	}, [event.id, favorites])
 
 	if (isFavorite) {

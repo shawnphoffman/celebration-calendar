@@ -1,9 +1,11 @@
 import { memo, useCallback } from 'react'
 import { NavLink } from 'react-router-dom'
 import { useAuth, useSigninCheck } from 'reactfire'
+import * as Panelbear from '@panelbear/panelbear-js'
 import { styled } from 'linaria/react'
 
 import Routes, { NavRoutes } from 'config/routes'
+import Event from 'utils/events'
 
 const Nav = styled.div`
 	margin: 16px 8px;
@@ -38,7 +40,10 @@ const AuthNavIcon = memo(() => {
 	const auth = useAuth()
 
 	const handleLogout = useCallback(() => {
-		auth.signOut().then(() => console.log('signed out'))
+		auth.signOut().then(() => {
+			Panelbear.track(Event.LogOut)
+			console.log('signed out')
+		})
 	}, [auth])
 
 	if (status === 'loading') return null
