@@ -1,7 +1,6 @@
 import { memo, useMemo } from 'react'
 import { styled } from 'linaria/react'
 
-import Loading from 'components/Loading'
 import { PageTitle } from 'components/styles'
 import EventListItem from 'components/v2/EventListItem'
 import { useFavoritesContext } from 'context/FavoritesContext'
