@@ -1,4 +1,4 @@
-import React, { memo, Suspense, useEffect, useMemo } from 'react'
+import React, { memo, Suspense } from 'react'
 import { styled } from 'linaria/react'
 
 import Loading from 'components/Loading'
