@@ -8,6 +8,11 @@ export const useDeviceTheme = () => {
 	const mediaListenerHandler = useCallback(matches => (matches ? setDeviceTheme('dark') : setDeviceTheme('light')), [setDeviceTheme])
 
 	useEffect(() => {
+		const rootBgColor = deviceTheme === 'dark' ? '#111' : '#eee'
+		document.documentElement.setAttribute('style', `background: ${rootBgColor}`)
+	}, [deviceTheme])
+
+	useEffect(() => {
 		const listener = ({ matches }) => mediaListenerHandler(matches)
 
 		const currentMediaQuery = mediaQuery.current
