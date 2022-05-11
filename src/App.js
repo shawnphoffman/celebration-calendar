@@ -1,5 +1,6 @@
 import { memo, Suspense } from 'react'
-import { AuthProvider, DatabaseProvider, useFirebaseApp } from 'reactfire'
+import { AppCheckProvider, AuthProvider, DatabaseProvider, useFirebaseApp } from 'reactfire'
+import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check'
 import { getAuth } from 'firebase/auth'
 import { getDatabase } from 'firebase/database'
 import { styled } from 'linaria/react'
@@ -25,9 +26,15 @@ const AppWrapper = styled.div`
 	background: var(--bg);
 `
 
+const APP_CHECK_TOKEN = process.env.REACT_APP_RECAPTCHA_SITE_KEY
+
 function App() {
 	// Firebase
-	const firebaseApp = useFirebaseApp()
+	const firebaseApp = useFirebaseApp('wow')
+	const appCheck = initializeAppCheck(firebaseApp, {
+		provider: new ReCaptchaV3Provider(APP_CHECK_TOKEN),
+		isTokenAutoRefreshEnabled: true,
+	})
 	const auth = getAuth(firebaseApp)
 	const database = getDatabase(firebaseApp)
 	// Theme
@@ -38,16 +45,18 @@ function App() {
 		<ThemeProvider>
 			<AppWrapper className={themeClass}>
 				<Suspense fallback={<Loading />}>
-					<AuthProvider sdk={auth}>
-						<Nav />
-						<DatabaseProvider sdk={database}>
-							<EventProvider>
-								<FavoritesProvider>
-									<AppRoutes />
-								</FavoritesProvider>
-							</EventProvider>
-						</DatabaseProvider>
-					</AuthProvider>
+					<AppCheckProvider sdk={appCheck}>
+						<AuthProvider sdk={auth}>
+							<Nav />
+							<DatabaseProvider sdk={database}>
+								<EventProvider>
+									<FavoritesProvider>
+										<AppRoutes />
+									</FavoritesProvider>
+								</EventProvider>
+							</DatabaseProvider>
+						</AuthProvider>
+					</AppCheckProvider>
 				</Suspense>
 			</AppWrapper>
 		</ThemeProvider>
