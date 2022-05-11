@@ -58,10 +58,10 @@ export const colorMap = {
 export const dayName = ['Sunday', 'x', 'x', 'x', 'Thursday', 'Friday', 'Saturday']
 
 export const dayColor = {
-	[dayName[4]]: '#042940',
-	[dayName[5]]: '#174001',
-	[dayName[6]]: '#400A40',
-	[dayName[0]]: '#40290A',
+	[dayName[4]]: 'var(--day1)',
+	[dayName[5]]: 'var(--day2)',
+	[dayName[6]]: 'var(--day3)',
+	[dayName[0]]: 'var(--day4)',
 }
 
 export const formatTime = time =>

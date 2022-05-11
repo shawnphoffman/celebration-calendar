@@ -29,7 +29,7 @@ const VenueWrapper = styled.div`
 	align-items: center;
 	cursor: pointer;
 	background: var(--outline);
-	color: white !important;
+	/* color: white !important; */
 
 	&:hover {
 		text-decoration: ${props => (props.enabled ? 'underline' : 'none')};

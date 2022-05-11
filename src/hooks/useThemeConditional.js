@@ -15,6 +15,10 @@ const dark = css`
 	--transparent: #0000;
 	--inputBg: #fff;
 	--inputBorder: #000;
+	--day1: #042940;
+	--day2: #174001;
+	--day3: #400a40;
+	--day4: #40290a;
 
 	color: var(--text);
 `
@@ -26,14 +30,18 @@ const light = css`
 	--text: #000;
 	--link: #333;
 	--linkAlt: #3e498c;
-	--linkHover: #00b8d4;
+	--linkHover: #028da2;
 	--linkActive: #304ffe;
-	--heart: #ff1493;
-	--download: #f71c22;
+	--heart: #fa48a7;
+	--download: #be060c;
 	--inactive: #333;
 	--transparent: #0000;
 	--inputBg: #fff;
 	--inputBorder: #000;
+	--day1: #97bfd7;
+	--day2: #b2c8a6;
+	--day3: #bbaabb;
+	--day4: #c1aa8d;
 
 	color: var(--text);
 `
