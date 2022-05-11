@@ -40,6 +40,8 @@ function App() {
 	const theme = useDeviceTheme()
 	const themeClass = themeConditional(theme)
 
+	// TODO Add background to html
+
 	return (
 		<ThemeProvider>
 			<AppWrapper className={themeClass}>

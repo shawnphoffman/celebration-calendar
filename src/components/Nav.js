@@ -6,7 +6,7 @@ import { styled } from 'linaria/react'
 import Routes, { NavRoutes } from 'config/routes'
 
 const Nav = styled.div`
-	margin: 16px;
+	margin: 16px 8px;
 	flex-direction: row;
 	align-items: center;
 	justify-content: center;
@@ -17,8 +17,7 @@ const Nav = styled.div`
 const NavIcon = styled(NavLink)`
 	color: var(--link);
 	font-size: 24px;
-	margin-left: 16px;
-	margin-right: 16px;
+	margin: 4px 8px;
 
 	&:hover {
 		color: var(--linkHover);

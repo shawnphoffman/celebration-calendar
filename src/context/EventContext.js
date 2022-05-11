@@ -19,7 +19,7 @@ const initialReducerState = {
 	disabledVenues: JSON.parse(localStorage.getItem(disabledVenueStorageKey)),
 }
 
-const filterEvents = (events, venues) => {
+const filterEvents = (events, venues = []) => {
 	return events.filter(e => {
 		return !venues.includes(e.venue)
 	})
@@ -82,7 +82,9 @@ const EventProvider = ({ children }) => {
 		if (raw) {
 			const stored = JSON.parse(raw)
 			// console.log('STORED', stored)
-			disabledVenues = stored
+			if (Array.isArray(stored)) {
+				disabledVenues = stored
+			}
 		}
 
 		// https://api-melupufoagt.stackpathdns.com/api/schedules?key=f4da60d9-7791-4d31-aaf0-5cce46bf1e5d
