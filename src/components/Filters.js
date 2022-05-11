@@ -4,7 +4,7 @@ import { styled } from 'linaria/react'
 // import { useEventContext } from 'context/EventContext'
 import { EventAction, useEventContext } from 'context/EventContext'
 
-import { colorMap } from '../utils/eventUtils'
+import { cleanVenueName, colorMap } from '../utils/eventUtils'
 
 const Wrapper = styled.div`
 	display: flex;
@@ -12,7 +12,7 @@ const Wrapper = styled.div`
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
-	margin-bottom: 8px;
+	margin-bottom: 4px;
 	max-width: 1200px;
 	flex: 0;
 `
@@ -52,7 +52,7 @@ const Indicator = styled.div`
 
 const Venue = memo(({ enabled, name }) => {
 	const cleanName = useMemo(() => {
-		return name.replace('The ', '')
+		return cleanVenueName(name)
 	}, [name])
 
 	return (

@@ -34,25 +34,45 @@ export const processApiData = data => {
 	})
 
 	return {
-		venues: Array.from(venueSet).sort((a, b) => (a.replace('The ', '') > b.replace('The ', '') ? 1 : -1)),
+		venues: Array.from(venueSet).sort((a, b) => (cleanVenueName(a) > cleanVenueName(b) ? 1 : -1)),
 		events,
 	}
 }
 
+const colorList = [
+	'#FF8C00',
+	'#ffab00',
+	'#ffd600',
+	'#aeea00',
+	'#00c853',
+	'#00bfa5',
+	'#00b8d4',
+	'#0091ea',
+	'#304ffe',
+	'#6200ea',
+	'#aa00ff',
+	'#c51162',
+	'#d50000',
+]
 export const colorMap = {
-	'209A': '#FF8C00',
-	'Celebration Stage': '#ffab00',
-	"Collector's Stage": '#ffd600',
-	'Fan Stage': '#aeea00',
-	'Galaxy Stage': '#00c853',
-	'Podcast Stage': '#00bfa5',
-	'Saber Guild Performance Stage': '#00b8d4',
-	'Star Wars Celebration LIVE': '#0091ea',
-	'Star Wars Kids Classroom': '#304ffe',
-	'Star Wars Kids Stage': '#6200ea',
-	'STEAM Classroom': '#aa00ff',
-	'Twin Suns Stage': '#c51162',
-	'University Stage': '#d50000',
+	'209A': colorList[0],
+	'Celebration LIVE': colorList[1],
+	'Celebration Stage': colorList[2],
+	'Fan Stage': colorList[3],
+	'Galaxy Stage': colorList[4],
+	'Kids Classroom': colorList[5],
+	'Kids Stage': colorList[6],
+	'Podcast Stage': colorList[7],
+	'Saber Guild Stage': colorList[8],
+	'STEAM Classroom': colorList[9],
+	'Twin Suns Stage': colorList[10],
+	'University Stage': colorList[11],
+	"Collector's Stage": colorList[12],
+	//
+}
+
+export const cleanVenueName = v => {
+	return v.replace('The ', '').replace('Star Wars ', '').replace('Performance ', '')
 }
 
 export const dayName = ['Sunday', 'x', 'x', 'x', 'Thursday', 'Friday', 'Saturday']
@@ -78,7 +98,7 @@ const transformEvent = rawEvent => {
 		summary: decodeEntities(rawEvent.title),
 		description: decodeEntities(rawEvent.description),
 		venue: rawEvent.location,
-		color: colorMap[rawEvent.location.replace('The ', '')] ?? '#FFF',
+		color: colorMap[cleanVenueName(rawEvent.location)] ?? '#FFF',
 		url: `https://www.starwarscelebration.com/en-us/panels/panel-information.html?gtID=${rawEvent.id}`,
 	}
 }

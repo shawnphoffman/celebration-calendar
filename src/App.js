@@ -19,6 +19,7 @@ const AppWrapper = styled.div`
 	flex-direction: column;
 	width: 100%;
 	height: 100vh;
+	height: ${() => window.innerHeight}px;
 	align-items: center;
 	padding: 0 8px 8px 8px;
 	background: var(--bg);
