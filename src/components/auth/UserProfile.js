@@ -1,4 +1,4 @@
-import { memo, useCallback } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { useAuth } from 'reactfire'
 import { styled } from 'linaria/react'
 
@@ -9,11 +9,20 @@ const Wrapper = styled.div`
 	flex-direction: column;
 	align-items: center;
 `
-
 const Username = styled.div`
 	font-size: 32px;
 	font-weight: bold;
 	margin-top: 16px;
+	text-align: center;
+`
+const PhoneIcon = styled.i`
+	font-size: 48px;
+`
+const PhoneNumber = styled.div`
+	font-size: 28px;
+	font-weight: bold;
+	margin-top: 16px;
+	text-align: center;
 `
 const Avatar = styled.img`
 	margin: 16px;
@@ -31,17 +40,25 @@ const UserProfile = ({ user }) => {
 		auth.signOut().then(() => console.log('signed out'))
 	}, [auth])
 
-	console.log({ user })
+	// console.log({ user })
+
+	const provider = useMemo(() => {
+		return user?.providerData[0]?.providerId
+	}, [user?.providerData])
 
 	return (
 		<Wrapper>
-			<Username>{user.displayName}</Username>
-			<Avatar src={user.photoURL} alt="pfp" />
-			{/* <div>
-				{user.providerData?.map(profile => (
-					<div key={profile?.providerId}>{profile?.providerId}</div>
-				))}
-			</div> */}
+			{provider === 'phone' ? (
+				<>
+					<PhoneIcon className="fa-solid fa-mobile-screen-button fa-beat" />
+					<PhoneNumber>{user.providerData[0].phoneNumber}</PhoneNumber>
+				</>
+			) : (
+				<>
+					<Username>{user.displayName}</Username>
+					<Avatar className="fa-beat" src={user.photoURL} alt="pfp" />
+				</>
+			)}
 			<div>
 				<Button onClick={handleLogout}>Logout</Button>
 			</div>
