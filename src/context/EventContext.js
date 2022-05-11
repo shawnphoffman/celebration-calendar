@@ -33,7 +33,7 @@ const reducer = (state, action) => {
 				// console.log('BYPASS SET_EVENTS')
 				return state
 			}
-			console.log('SET_EVENTS', { action })
+			// console.log('SET_EVENTS', { action })
 			return {
 				...state,
 				allEvents: action.name,
@@ -81,7 +81,7 @@ const EventProvider = ({ children }) => {
 		const raw = localStorage.getItem(disabledVenueStorageKey)
 		if (raw) {
 			const stored = JSON.parse(raw)
-			console.log('STORED', stored)
+			// console.log('STORED', stored)
 			disabledVenues = stored
 		}
 
