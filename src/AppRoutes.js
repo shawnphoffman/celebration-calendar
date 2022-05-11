@@ -17,7 +17,18 @@ const AppRoutes = () => {
 		<RouterRoutes>
 			{RegisteredRoutes.map(l => {
 				const path = l.path === '' ? '*' : l.path
-				return <Route key={path} path={path} element={<Suspense fallback={l.fallback}>{l.component}</Suspense>} />
+				const Comp = l.component
+				return (
+					<Route
+						key={path}
+						path={path}
+						element={
+							<Suspense fallback={l.fallback}>
+								<Comp />
+							</Suspense>
+						}
+					/>
+				)
 			})}
 		</RouterRoutes>
 	)

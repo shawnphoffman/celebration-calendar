@@ -1,49 +1,55 @@
 import { lazy } from 'react'
 
-const Schedule = lazy(() => import('../pages/Schedule'))
-const Faq = lazy(() => import('../pages/Faq'))
-const Favorites = lazy(() => import('../pages/Favorites'))
-const Resources = lazy(() => import('../pages/Resources'))
-const Search = lazy(() => import('../pages/Search'))
-const Login = lazy(() => import('../pages/Login'))
+const LazyPreload = importStatement => {
+	const Component = lazy(importStatement)
+	Component.preload = importStatement
+	return Component
+}
+
+const Schedule = LazyPreload(() => import('../pages/Schedule'))
+const Faq = LazyPreload(() => import('../pages/Faq'))
+const Favorites = LazyPreload(() => import('../pages/Favorites'))
+const Resources = LazyPreload(() => import('../pages/Resources'))
+const Search = LazyPreload(() => import('../pages/Search'))
+const Login = LazyPreload(() => import('../pages/Login'))
 
 // Change to conform to API?
 // https://reactrouter.com/docs/en/v6/api#useroutes
 
 const Routes = {
 	Home: {
-		path: '',
-		component: <Schedule />,
+		path: '/',
+		component: Schedule,
 		icon: 'fa-calendar-days',
 		title: 'Home',
 	},
 	FAQ: {
 		path: 'faq',
-		component: <Faq />,
+		component: Faq,
 		icon: 'fa-messages-question',
 		title: 'FAQ',
 	},
 	Search: {
 		path: 'search',
-		component: <Search />,
+		component: Search,
 		icon: 'fa-magnifying-glass',
 		title: 'Search',
 	},
 	Resources: {
 		path: 'resources',
-		component: <Resources />,
+		component: Resources,
 		icon: 'fa-link',
 		title: 'Resources',
 	},
 	Favorites: {
 		path: 'favorites',
-		component: <Favorites />,
+		component: Favorites,
 		icon: 'fa-heart',
 		title: 'Favorites',
 	},
 	Login: {
 		path: 'login',
-		component: <Login />,
+		component: Login,
 		icon: 'fa-right-to-bracket',
 		title: 'Login',
 	},
@@ -53,7 +59,7 @@ const Routes = {
 	},
 	User: {
 		path: 'login',
-		component: <Login />,
+		component: Login,
 		icon: 'fa-user-astronaut',
 		title: 'User Info',
 	},

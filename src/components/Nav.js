@@ -28,6 +28,12 @@ const NavIcon = styled(NavLink)`
 	}
 `
 
+const preloadRouteComponent = component => {
+	if (component && component.preload) {
+		component.preload()
+	}
+}
+
 const AuthNavIcon = memo(() => {
 	const { status, data: signInCheckResult } = useSigninCheck()
 	const auth = useAuth()
@@ -41,7 +47,12 @@ const AuthNavIcon = memo(() => {
 	if (signInCheckResult.signedIn) {
 		return (
 			<>
-				<NavIcon to={Routes.User.path} title={Routes.User.title} key="nav-user">
+				<NavIcon
+					to={Routes.User.path}
+					title={Routes.User.title}
+					key="nav-user"
+					onMouseEnter={() => preloadRouteComponent(Routes.Login.component)}
+				>
 					<i className={`fa-solid ${Routes.User.icon}`}></i>
 				</NavIcon>
 				<NavIcon to={Routes.Logout.path} title={Routes.Logout.title} as="span" onClick={handleLogout}>
@@ -52,7 +63,12 @@ const AuthNavIcon = memo(() => {
 	}
 
 	return (
-		<NavIcon to={Routes.Login.path} title={Routes.Login.title} key="nav-login">
+		<NavIcon
+			to={Routes.Login.path}
+			title={Routes.Login.title}
+			key="nav-login"
+			onMouseEnter={() => preloadRouteComponent(Routes.Login.component)}
+		>
 			<i className={`fa-solid ${Routes.Login.icon}`}></i>
 		</NavIcon>
 	)
@@ -62,7 +78,7 @@ const NavBar = () => {
 	return (
 		<Nav>
 			{NavRoutes.map(r => (
-				<NavIcon to={r.path} title={r.title} key={r.title}>
+				<NavIcon to={r.path} title={r.title} key={r.title} onMouseEnter={() => preloadRouteComponent(r.component)}>
 					<i className={`fa-solid ${r.icon}`}></i>
 				</NavIcon>
 			))}
