@@ -102,8 +102,10 @@ const Search = () => {
 	}, [state.allEvents])
 
 	useEffect(() => {
-		const output = fuse.search(search, { limit: 20 })
-		startTransition(() => setResults(output))
+		if (search.length >= 3) {
+			const output = fuse.search(search, { limit: 20 })
+			startTransition(() => setResults(output))
+		}
 	}, [fuse, search])
 
 	const handleChange = useCallback(e => {
