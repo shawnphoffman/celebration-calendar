@@ -28,17 +28,21 @@ const FavoritesProvider = ({ children }) => {
 	// Firebase User Favorites
 	const userFavoritesRef = ref(database, `favorites/${user?.uid}`)
 	const userFavoritesQuery = query(userFavoritesRef)
-	const { status, data: favoritesListResponse } = useDatabaseListData(userFavoritesQuery, {
+	const {
+		status,
+		data: favoritesListResponse,
+		...rest
+	} = useDatabaseListData(userFavoritesQuery, {
 		idField: 'id',
 	})
 
 	// SYNC FIREBASE WITH LOCALSTORAGE
 	useEffect(() => {
 		if (!user || status !== 'success' || updated) {
-			// console.log('Effect.SKIP', { status, updated })
+			console.log('Effect.SKIP', { status, updated })
 			return
 		}
-		// console.log('Effect.GO')
+		console.log('Effect.GO')
 		const initStorageIds = favorites
 		const initFireIds = favoritesListResponse.map(x => x.id)
 		const shouldUpdate =
@@ -47,12 +51,12 @@ const FavoritesProvider = ({ children }) => {
 			initFireIds.some(x => !initStorageIds.includes(x))
 
 		if (!shouldUpdate) {
-			// console.log('IN SYNC. NO UPDATE')
+			console.log('IN SYNC. NO UPDATE')
 			return
 		}
 
 		const finalFavoriteIds = [...new Set([...initStorageIds, ...initFireIds])]
-		// console.log('OUT OF SYNC. UPDATING', { initStorageIds, initFireIds, finalFavoriteIds })
+		console.log('OUT OF SYNC. UPDATING', { initStorageIds, initFireIds, finalFavoriteIds })
 
 		const pending = {}
 		finalFavoriteIds.forEach(id => {
@@ -65,6 +69,19 @@ const FavoritesProvider = ({ children }) => {
 		setFavorites(finalFavoriteIds)
 		setUpdated(true)
 	}, [favorites, favoritesListResponse, setFavorites, status, updated, user, userFavoritesRef])
+
+	// POST-LOAD UPDATES
+	useEffect(() => {
+		if (updated && status === 'success') {
+			const fireIds = favoritesListResponse.map(x => x.id)
+			console.log('MORE', { status, favoritesListResponse, rest })
+			if (fireIds.length !== favorites.length) {
+				setFavorites(fireIds)
+			}
+		}
+		// TODO Figure this shit out
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [favoritesListResponse, setFavorites])
 
 	//
 	const addFavorite = useCallback(
