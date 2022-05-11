@@ -1,4 +1,4 @@
-import React, { memo, Suspense } from 'react'
+import React, { memo, Suspense, useEffect, useMemo } from 'react'
 import { styled } from 'linaria/react'
 
 import Loading from 'components/Loading'
@@ -25,19 +25,22 @@ const ScrollBox = styled.div`
 const Agenda = () => {
 	const [state] = useEventContext()
 
-	if (!state || !state.filteredEvents || state.filteredEvents.length < 1) return <Loading />
+	if (!state || state.allVenues.length === state.disabledVenues.length) {
+		return <Loading />
+	}
 
 	// console.log('Agenda.render', {
 	// 	state,
 	// })
 
 	return (
-		<Container test-id="agenda-container">
+		<Container>
 			<ScrollBox>
 				<Suspense fallback={<Loading />}>
-					{state.filteredEvents.map(e => (
-						<EventListItem key={e.id} event={e} />
-					))}
+					{state.allEvents.map(e => {
+						if (state.disabledVenues.includes(e.venue)) return null
+						return <EventListItem key={e.id} event={e} />
+					})}
 				</Suspense>
 			</ScrollBox>
 		</Container>

@@ -15,14 +15,7 @@ export const EventAction = {
 const initialReducerState = {
 	allEvents: [],
 	allVenues: [],
-	filteredEvents: [],
 	disabledVenues: JSON.parse(localStorage.getItem(disabledVenueStorageKey)),
-}
-
-const filterEvents = (events, venues = []) => {
-	return events.filter(e => {
-		return !venues.includes(e.venue)
-	})
 }
 
 const reducer = (state, action) => {
@@ -30,14 +23,11 @@ const reducer = (state, action) => {
 		case EventAction.SET_EVENTS:
 			// Don't set it multiple times
 			if (state.allEvents.length > 0) {
-				// console.log('BYPASS SET_EVENTS')
 				return state
 			}
-			// console.log('SET_EVENTS', { action })
 			return {
 				...state,
 				allEvents: action.name,
-				filteredEvents: filterEvents(action.name, action.disabled),
 				allVenues: action.venues,
 				disabledVenues: action.disabled,
 			}
@@ -45,24 +35,14 @@ const reducer = (state, action) => {
 			const isAdding = state.disabledVenues.includes(action.name)
 			if (isAdding) {
 				const newVenues = state.disabledVenues.filter(v => v !== action.name)
-				const newEvents = filterEvents(state.allEvents, newVenues)
-				// state.allEvents.filter(e => {
-				// 	return !newVenues.includes(e.venue)
-				// })
 				return {
 					...state,
-					filteredEvents: newEvents,
 					disabledVenues: newVenues,
 				}
 			} else {
 				const newVenues = [...state.disabledVenues, action.name]
-				const newEvents = filterEvents(state.allEvents, newVenues)
-				// const newEvents = state.allEvents.filter(e => {
-				// 	return !newVenues.includes(e.venue)
-				// })
 				return {
 					...state,
-					filteredEvents: newEvents,
 					disabledVenues: newVenues,
 				}
 			}
@@ -101,11 +81,6 @@ const EventProvider = ({ children }) => {
 					dispatch({ type: EventAction.SET_EVENTS, name: events, venues: venues, disabled: disabledVenues })
 				})
 			})
-
-		// import('../data/schedule.json').then(rawEvents => {
-		// 	const { events, venues } = processApiData(rawEvents)
-		// 	dispatch({ type: EventAction.SET_EVENTS, name: events, venues: venues, disabled: disabledVenues })
-		// })
 	}, [])
 
 	useEffect(() => {
