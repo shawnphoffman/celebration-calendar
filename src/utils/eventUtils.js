@@ -13,7 +13,7 @@ const customEvents = [
 		endDate: new Date('2022-05-28T23:59:00'),
 		startAt: convertDate(new Date('2022-05-28T19:00:00').toISOString()),
 		endAt: convertDate(new Date('2022-05-28T23:59:00').toISOString()),
-		color: '#FFF',
+		color: 'var(--fallback)',
 		url: 'https://contentcontent.myshopify.com/products/anaheim-live-show-erotic-fan-fiction-party-ticket-1',
 		address: '440 South Anaheim Boulevard, Anaheim, California 92805',
 	},
@@ -27,7 +27,7 @@ const customEvents = [
 		endDate: new Date('2022-05-26T23:00:00'),
 		startAt: convertDate(new Date('2022-05-26T20:00:00').toISOString()),
 		endAt: convertDate(new Date('2022-05-26T23:00:00').toISOString()),
-		color: '#FFF',
+		color: 'var(--fallback)',
 		url: 'https://d23.com/d23-event/d23-galactic-disco/',
 		address: '400 Disney Way #337, Anaheim, CA 92802',
 	},
@@ -41,7 +41,7 @@ const customEvents = [
 		endDate: new Date('2022-05-26T19:00:00'),
 		startAt: convertDate(new Date('2022-05-26T10:00:00').toISOString()),
 		endAt: convertDate(new Date('2022-05-26T19:00:00').toISOString()),
-		color: '#FFF',
+		color: 'var(--fallback)',
 		url: 'https://www.starwarscelebration.com/en-us/show-information.html',
 	},
 	{
@@ -54,7 +54,7 @@ const customEvents = [
 		endDate: new Date('2022-05-27T19:00:00'),
 		startAt: convertDate(new Date('2022-05-27T10:00:00').toISOString()),
 		endAt: convertDate(new Date('2022-05-27T19:00:00').toISOString()),
-		color: '#FFF',
+		color: 'var(--fallback)',
 		url: 'https://www.starwarscelebration.com/en-us/show-information.html',
 	},
 	{
@@ -67,7 +67,7 @@ const customEvents = [
 		endDate: new Date('2022-05-28T17:00:00'),
 		startAt: convertDate(new Date('2022-05-28T10:00:00').toISOString()),
 		endAt: convertDate(new Date('2022-05-28T17:00:00').toISOString()),
-		color: '#FFF',
+		color: 'var(--fallback)',
 		url: 'https://www.starwarscelebration.com/en-us/show-information.html',
 	},
 	{
@@ -80,7 +80,7 @@ const customEvents = [
 		endDate: new Date('2022-05-29T19:00:00'),
 		startAt: convertDate(new Date('2022-05-29T10:00:00').toISOString()),
 		endAt: convertDate(new Date('2022-05-29T19:00:00').toISOString()),
-		color: '#FFF',
+		color: 'var(--fallback)',
 		url: 'https://www.starwarscelebration.com/en-us/show-information.html',
 	},
 ]
@@ -173,7 +173,7 @@ const transformEvent = rawEvent => {
 		summary: decodeEntities(rawEvent.title),
 		description: decodeEntities(rawEvent.description),
 		venue: rawEvent.location,
-		color: colorMap[cleanVenueName(rawEvent.location)] ?? '#FFF',
+		color: colorMap[cleanVenueName(rawEvent.location)],
 		url: `https://www.starwarscelebration.com/en-us/panels/panel-information.html?gtID=${rawEvent.id}`,
 	}
 }

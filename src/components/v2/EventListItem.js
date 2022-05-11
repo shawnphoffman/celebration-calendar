@@ -40,7 +40,7 @@ const Title = styled.div`
 `
 const ColorBlock = styled.div`
 	width: 12px;
-	background-color: ${e => e.color};
+	background-color: ${e => e.color ?? `var(--fallback)`};
 `
 const Description = styled.div`
 	font-size: 12px;

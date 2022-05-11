@@ -19,6 +19,7 @@ const dark = css`
 	--day2: #174001;
 	--day3: #400a40;
 	--day4: #40290a;
+	--fallback: yellow;
 
 	color: var(--text);
 `
@@ -42,6 +43,7 @@ const light = css`
 	--day2: #b2c8a6;
 	--day3: #bbaabb;
 	--day4: #c1aa8d;
+	--fallback: yellow;
 
 	color: var(--text);
 `

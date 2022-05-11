@@ -41,10 +41,10 @@ const VenueName = styled.span`
 const Indicator = styled.div`
 	margin-right: 8px;
 	filter: none;
-	color: ${props => (props.enabled ? colorMap[props.name] : 'var(--text)')};
+	color: ${props => (props.enabled ? colorMap[props.name] ?? 'var(--fallback)' : 'var(--text)')};
 
 	${VenueWrapper}:hover & {
-		color: ${props => colorMap[props.name]};
+		color: ${props => colorMap[props.name] ?? 'var(--fallback)'};
 	}
 `
 
