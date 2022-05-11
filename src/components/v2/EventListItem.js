@@ -85,15 +85,15 @@ const ActionWrapper = styled.div`
 const EventListItem = ({ event, forceOpen = false }) => {
 	const [expanded, setExpanded] = useState(forceOpen)
 
+	const handleClick = useCallback(() => {
+		if (!forceOpen) {
+			setExpanded(prev => !prev)
+		}
+	}, [forceOpen])
+
 	const eventDay = useMemo(() => {
 		return dayName[new Date(event.startAt).getDay()]
 	}, [event.startAt])
-
-	const handleClick = useCallback(() => {
-		if (!forceOpen) {
-			setExpanded(!expanded)
-		}
-	}, [expanded, forceOpen])
 
 	const time = useMemo(
 		() => ({
@@ -102,11 +102,12 @@ const EventListItem = ({ event, forceOpen = false }) => {
 		}),
 		[event.endAt, event.startAt]
 	)
+
 	return (
 		<Container onClick={handleClick}>
 			<DayName bg={dayColor[eventDay]}>{eventDay}</DayName>
 			<ColorBlock color={event.color} />
-			<Event onClick={() => {}}>
+			<Event>
 				<Title>{event.summary}</Title>
 				<Details>
 					<NoWrap>
@@ -123,7 +124,6 @@ const EventListItem = ({ event, forceOpen = false }) => {
 					</>
 				)}
 			</Event>
-
 			<ActionWrapper>
 				{/* Favorite */}
 				<FavoriteIcon event={event} />

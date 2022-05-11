@@ -9,25 +9,25 @@ const Wrapper = styled.div`
 
 const StyledButton = styled(Link)`
 	color: var(--inputBg);
+	background: var(--linkActive);
 	border: 2px solid var(--inputBorder);
 	font-weight: 700;
 	border-radius: 8px;
-	background: var(--linkActive);
 	text-align: center;
 	display: inline-block;
 
 	&:hover {
+		color: var(--inputBg);
 		background: var(--linkHover);
-		color: var(--inputBorder);
 	}
 
-	margin: ${props => (props.small ? '8px' : '16px')};
-	font-size: ${props => (props.small ? '20px' : '32px')};
-	padding: ${props => (props.small ? '8px 16px' : '16px 32px')};
-	min-width: ${props => (props.small ? '175px' : '300px')};
+	margin: 8px;
+	font-size: 20px;
+	padding: 8px 16px;
+	min-width: 175px;
 
-	text-decoration: ${props => (props.disabled ? 'line-through' : 'none')};
-	cursor: ${props => (props.disabled ? 'default' : 'pointer')};
+	text-decoration: none;
+	cursor: pointer;
 `
 
 const Button = props => {

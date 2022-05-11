@@ -1,9 +1,7 @@
-// import React, { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import React, { createContext, memo, useCallback, useContext, useMemo } from 'react'
-// import { useDatabase, useDatabaseListData, useUser } from 'reactfire'
-import { useDatabase, useUser } from 'reactfire'
+import React, { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
+import { useDatabase, useDatabaseListData, useUser } from 'reactfire'
 import * as Panelbear from '@panelbear/panelbear-js'
-import { /*increment,  query, */ ref, set } from 'firebase/database'
+import { query, ref, set } from 'firebase/database'
 
 import useLocalStorage from 'hooks/useLocalStorage'
 import Event from 'utils/events'
@@ -18,70 +16,58 @@ const initialState = {
 const FavoritesContext = createContext(initialState)
 
 const FavoritesProvider = ({ children }) => {
-	// const [updated, setUpdated] = useState(false)
-	// Storage
+	const [updated, setUpdated] = useState(false)
+
+	// Non-Auth Storage
 	const [favorites, setFavorites] = useLocalStorage('favorites', [])
+
 	// Firebase
 	const { data: user } = useUser()
 	const database = useDatabase()
-	// const userFavoritesRef = ref(database, `favorites/${user?.uid}`)
-	// const allCountsRef = ref(database, 'counts')
-	// const getEventCountsRef = useCallback(
-	// 	id => {
-	// 		return ref(database, `counts/${id}`)
-	// 	},
-	// 	[database]
-	// )
-	// const allCountsResponse = useDatabaseObjectData(allCountsRef)
-	// const userFavoritesQuery = query(userFavoritesRef)
-	// const { status, data: favoritesListResponse } = useDatabaseListData(userFavoritesQuery, {
-	// 	idField: 'id',
-	// })
+	// Firebase User Favorites
+	const userFavoritesRef = ref(database, `favorites/${user?.uid}`)
+	const userFavoritesQuery = query(userFavoritesRef)
+	const { status, data: favoritesListResponse } = useDatabaseListData(userFavoritesQuery, {
+		idField: 'id',
+	})
+
+	// SYNC FIREBASE WITH LOCALSTORAGE
+	useEffect(() => {
+		if (!user || status !== 'success' || updated) {
+			// console.log('SKIP', { user, status, updated })
+			return
+		}
+		// console.log('GO!', { user, status, updated })
+		const storageIds = favorites.map(x => x.id)
+		const fireIds = favoritesListResponse.map(x => x.id)
+		const shouldUpdate = storageIds.some(x => !fireIds.includes(x))
+
+		if (!shouldUpdate) {
+			console.log('IN SYNC. NO UPDATE')
+			return
+		}
+
+		const finalFireIds = [...new Set([...storageIds, ...fireIds])]
+		// console.log('OUT OF SYNC. UPDATING', { storageIds, fireIds, finalFireIds, status, favoritesListResponse })
+		console.log('OUT OF SYNC. UPDATING')
+
+		const pending = {}
+		finalFireIds.forEach(id => {
+			pending[id] = {
+				id,
+				favorited: true,
+			}
+		})
+		set(userFavoritesRef, pending)
+		setUpdated(true)
+	}, [favorites, favoritesListResponse, status, updated, user, userFavoritesRef])
 
 	//
-	//
-	//
-	// useEffect(() => {
-	// 	if (status !== 'success' || updated) {
-	// 		return
-	// 	}
-	// 	const storageIds = favorites.map(x => x.id).sort()
-	// 	const fireIds = favoritesListResponse.map(x => x.id).sort()
-	// 	const shouldUpdate = storageIds.some(x => !fireIds.includes(x))
-
-	// 	if (!shouldUpdate) {
-	// 		console.log('SHOULD NOT UPDATE')
-	// 		return
-	// 	}
-
-	// 	const finalFireIds = [...new Set([...storageIds, ...fireIds].sort())]
-	// 	console.log('wow', { storageIds, fireIds, finalFireIds, status, favoritesListResponse })
-
-	// 	const pending = {}
-	// 	finalFireIds.forEach(id => {
-	// 		pending[id] = {
-	// 			id,
-	// 			favorited: true,
-	// 		}
-	// 	})
-	// 	set(userFavoritesRef, pending)
-	// 	setUpdated(true)
-	// }, [favorites, favoritesListResponse, status, updated, userFavoritesRef])
-
-	// useEffect(() => {
-	// 	if (allCountsResponse.status === 'success') {
-	// 		// console.log('useEffect.allCounts', allCountsResponse.data)
-	// 	}
-
-	// 	// if (userFavoritesResponse.status === 'success') {
-	// 	// 	console.log('useEffect.userFavorites', userFavoritesResponse.data)
-	// 	// }
-	// 	// }, [allCountsResponse, userFavoritesResponse])
-	// }, [allCountsResponse])
-
 	const addFavorite = useCallback(
 		event => {
+			//
 			Panelbear.track(Event.AddFavorite)
+			//
 			if (user?.uid) {
 				const tRef = ref(database, `favorites/${user?.uid}/${event.id}`)
 				set(tRef, {
@@ -89,29 +75,37 @@ const FavoritesProvider = ({ children }) => {
 					favorited: true,
 				})
 			}
-			// set(getEventCountsRef(event.id), increment(1))
+			//
 			setFavorites(
-				[...favorites, event].sort((a, b) =>
-					a.startDate > b.startDate ? 1 : a.startDate === b.startDate ? (a.endDate > b.endDate ? 1 : -1) : -1
-				)
+				[...favorites, event].sort((a, b) => {
+					const aStart = new Date(a.startDate)
+					const bStart = new Date(b.startDate)
+					const aEnd = new Date(a.endDate)
+					const bEnd = new Date(b.endDate)
+					return aStart > bStart ? 1 : aStart === bStart ? (aEnd > bEnd ? 1 : -1) : -1
+				})
 			)
 		},
 		[database, user?.uid, setFavorites, favorites]
 	)
 
+	//
 	const removeFavorite = useCallback(
 		event => {
+			//
 			Panelbear.track(Event.RemoveFavorite)
+			//
 			if (user?.uid) {
 				const tRef = ref(database, `favorites/${user?.uid}/${event.id}`)
 				set(tRef, null)
 			}
-			// set(getEventCountsRef(event.id), increment(-1))
+			//
 			setFavorites(favorites.filter(f => f !== event))
 		},
 		[database, user?.uid, setFavorites, favorites]
 	)
 
+	//
 	const isFavorite = useCallback(
 		id => {
 			return favorites.some(f => f.id === id)
