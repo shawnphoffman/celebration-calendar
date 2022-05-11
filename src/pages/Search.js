@@ -105,6 +105,8 @@ const Search = () => {
 		if (search.length >= 3) {
 			const output = fuse.search(search, { limit: 20 })
 			startTransition(() => setResults(output))
+		} else if (search.length === 0) {
+			setResults([])
 		}
 	}, [fuse, search])
 
