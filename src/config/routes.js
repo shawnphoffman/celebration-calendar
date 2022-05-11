@@ -1,6 +1,5 @@
 import { lazy } from 'react'
 
-const V2 = lazy(() => import('../pages/V2'))
 const Schedule = lazy(() => import('../pages/Schedule'))
 const Faq = lazy(() => import('../pages/Faq'))
 const Favorites = lazy(() => import('../pages/Favorites'))
@@ -14,7 +13,7 @@ const Login = lazy(() => import('../pages/Login'))
 const Routes = {
 	Home: {
 		path: '',
-		component: <V2 />,
+		component: <Schedule />,
 		icon: 'fa-calendar-days',
 		title: 'Home',
 	},
@@ -58,12 +57,10 @@ const Routes = {
 		icon: 'fa-user-astronaut',
 		title: 'User Info',
 	},
-	Old: {
-		path: 'old',
-		component: <Schedule />,
-		icon: 'fa-skull',
-		title: 'Old Schedule',
-	},
 }
+
+export const RegisteredRoutes = [Routes.FAQ, Routes.Favorites, Routes.Resources, Routes.Search, Routes.Login, Routes.Home]
+
+export const NavRoutes = [Routes.Home, Routes.Search, Routes.Favorites, Routes.Resources, Routes.FAQ]
 
 export default Routes

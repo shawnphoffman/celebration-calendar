@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom'
 import { useAuth, useSigninCheck } from 'reactfire'
 import { styled } from 'linaria/react'
 
-import Route from 'config/routes'
+import Routes, { NavRoutes } from 'config/routes'
 
 const Nav = styled.div`
 	margin: 16px;
@@ -41,28 +41,27 @@ const AuthNavIcon = memo(() => {
 	if (signInCheckResult.signedIn) {
 		return (
 			<>
-				<NavIcon to={Route.User.path} title={Route.User.title} key="nav-user">
-					<i className={`fa-solid ${Route.User.icon}`}></i>
+				<NavIcon to={Routes.User.path} title={Routes.User.title} key="nav-user">
+					<i className={`fa-solid ${Routes.User.icon}`}></i>
 				</NavIcon>
-				<NavIcon to={Route.Logout.path} title={Route.Logout.title} as="span" onClick={handleLogout}>
-					<i className={`fa-solid ${Route.Logout.icon}`}></i>
+				<NavIcon to={Routes.Logout.path} title={Routes.Logout.title} as="span" onClick={handleLogout}>
+					<i className={`fa-solid ${Routes.Logout.icon}`}></i>
 				</NavIcon>
 			</>
 		)
 	}
 
 	return (
-		<NavIcon to={Route.Login.path} title={Route.Login.title} key="nav-login">
-			<i className={`fa-solid ${Route.Login.icon}`}></i>
+		<NavIcon to={Routes.Login.path} title={Routes.Login.title} key="nav-login">
+			<i className={`fa-solid ${Routes.Login.icon}`}></i>
 		</NavIcon>
 	)
 })
 
 const NavBar = () => {
-	const navRoutes = [Route.Home, Route.Search, Route.Favorites, Route.Resources, Route.FAQ]
 	return (
 		<Nav>
-			{navRoutes.map(r => (
+			{NavRoutes.map(r => (
 				<NavIcon to={r.path} title={r.title} key={r.title}>
 					<i className={`fa-solid ${r.icon}`}></i>
 				</NavIcon>

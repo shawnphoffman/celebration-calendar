@@ -13,7 +13,6 @@
 		"firebase": "^9.8.0",
 		"fuse.js": "^6.6.0",
 		"ics": "^2.35.0",
-		"kalend": "^0.14.2",
 		"linaria": "^3.0.0-beta.1",
 		"react": "^18.1.0",
 		"react-dom": "^18.1.0",
@@ -50,7 +49,6 @@
 	"devDependencies": {
 		"@craco/craco": "^6.4.3",
 		"eslint": "^8.14.0",
-		"eslint-plugin-simple-import-sort": "^7.0.0",
-		"jsonfile": "^6.1.0"
+		"eslint-plugin-simple-import-sort": "^7.0.0"
 	}
 }

@@ -4,7 +4,6 @@ import { getAuth } from 'firebase/auth'
 import { getDatabase } from 'firebase/database'
 import { styled } from 'linaria/react'
 
-import AppRoutes from 'components/AppRoutes'
 import Loading from 'components/Loading'
 import Nav from 'components/Nav'
 import EventProvider from 'context/EventContext'
@@ -12,6 +11,8 @@ import FavoritesProvider from 'context/FavoritesContext'
 import ThemeProvider from 'context/ThemeContext'
 import { useDeviceTheme } from 'hooks/useDeviceTheme'
 import themeConditional from 'hooks/useThemeConditional'
+
+import AppRoutes from './AppRoutes'
 
 const AppWrapper = styled.div`
 	display: flex;
