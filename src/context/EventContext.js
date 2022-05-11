@@ -19,6 +19,12 @@ const initialReducerState = {
 	disabledVenues: JSON.parse(localStorage.getItem(disabledVenueStorageKey)),
 }
 
+const filterEvents = (events, venues) => {
+	return events.filter(e => {
+		return !venues.includes(e.venue)
+	})
+}
+
 const reducer = (state, action) => {
 	switch (action.type) {
 		case EventAction.SET_EVENTS:
@@ -27,11 +33,11 @@ const reducer = (state, action) => {
 				// console.log('BYPASS SET_EVENTS')
 				return state
 			}
-			// console.log('SET_EVENTS', { action })
+			console.log('SET_EVENTS', { action })
 			return {
 				...state,
 				allEvents: action.name,
-				filteredEvents: action.name,
+				filteredEvents: filterEvents(action.name, action.disabled),
 				allVenues: action.venues,
 				disabledVenues: action.disabled,
 			}
@@ -39,9 +45,10 @@ const reducer = (state, action) => {
 			const isAdding = state.disabledVenues.includes(action.name)
 			if (isAdding) {
 				const newVenues = state.disabledVenues.filter(v => v !== action.name)
-				const newEvents = state.allEvents.filter(e => {
-					return !newVenues.includes(e.venue)
-				})
+				const newEvents = filterEvents(state.allEvents, newVenues)
+				// state.allEvents.filter(e => {
+				// 	return !newVenues.includes(e.venue)
+				// })
 				return {
 					...state,
 					filteredEvents: newEvents,
@@ -49,9 +56,10 @@ const reducer = (state, action) => {
 				}
 			} else {
 				const newVenues = [...state.disabledVenues, action.name]
-				const newEvents = state.allEvents.filter(e => {
-					return !newVenues.includes(e.venue)
-				})
+				const newEvents = filterEvents(state.allEvents, newVenues)
+				// const newEvents = state.allEvents.filter(e => {
+				// 	return !newVenues.includes(e.venue)
+				// })
 				return {
 					...state,
 					filteredEvents: newEvents,
@@ -73,7 +81,7 @@ const EventProvider = ({ children }) => {
 		const raw = localStorage.getItem(disabledVenueStorageKey)
 		if (raw) {
 			const stored = JSON.parse(raw)
-			// console.log('STORED', stored)
+			console.log('STORED', stored)
 			disabledVenues = stored
 		}
 
