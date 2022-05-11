@@ -3,22 +3,19 @@ import { styled } from 'linaria/react'
 
 import Loading from 'components/Loading'
 import { useEventContext } from 'context/EventContext'
-import colors from 'utils/colors'
 
 import EventListItem from './EventListItem'
 
 const Container = styled.div`
-	flex: 1;
 	width: 100%;
 	display: flex;
 	justify-content: center;
 	overflow-x: hidden;
-	padding: 8px;
-	background: ${colors.darkBg};
+	background: var(--outline);
 	border-radius: 8px;
 `
 const ScrollBox = styled.div`
-	color: black;
+	/* color: black; */
 	width: 100%;
 	overflow-y: scroll;
 	::-webkit-scrollbar-corner {
@@ -29,11 +26,11 @@ const ScrollBox = styled.div`
 const Agenda = () => {
 	const [state] = useEventContext()
 
-	if (!state || !state.filteredEvents) return <Loading />
+	if (!state || !state.filteredEvents || state.filteredEvents.length < 1) return <Loading />
 
-	console.log('Agenda.render', {
-		state,
-	})
+	// console.log('Agenda.render', {
+	// 	state,
+	// })
 
 	return (
 		<Container test-id="agenda-container">

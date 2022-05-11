@@ -1,19 +1,19 @@
 import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
 
-import colors from 'utils/colors'
-
 export const Wrapper = styled.div`
-	background: ${colors.containerBg};
-	margin: 0px 16px 8px 16px;
+	background: var(--outline);
+	/* margin: 0px 16px 8px 16px; */
+	margin-bottom: 8px;
 	border-radius: 8px;
 	padding: 8px 8px 8px 16px;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
-	color: ${colors.black};
+	color: var(--text);
 	max-width: 1200px;
 	width: 100%;
+	border: 3px solid var(--inactive);
 `
 export const ActionWrapper = styled.div`
 	display: flex;
@@ -41,18 +41,18 @@ export const Description = styled.div`
 `
 export const IconButton = styled.div`
 	font-size: 26px;
-	color: ${props => props.color ?? 'inherit'};
+	color: ${props => (props.pink ? 'var(--heart)' : 'inherit')};
 
 	&:hover {
-		color: ${colors.iconHover};
+		color: var(--linkHover);
 	}
 `
 export const Button = styled(ICalendarLink)`
-	color: ${colors.download};
+	color: var(--download);
 	font-size: 26px;
 
 	&:hover {
-		color: ${colors.iconHover};
+		color: var(--linkHover);
 	}
 `
 export const Day = styled.span`
@@ -63,11 +63,11 @@ export const NoWrap = styled.span`
 	white-space: nowrap;
 `
 export const EventLink = styled.a`
-	color: ${colors.link};
+	color: var(--link);
 	font-size: 12px;
 	font-weight: bold;
 
 	&:hover {
-		color: ${colors.iconHover};
+		color: var(--linkHover);
 	}
 `

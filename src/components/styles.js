@@ -11,7 +11,7 @@ export const Wrapper = styled.div`
 `
 
 export const Header = styled.h2`
-	margin: 8px 0px 32px 0px;
+	margin: 8px 0px 16px 0px;
 `
 
 export const List = styled.ul`

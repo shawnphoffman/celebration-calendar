@@ -3,15 +3,13 @@ import Fuse from 'fuse.js'
 import { styled } from 'linaria/react'
 
 import EventDetails from 'components/EventDetails'
-import { Wrapper } from 'components/styles'
 import { useEventContext } from 'context/EventContext'
-import colors from 'utils/colors'
 
 const InputWrapper = styled.div`
 	display: flex;
 	flex-direction: row;
 	position: relative;
-	background-color: ${colors.containerBg};
+	background-color: var(--inputBg);
 	border-color: none;
 	border-width: 1px;
 	border-style: solid;
@@ -30,8 +28,8 @@ const InputWrapper = styled.div`
 	}
 
 	&:focus-within {
-		border-color: ${colors.link};
-		box-shadow: 0 0 0 2px white;
+		border-color: var(--linkActive);
+		box-shadow: 0 0 0 2px var(--inputBg);
 		opacity: 1;
 	}
 `
@@ -45,17 +43,17 @@ const Input = styled.input`
 	text-indent: 0px;
 	text-transform: none;
 	word-spacing: 0px;
-	border-color: black;
+	border-color: var(--inputBorder);
 	border-style: solid;
 	border-width: 0;
-	background-color: ${colors.transparent};
+	background-color: var(--transparent);
 	opacity: 1;
 	flex: 1;
 
 	&:focus {
 		outline-style: none;
 		box-shadow: none;
-		border-color: ${colors.transparent};
+		border-color: var(--transparent);
 	}
 `
 
@@ -75,6 +73,24 @@ const options = {
 		},
 	],
 }
+const Container = styled.div`
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	overflow-x: hidden;
+	background: var(--bg);
+	border-radius: 8px;
+	flex-direction: column;
+	align-items: center;
+`
+const ScrollBox = styled.div`
+	/* color: black; */
+	width: 100%;
+	overflow-y: scroll;
+	::-webkit-scrollbar-corner {
+		background: rgba(0, 0, 0, 0);
+	}
+`
 
 const Search = () => {
 	const [state] = useEventContext()
@@ -97,14 +113,16 @@ const Search = () => {
 	}, [])
 
 	return (
-		<Wrapper>
+		<Container>
 			<InputWrapper>
 				<Input onChange={handleChange} type="text" placeholder="Search panels..." />
 			</InputWrapper>
-			{results.map(r => (
-				<EventDetails event={r.item} key={r.item.id} />
-			))}
-		</Wrapper>
+			<ScrollBox>
+				{results.map(r => (
+					<EventDetails event={r.item} key={r.item.id} />
+				))}
+			</ScrollBox>
+		</Container>
 	)
 }
 

@@ -67,7 +67,7 @@ const EventProvider = ({ children }) => {
 	const [state, dispatch] = useReducer(reducer, initialReducerState)
 
 	useEffect(() => {
-		console.log('EventContext.init')
+		// console.log('EventContext.init')
 
 		let disabledVenues = []
 		const raw = localStorage.getItem(disabledVenueStorageKey)

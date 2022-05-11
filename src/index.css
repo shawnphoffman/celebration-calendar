@@ -11,8 +11,6 @@ html body {
 	width: 100vw;
 	height: 100vh;
 	font-family: 'Open Sans', sans-serif;
-	color: white;
-	background: #1d1c40;
 }
 
 #root {
@@ -22,10 +20,6 @@ html body {
 
 a {
 	text-decoration: none;
-	color: white;
-}
-a:hover {
-	color: #00b8d4;
 }
 
 .Kalend__Calendar__root,

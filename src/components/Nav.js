@@ -4,7 +4,6 @@ import { useAuth, useSigninCheck } from 'reactfire'
 import { styled } from 'linaria/react'
 
 import Route from 'config/routes'
-import colors from 'utils/colors'
 
 const Nav = styled.div`
 	margin: 16px;
@@ -16,16 +15,16 @@ const Nav = styled.div`
 `
 
 const NavIcon = styled(NavLink)`
-	color: white;
+	color: var(--link);
 	font-size: 24px;
 	margin-left: 16px;
 	margin-right: 16px;
 
 	&:hover {
-		color: ${colors.iconHover};
+		color: var(--linkHover);
 	}
 	&.active {
-		color: ${colors.blue};
+		color: var(--linkActive);
 	}
 `
 
@@ -60,7 +59,7 @@ const AuthNavIcon = memo(() => {
 })
 
 const NavBar = () => {
-	const navRoutes = [Route.Home, /*Route.V2,*/ Route.Search, Route.Favorites, Route.Resources, Route.FAQ]
+	const navRoutes = [Route.Home, Route.V2, Route.Search, Route.Favorites, Route.Resources, Route.FAQ]
 	return (
 		<Nav>
 			{navRoutes.map(r => (
@@ -68,7 +67,7 @@ const NavBar = () => {
 					<i className={`fa-solid ${r.icon}`}></i>
 				</NavIcon>
 			))}
-			{process.env.NODE_ENV !== 'production' && <AuthNavIcon />}
+			<AuthNavIcon />
 		</Nav>
 	)
 }

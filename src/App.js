@@ -9,6 +9,9 @@ import Loading from 'components/Loading'
 import Nav from 'components/Nav'
 import EventProvider from 'context/EventContext'
 import FavoritesProvider from 'context/FavoritesContext'
+import ThemeProvider from 'context/ThemeContext'
+import { useDeviceTheme } from 'hooks/useDeviceTheme'
+import themeConditional from 'hooks/useThemeConditional'
 
 const AppWrapper = styled.div`
 	display: flex;
@@ -17,6 +20,7 @@ const AppWrapper = styled.div`
 	height: 100vh;
 	align-items: center;
 	padding: 0 8px 8px 8px;
+	background: var(--bg);
 `
 
 const Header = styled.div`
@@ -31,24 +35,29 @@ function App() {
 	const firebaseApp = useFirebaseApp()
 	const auth = getAuth(firebaseApp)
 	const database = getDatabase(firebaseApp)
+	// Theme
+	const theme = useDeviceTheme()
+	const themeClass = themeConditional(theme)
 
 	return (
-		<AppWrapper>
-			<Suspense fallback={<Loading />}>
-				<AuthProvider sdk={auth}>
-					<Header>
-						<Nav />
-					</Header>
-					<DatabaseProvider sdk={database}>
-						<EventProvider>
-							<FavoritesProvider>
-								<AppRoutes />
-							</FavoritesProvider>
-						</EventProvider>
-					</DatabaseProvider>
-				</AuthProvider>
-			</Suspense>
-		</AppWrapper>
+		<ThemeProvider>
+			<AppWrapper className={themeClass}>
+				<Suspense fallback={<Loading />}>
+					<AuthProvider sdk={auth}>
+						<Header>
+							<Nav />
+						</Header>
+						<DatabaseProvider sdk={database}>
+							<EventProvider>
+								<FavoritesProvider>
+									<AppRoutes />
+								</FavoritesProvider>
+							</EventProvider>
+						</DatabaseProvider>
+					</AuthProvider>
+				</Suspense>
+			</AppWrapper>
+		</ThemeProvider>
 	)
 }
 

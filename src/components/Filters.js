@@ -3,7 +3,6 @@ import { styled } from 'linaria/react'
 
 // import { useEventContext } from 'context/EventContext'
 import { EventAction, useEventContext } from 'context/EventContext'
-import colors from 'utils/colors'
 
 import { colorMap } from '../utils/eventUtils'
 
@@ -29,7 +28,7 @@ const VenueWrapper = styled.div`
 	flex-wrap: nowrap;
 	align-items: center;
 	cursor: pointer;
-	background: ${colors.darkBg};
+	background: var(--outline);
 	color: white !important;
 
 	&:hover {
@@ -44,7 +43,11 @@ const VenueName = styled.span`
 const Indicator = styled.div`
 	margin-right: 8px;
 	filter: none;
-	color: ${props => (props.enabled ? colorMap[props.name] : colors.darkInactive)};
+	color: ${props => (props.enabled ? colorMap[props.name] : 'var(--text)')};
+
+	${VenueWrapper}:hover & {
+		color: ${props => colorMap[props.name]};
+	}
 `
 
 const Venue = memo(({ enabled, name }) => {
@@ -70,7 +73,7 @@ const Filters = memo(() => {
 
 	if (!state?.allVenues) return null
 
-	console.log('Filters.Render')
+	// console.log('Filters.Render')
 
 	return (
 		<Wrapper>

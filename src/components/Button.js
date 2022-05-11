@@ -8,16 +8,17 @@ const Wrapper = styled.div`
 `
 
 const StyledButton = styled(Link)`
-	color: black;
-	border: 2px solid #222;
+	color: var(--inputBg);
+	border: 2px solid var(--inputBorder);
 	font-weight: 700;
 	border-radius: 8px;
-	background-color: #efefef;
+	background: var(--linkActive);
 	text-align: center;
 	display: inline-block;
 
 	&:hover {
-		background-color: ${props => (props.disabled ? '#efefef' : '#dedede')};
+		background: var(--linkHover);
+		color: var(--inputBorder);
 	}
 
 	margin: ${props => (props.small ? '8px' : '16px')};

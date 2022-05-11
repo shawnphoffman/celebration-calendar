@@ -3,14 +3,13 @@ import ICalendarLink from 'react-icalendar-link'
 import { styled } from '@linaria/react'
 
 // import * as Panelbear from '@panelbear/panelbear-js'
-import colors from 'utils/colors'
 
 export const Button = styled(ICalendarLink)`
-	color: ${colors.download};
+	color: var(--download);
 	font-size: 26px;
 
 	&:hover {
-		color: ${colors.iconHover};
+		color: var(--linkHover);
 	}
 `
 
@@ -36,9 +35,9 @@ const DownloadIcon = ({ event }) => {
 	const icsFilename = `event-${event.id}.ics`
 
 	return (
-		<div onClickCapture={logDownload}>
+		<div onClickCapture={logDownload} title="Download Event">
 			<Button filename={icsFilename} event={icsEvent}>
-				<i className="fa-regular fa-calendar-arrow-down"></i>
+				<i className="fa-light fa-calendar-arrow-down"></i>
 			</Button>
 		</div>
 	)

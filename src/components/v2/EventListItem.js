@@ -1,7 +1,6 @@
 import React, { memo, useCallback, useMemo, useState } from 'react'
 import { styled } from 'linaria/react'
 
-import colors from 'utils/colors'
 import { dayColor, dayName, formatTime } from 'utils/eventUtils'
 
 import DownloadIcon from './DownloadIcon'
@@ -10,17 +9,22 @@ import FavoriteIcon from './FavoriteIcon'
 const Container = styled.div`
 	display: flex;
 	flex-direction: row;
-	border-bottom: 1px solid black;
+	border-bottom: 2px solid var(--bg);
 	cursor: pointer;
 `
 const Event = styled.div`
 	padding: 16px;
 	flex: 1;
-	background: white;
+	background: var(--outline);
+	color: var(--text);
+
+	${Container}:hover & {
+		background: var(--outlineHover);
+	}
 `
 const DayName = styled.div`
 	background-color: ${p => p.bg};
-	color: white;
+	color: var(--text);
 	writing-mode: vertical-lr;
 	display: flex;
 	justify-content: center;
@@ -30,13 +34,11 @@ const DayName = styled.div`
 	font-weight: bold;
 	flex: 0;
 `
-
 const Title = styled.div`
 	font-weight: bold;
 	font-size: 16px;
 `
 const ColorBlock = styled.div`
-	/* width: 20px; */
 	width: 12px;
 	background-color: ${e => e.color};
 `
@@ -48,17 +50,18 @@ const Details = styled.div`
 	font-style: italic;
 	font-size: 14px;
 	margin-top: 8px;
+	opacity: 0.8;
 
 	display: flex;
 	flex-wrap: wrap;
 `
 const EventLink = styled.a`
-	color: ${colors.link};
+	color: var(--linkAlt);
 	font-size: 12px;
 	font-weight: bold;
 
 	&:hover {
-		color: ${colors.iconHover};
+		color: var(--linkHover);
 	}
 `
 const NoWrap = styled.span`
@@ -69,10 +72,14 @@ const ActionWrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	background: white;
+	background: var(--outline);
 	padding: 8px;
 	/* Accommodate scroll bars */
 	padding-right: 12px;
+
+	${Container}:hover & {
+		background: var(--outlineHover);
+	}
 `
 
 const EventListItem = ({ event }) => {

@@ -29,9 +29,9 @@ const Calendar = ({ onSelect }) => {
 
 	if (!state) return <Loading />
 
-	console.log('Calendar.render', {
-		state,
-	})
+	// console.log('Calendar.render', {
+	// 	state,
+	// })
 
 	return (
 		<Wrapper>

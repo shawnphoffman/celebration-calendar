@@ -2,15 +2,14 @@ import { memo, useCallback, useMemo } from 'react'
 import { styled } from '@linaria/react'
 
 import { useFavoritesContext } from 'context/FavoritesContext'
-import colors from 'utils/colors'
 
 const IconButton = styled.div`
+	color: var(--heart);
 	font-size: 26px;
-	color: ${props => props.color ?? 'inherit'};
 	cursor: pointer;
 
 	&:hover {
-		color: ${colors.iconHover};
+		color: var(--linkHover);
 	}
 `
 
@@ -39,15 +38,15 @@ const FavoriteIcon = ({ event }) => {
 
 	if (isFavorite) {
 		return (
-			<IconButton key={`${event.id}.heart-solid`} onClick={handleRemove} color={colors.pink} title="Remove Favorite">
+			<IconButton key={`${event.id}.heart-solid`} onClick={handleRemove} title="Remove Favorite">
 				<i className="fa-solid fa-heart"></i>
 			</IconButton>
 		)
 	}
 
 	return (
-		<IconButton key={`${event.id}-heart`} onClick={handleAdd} title="Add Favorite" color={colors.pink}>
-			<i className="fa-regular fa-heart"></i>
+		<IconButton key={`${event.id}-heart`} onClick={handleAdd} title="Add Favorite">
+			<i className="fa-light fa-heart"></i>
 		</IconButton>
 	)
 }

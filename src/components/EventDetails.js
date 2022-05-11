@@ -3,7 +3,6 @@ import ICalendarLink from 'react-icalendar-link'
 import * as Panelbear from '@panelbear/panelbear-js'
 
 import { useFavoritesContext } from 'context/FavoritesContext'
-import colors from 'utils/colors'
 import Event from 'utils/events'
 import { dayName, formatTime } from 'utils/eventUtils'
 
@@ -40,15 +39,15 @@ const FavoriteIcon = memo(({ event }) => {
 
 	if (isFavorite) {
 		return (
-			<IconButton key={`${event.id}.heart-solid`} onClick={handleRemove} color={colors.pink} title="Remove Favorite">
+			<IconButton key={`${event.id}.heart-solid`} onClick={handleRemove} pink={true} title="Remove Favorite">
 				<i className="fa-solid fa-heart"></i>
 			</IconButton>
 		)
 	}
 
 	return (
-		<IconButton key={`${event.id}-heart`} onClick={handleAdd} title="Add Favorite" color={colors.pink}>
-			<i className="fa-regular fa-heart"></i>
+		<IconButton key={`${event.id}-heart`} onClick={handleAdd} title="Add Favorite" pink={true}>
+			<i className="fa-light fa-heart"></i>
 		</IconButton>
 	)
 })
@@ -113,7 +112,7 @@ const EventDetails = ({ event, onDismiss: handleDismiss }) => {
 				{isSupported ? (
 					<div onClickCapture={logDownload}>
 						<Button filename={icsFilename} event={icsEvent}>
-							<i className="fa-regular fa-calendar-arrow-down"></i>
+							<i className="fa-light fa-calendar-arrow-down"></i>
 						</Button>
 					</div>
 				) : null}
