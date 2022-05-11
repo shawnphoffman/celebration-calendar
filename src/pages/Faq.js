@@ -8,6 +8,12 @@ const SectionTitle = styled.h3`
 	margin-bottom: 16px;
 	margin-top: 0px;
 `
+const Link = styled.a`
+	color: var(--link);
+	&:hover {
+		color: var(--linkHover);
+	}
+`
 
 const Faq = () => {
 	return (
@@ -16,6 +22,16 @@ const Faq = () => {
 			<Section>
 				<SectionTitle>Why can't I download events on Chrome iOS?</SectionTitle>
 				<div>This is an open bug with Chromium. They won't fix it. 😩</div>
+			</Section>
+			<Section>
+				<SectionTitle>Can I add an event to the schedule?</SectionTitle>
+				<div>
+					Absolutely. Please reach out{' '}
+					<Link href="https://twitter.com/iceplanethoff" target="_blank" rel="noreferrer">
+						on Twitter
+					</Link>{' '}
+					and I'll get it added.
+				</div>
 			</Section>
 			<Section>
 				<SectionTitle>What are the show hours?</SectionTitle>

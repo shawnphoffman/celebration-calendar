@@ -25,7 +25,7 @@ const DownloadIcon = ({ event }) => {
 			description: event.description,
 			startTime: event.startAt,
 			endTime: event.endAt,
-			location: event.venue,
+			location: event.address || event.venue,
 			url: event.url,
 		}
 	}, [event])

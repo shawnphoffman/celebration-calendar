@@ -3,19 +3,86 @@ const convertDate = rawDate => {
 }
 
 const customEvents = [
-	// {
-	// 	id: 'custom-1',
-	// 	summary: 'Test Event',
-	// 	description: 'Test Description.',
-	// 	venue: 'Test Venue',
-	// 	timezoneStartAt: 'America/Los_Angeles',
-	// 	startDate: new Date('2022-05-26T17:30:00'),
-	// 	endDate: new Date('2022-05-26T18:30:00'),
-	// 	startAt: convertDate(new Date('2022-05-26T17:30:00').toISOString()),
-	// 	endAt: convertDate(new Date('2022-05-26T18:30:00').toISOString()),
-	// 	color: '#FFF',
-	// 	url: 'https://google.com',
-	// },
+	{
+		id: 'steele-1',
+		summary: 'Steele Wars Live Show',
+		description: `TICKETED EVENT: Don't miss our Celebration Anaheim live show, erotic fan fiction and party! Always one of the funnest vibes of Celebration. Special Star Wars guests & the best fun ever.\n - Where: 440 South Anaheim Boulevard, Anaheim, California 92805\n - Doors: 7pm\n - Show: 8:30pm\n - Last Call: 11:59pm`,
+		venue: '~ Misc Events',
+		timezoneStartAt: 'America/Los_Angeles',
+		startDate: new Date('2022-05-28T19:00:00'),
+		endDate: new Date('2022-05-28T23:59:00'),
+		startAt: convertDate(new Date('2022-05-28T19:00:00').toISOString()),
+		endAt: convertDate(new Date('2022-05-28T23:59:00').toISOString()),
+		color: '#FFF',
+		url: 'https://contentcontent.myshopify.com/products/anaheim-live-show-erotic-fan-fiction-party-ticket-1',
+		address: '440 South Anaheim Boulevard, Anaheim, California 92805',
+	},
+	{
+		id: 'd23-1',
+		summary: 'D23 Galactic Disco Night',
+		description: `TICKETED EVENT: This Galactic Disco Night Dance Party on Thursday, May 26, will feature cosmic boogie and funky beats with an epic DJ set from Grammy®-nominated artist Mayer Hawthorne. Party like an ecstatic Ewok with special photo backdrops, surprise character appearances, and more.`,
+		venue: '~ Misc Events',
+		timezoneStartAt: 'America/Los_Angeles',
+		startDate: new Date('2022-05-26T20:00:00'),
+		endDate: new Date('2022-05-26T23:00:00'),
+		startAt: convertDate(new Date('2022-05-26T20:00:00').toISOString()),
+		endAt: convertDate(new Date('2022-05-26T23:00:00').toISOString()),
+		color: '#FFF',
+		url: 'https://d23.com/d23-event/d23-galactic-disco/',
+		address: '400 Disney Way #337, Anaheim, CA 92802',
+	},
+	{
+		id: 'show-1',
+		summary: 'Exhibit Hall Hours',
+		description: `Official exhibit hall hours. Jedi Master VIP tickets may access the Exhibit Hall at 9:30 AM`,
+		venue: '~ Misc Events',
+		timezoneStartAt: 'America/Los_Angeles',
+		startDate: new Date('2022-05-26T10:00:00'),
+		endDate: new Date('2022-05-26T19:00:00'),
+		startAt: convertDate(new Date('2022-05-26T10:00:00').toISOString()),
+		endAt: convertDate(new Date('2022-05-26T19:00:00').toISOString()),
+		color: '#FFF',
+		url: 'https://www.starwarscelebration.com/en-us/show-information.html',
+	},
+	{
+		id: 'show-2',
+		summary: 'Exhibit Hall Hours',
+		description: `Official exhibit hall hours. Jedi Master VIP tickets may access the Exhibit Hall at 9:30 AM`,
+		venue: '~ Misc Events',
+		timezoneStartAt: 'America/Los_Angeles',
+		startDate: new Date('2022-05-27T10:00:00'),
+		endDate: new Date('2022-05-27T19:00:00'),
+		startAt: convertDate(new Date('2022-05-27T10:00:00').toISOString()),
+		endAt: convertDate(new Date('2022-05-27T19:00:00').toISOString()),
+		color: '#FFF',
+		url: 'https://www.starwarscelebration.com/en-us/show-information.html',
+	},
+	{
+		id: 'show-3',
+		summary: 'Exhibit Hall Hours',
+		description: `Official exhibit hall hours. Jedi Master VIP tickets may access the Exhibit Hall at 9:30 AM`,
+		venue: '~ Misc Events',
+		timezoneStartAt: 'America/Los_Angeles',
+		startDate: new Date('2022-05-28T10:00:00'),
+		endDate: new Date('2022-05-28T17:00:00'),
+		startAt: convertDate(new Date('2022-05-28T10:00:00').toISOString()),
+		endAt: convertDate(new Date('2022-05-28T17:00:00').toISOString()),
+		color: '#FFF',
+		url: 'https://www.starwarscelebration.com/en-us/show-information.html',
+	},
+	{
+		id: 'show-4',
+		summary: 'Exhibit Hall Hours',
+		description: `Official exhibit hall hours. Jedi Master VIP tickets may access the Exhibit Hall at 9:30 AM`,
+		venue: '~ Misc Events',
+		timezoneStartAt: 'America/Los_Angeles',
+		startDate: new Date('2022-05-29T10:00:00'),
+		endDate: new Date('2022-05-29T19:00:00'),
+		startAt: convertDate(new Date('2022-05-29T10:00:00').toISOString()),
+		endAt: convertDate(new Date('2022-05-29T19:00:00').toISOString()),
+		color: '#FFF',
+		url: 'https://www.starwarscelebration.com/en-us/show-information.html',
+	},
 ]
 
 export const processApiData = data => {
@@ -33,9 +100,17 @@ export const processApiData = data => {
 		venueSet.add(event.venue)
 	})
 
+	const sorted = events.sort((a, b) => {
+		const aStart = new Date(a.startDate)
+		const bStart = new Date(b.startDate)
+		const aEnd = new Date(a.endDate)
+		const bEnd = new Date(b.endDate)
+		return aStart > bStart ? 1 : aStart === bStart ? (aEnd > bEnd ? 1 : -1) : -1
+	})
+
 	return {
 		venues: Array.from(venueSet).sort((a, b) => (cleanVenueName(a) > cleanVenueName(b) ? 1 : -1)),
-		events,
+		events: sorted,
 	}
 }
 

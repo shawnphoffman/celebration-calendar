@@ -45,6 +45,7 @@ const ColorBlock = styled.div`
 const Description = styled.div`
 	font-size: 12px;
 	margin: 8px 0;
+	white-space: pre-line;
 `
 const Details = styled.div`
 	font-style: italic;

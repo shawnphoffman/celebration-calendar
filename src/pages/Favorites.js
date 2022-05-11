@@ -8,6 +8,15 @@ import EventListItem from 'components/v2/EventListItem'
 import Routes from 'config/routes'
 import { useFavoritesContext } from 'context/FavoritesContext'
 
+const NoFavorites = styled.div`
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	flex: 0;
+	margin-top: 16px;
+	font-weight: bold;
+`
+
 const Container = styled.div`
 	width: 100%;
 	display: flex;
@@ -38,6 +47,8 @@ const Link = styled(NavLink)`
 	}
 `
 
+// TODO Change favorites context to store IDs and not the object
+
 const Favorites = () => {
 	const { favorites } = useFavoritesContext()
 	const { status, data: signInCheckResult } = useSigninCheck()
@@ -59,7 +70,7 @@ const Favorites = () => {
 				</LoginPrompt>
 			)}
 			<ScrollBox>
-				{!hasFavorites && <div>No favorites to display</div>}
+				{!hasFavorites && <NoFavorites>No favorites to display...</NoFavorites>}
 				{favorites.map(event => (
 					<EventListItem event={event} key={event.id} forceOpen />
 				))}

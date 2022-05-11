@@ -40,7 +40,10 @@ const FavoritesProvider = ({ children }) => {
 		// console.log('GO!', { user, status, updated })
 		const storageIds = favorites.map(x => x.id)
 		const fireIds = favoritesListResponse.map(x => x.id)
+		// const shouldUpdate = storageIds.some(x => !fireIds.includes(x)) || fireIds.some(x => !storageIds.includes(x))
 		const shouldUpdate = storageIds.some(x => !fireIds.includes(x))
+
+		// TODO We need to sync back to localstorage if firebase has more IDs persisted
 
 		if (!shouldUpdate) {
 			console.log('IN SYNC. NO UPDATE')
@@ -48,8 +51,8 @@ const FavoritesProvider = ({ children }) => {
 		}
 
 		const finalFireIds = [...new Set([...storageIds, ...fireIds])]
-		// console.log('OUT OF SYNC. UPDATING', { storageIds, fireIds, finalFireIds, status, favoritesListResponse })
-		console.log('OUT OF SYNC. UPDATING')
+		console.log('OUT OF SYNC. UPDATING', { storageIds, fireIds, finalFireIds, status, favoritesListResponse })
+		// console.log('OUT OF SYNC. UPDATING')
 
 		const pending = {}
 		finalFireIds.forEach(id => {
@@ -100,7 +103,7 @@ const FavoritesProvider = ({ children }) => {
 				set(tRef, null)
 			}
 			//
-			setFavorites(favorites.filter(f => f !== event))
+			setFavorites(favorites.filter(f => f.id !== event.id))
 		},
 		[database, user?.uid, setFavorites, favorites]
 	)
