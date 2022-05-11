@@ -6,7 +6,7 @@ import * as Panelbear from '@panelbear/panelbear-js'
 import Routes from 'config/routes'
 import Event from 'utils/events'
 
-const appLinks = [Routes.FAQ, Routes.Favorites, Routes.Resources, Routes.Search, Routes.Login, Routes.V2, Routes.Home]
+const appLinks = [Routes.FAQ, Routes.Favorites, Routes.Resources, Routes.Search, Routes.Login, Routes.Old, Routes.Home]
 
 const AppRoutes = () => {
 	let location = useLocation()

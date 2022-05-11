@@ -59,7 +59,7 @@ const AuthNavIcon = memo(() => {
 })
 
 const NavBar = () => {
-	const navRoutes = [Route.Home, Route.V2, Route.Search, Route.Favorites, Route.Resources, Route.FAQ]
+	const navRoutes = [Route.Home, Route.Search, Route.Favorites, Route.Resources, Route.FAQ]
 	return (
 		<Nav>
 			{navRoutes.map(r => (

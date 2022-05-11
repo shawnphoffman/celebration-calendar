@@ -14,8 +14,8 @@ const Login = lazy(() => import('../pages/Login'))
 const Routes = {
 	Home: {
 		path: '',
-		component: <Schedule />,
-		icon: 'fa-house',
+		component: <V2 />,
+		icon: 'fa-calendar-days',
 		title: 'Home',
 	},
 	FAQ: {
@@ -58,11 +58,11 @@ const Routes = {
 		icon: 'fa-user-astronaut',
 		title: 'User Info',
 	},
-	V2: {
-		path: 'v2',
-		component: <V2 />,
-		icon: 'fa-flask-vial',
-		title: 'Agenda',
+	Old: {
+		path: 'old',
+		component: <Schedule />,
+		icon: 'fa-skull',
+		title: 'Old Schedule',
 	},
 }
 
