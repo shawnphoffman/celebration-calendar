@@ -31,7 +31,7 @@ const FavoritesProvider = ({ children }) => {
 	const {
 		status,
 		data: favoritesListResponse,
-		...rest
+		// ...rest
 	} = useDatabaseListData(userFavoritesQuery, {
 		idField: 'id',
 	})
@@ -39,10 +39,10 @@ const FavoritesProvider = ({ children }) => {
 	// SYNC FIREBASE WITH LOCALSTORAGE
 	useEffect(() => {
 		if (!user || status !== 'success' || updated) {
-			console.log('Effect.SKIP', { status, updated })
+			// console.log('Effect.SKIP', { status, updated })
 			return
 		}
-		console.log('Effect.GO')
+		// console.log('Effect.GO')
 		const initStorageIds = favorites
 		const initFireIds = favoritesListResponse.map(x => x.id)
 		const shouldUpdate =
@@ -51,12 +51,12 @@ const FavoritesProvider = ({ children }) => {
 			initFireIds.some(x => !initStorageIds.includes(x))
 
 		if (!shouldUpdate) {
-			console.log('IN SYNC. NO UPDATE')
+			// console.log('IN SYNC. NO UPDATE')
 			return
 		}
 
 		const finalFavoriteIds = [...new Set([...initStorageIds, ...initFireIds])]
-		console.log('OUT OF SYNC. UPDATING', { initStorageIds, initFireIds, finalFavoriteIds })
+		// console.log('OUT OF SYNC. UPDATING', { initStorageIds, initFireIds, finalFavoriteIds })
 
 		const pending = {}
 		finalFavoriteIds.forEach(id => {
@@ -74,7 +74,7 @@ const FavoritesProvider = ({ children }) => {
 	useEffect(() => {
 		if (updated && status === 'success') {
 			const fireIds = favoritesListResponse.map(x => x.id)
-			console.log('MORE', { status, favoritesListResponse, rest })
+			// console.log('MORE', { status, favoritesListResponse, rest })
 			if (fireIds.length !== favorites.length) {
 				setFavorites(fireIds)
 			}

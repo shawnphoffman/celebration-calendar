@@ -12,6 +12,7 @@ const Favorites = LazyPreload(() => import('../pages/Favorites'))
 const Resources = LazyPreload(() => import('../pages/Resources'))
 const Search = LazyPreload(() => import('../pages/Search'))
 const Login = LazyPreload(() => import('../pages/Login'))
+const Temp = LazyPreload(() => import('../pages/Temp'))
 const EventDetails = LazyPreload(() => import('../pages/EventDetails'))
 
 // Change to conform to API?
@@ -64,6 +65,10 @@ const Routes = {
 		icon: 'fa-user-astronaut',
 		title: 'User Info',
 	},
+	Temp: {
+		path: '/temp',
+		component: Temp,
+	},
 	EventDetails: {
 		path: '/event/:id',
 		component: EventDetails,
@@ -76,6 +81,7 @@ export const RegisteredRoutes = [
 	Routes.Resources,
 	Routes.Search,
 	Routes.Login,
+	Routes.Temp,
 	Routes.EventDetails,
 	Routes.Home,
 ]
