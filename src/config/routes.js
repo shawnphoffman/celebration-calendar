@@ -19,7 +19,7 @@ const EventDetails = LazyPreload(() => import('../pages/EventDetails'))
 
 const Routes = {
 	Home: {
-		path: '/',
+		path: '',
 		component: Schedule,
 		icon: 'fa-calendar-days',
 		title: 'Home',
