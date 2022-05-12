@@ -10,7 +10,7 @@ const AppRoutes = () => {
 	let location = useLocation()
 
 	useEffect(() => {
-		Panelbear.track(`${Event.PageRender}-${location.pathname.replace('/', '')}`)
+		Panelbear.track(`${Event.PageRender}-${location.pathname.replace(/\//g, '')}`)
 	}, [location])
 
 	return (

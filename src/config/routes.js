@@ -12,6 +12,7 @@ const Favorites = LazyPreload(() => import('../pages/Favorites'))
 const Resources = LazyPreload(() => import('../pages/Resources'))
 const Search = LazyPreload(() => import('../pages/Search'))
 const Login = LazyPreload(() => import('../pages/Login'))
+const EventDetails = LazyPreload(() => import('../pages/EventDetails'))
 
 // Change to conform to API?
 // https://reactrouter.com/docs/en/v6/api#useroutes
@@ -63,9 +64,21 @@ const Routes = {
 		icon: 'fa-user-astronaut',
 		title: 'User Info',
 	},
+	EventDetails: {
+		path: '/event/:id',
+		component: EventDetails,
+	},
 }
 
-export const RegisteredRoutes = [Routes.FAQ, Routes.Favorites, Routes.Resources, Routes.Search, Routes.Login, Routes.Home]
+export const RegisteredRoutes = [
+	Routes.FAQ,
+	Routes.Favorites,
+	Routes.Resources,
+	Routes.Search,
+	Routes.Login,
+	Routes.EventDetails,
+	Routes.Home,
+]
 
 export const NavRoutes = [Routes.Home, Routes.Search, Routes.Favorites, Routes.Resources, Routes.FAQ]
 
