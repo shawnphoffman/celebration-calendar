@@ -115,7 +115,7 @@ const EventListItem = ({ event, forceOpen = false }) => {
 					<NoWrap>
 						{time.start} - {time.end}
 					</NoWrap>
-					<NoWrap>({event.venue})</NoWrap>
+					<NoWrap>({event.venue.trim()})</NoWrap>
 				</Details>
 				{expanded && (
 					<>

@@ -58,7 +58,7 @@ const Venue = memo(({ enabled, name }) => {
 			<Indicator name={cleanName} enabled={enabled} key={`i-${name}-${enabled}`}>
 				<i className={`fa-solid ${enabled ? 'fa-circle' : 'fa-circle-dashed'}`}></i>
 			</Indicator>
-			<VenueName enabled={enabled}>{cleanName}</VenueName>
+			<VenueName enabled={enabled}>{cleanName.trim()}</VenueName>
 		</VenueWrapper>
 	)
 })

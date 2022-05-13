@@ -43,7 +43,8 @@ const VenueDetails = () => {
 
 	const events = useMemo(() => {
 		if (isLoading) return null
-		return state.allEvents.filter(e => e.venue === venue)
+		const lowerVenue = venue.toLowerCase()
+		return state.allEvents.filter(e => e.venue.trim().toLowerCase() === lowerVenue)
 	}, [venue, isLoading, state.allEvents])
 
 	const hasEvents = useMemo(() => {
