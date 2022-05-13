@@ -29,6 +29,11 @@ Sentry.init({
 	// We recommend adjusting this value in production
 	tracesSampleRate: 1.0,
 	beforeSend(event, hint) {
+		console.log({ event, hint })
+		const error = hint.originalException
+		if (error && error.message && error.message.match(/rejection/i)) {
+			return event
+		}
 		// Check if it is an exception, and if so, show the report dialog
 		if (event.exception) {
 			Sentry.showReportDialog({
