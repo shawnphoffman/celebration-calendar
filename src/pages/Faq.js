@@ -50,13 +50,6 @@ const Faq = () => {
 					track the following events without PII attached. <strong>{Object.keys(Event).join(', ')}</strong>
 				</div>
 			</Section>
-			<Section>
-				<SectionTitle>Why does favorites sync behave weird across different devices when I'm authenticated?</SectionTitle>
-				<div>
-					I'm aware of the issue and I'm working on it. I'm currently making the choice to have it favor anything that was favorited across
-					devices so it can be weird. <i>Sorry...</i>
-				</div>
-			</Section>
 		</NonScrollWrapper>
 	)
 }

@@ -1,69 +1,85 @@
-import { memo, useCallback, useMemo, useState } from 'react'
-import { useDatabase, useDatabaseListData, useDatabaseObjectData } from 'reactfire'
-import { equalTo, orderByValue, query, ref, set } from 'firebase/database'
+// import { memo, useCallback, useMemo, useState } from 'react'
+// import { Link } from 'react-router-dom'
+// import { useDatabase, useDatabaseListData, useDatabaseObjectData, useUser } from 'reactfire'
+// import { equalTo, orderByValue, query, ref, set } from 'firebase/database'
+// import { styled } from 'linaria/react'
+import { memo, useMemo } from 'react'
+import { Link } from 'react-router-dom'
+import { useDatabase, useDatabaseListData } from 'reactfire'
+import { ref } from 'firebase/database'
 import { styled } from 'linaria/react'
 
-import Button from 'components/Button'
-// import { useEventContext } from 'context/EventContext'
+// import Button from 'components/Button'
 import { NonScrollWrapper } from 'components/styles'
+import { useEventContext } from 'context/EventContext'
 
 const Row = styled.div`
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: center;
+	font-size: 18px;
+	font-weight: bold;
+	padding: 6px;
+`
+const Lunk = styled(Link)`
+	color: var(--link);
+	text-decoration: none;
+	&:hover {
+		color: var(--linkHover);
+	}
 `
 
-const Divider = styled.hr`
-	width: 100%;
-	border-color: red;
-`
+// const Divider = styled.hr`
+// 	width: 100%;
+// 	border-color: red;
+// `
 
-const events = ['event1', 'event2', 'event3', 'event4', 'event5']
-const users = ['user1', 'user2', 'user3', 'user4']
+// const events = ['event1', 'event2', 'event3', 'event4', 'event5']
+// const users = ['user1', 'user2', 'user3', 'user4']
 
 const Temp = () => {
 	// const { data: user } = useUser()
 
-	const [user, setUser] = useState(users[0])
-	// const [state] = useEventContext()
+	// const [user, setUser] = useState(users[0])
+	const [{ allEvents }] = useEventContext()
 
 	const database = useDatabase()
 
 	// ============================================================
 
 	// User Favorites Query
-	const userFavQ = useMemo(() => {
-		const userFavRef = ref(database, `temp-favorites/${user}`)
-		const userFavQuery = query(userFavRef, orderByValue())
-		return query(userFavQuery, equalTo('true'))
-	}, [database, user])
+	// const userFavQ = useMemo(() => {
+	// 	const userFavRef = ref(database, `user-favorites/${user?.uid}`)
+	// 	const userFavQuery = query(userFavRef, orderByValue())
+	// 	return query(userFavQuery, equalTo('true'))
+	// }, [database, user])
 
 	// User Favorites Resp
-	const userFavResp = useDatabaseObjectData(userFavQ, {})
+	// const userFavResp = useDatabaseObjectData(userFavQ, {})
 
 	// User Favorite
-	const userFaves = useMemo(() => {
-		if (userFavResp?.status !== 'success' || !userFavResp?.data) return []
-		return Object.keys(userFavResp?.data) || []
-	}, [userFavResp?.data, userFavResp?.status])
+	// const userFaves = useMemo(() => {
+	// 	if (userFavResp?.status !== 'success' || !userFavResp?.data) return []
+	// 	return Object.keys(userFavResp?.data) || []
+	// }, [userFavResp?.data, userFavResp?.status])
 
 	// ============================================================
 
 	// Add/Remove User Favorite
-	const toggleFavorite = useCallback(
-		(id, newState) => {
-			const userFavRef = ref(database, `temp-favorites/${user}/${id}`)
-			// set(userFavRef, `${newState}`)
-			set(userFavRef, newState ? 'true' : null)
-			// console.log('SET', { id, newState })
-		},
-		[database, user]
-	)
+	// const toggleFavorite = useCallback(
+	// 	(id, newState) => {
+	// 		const userFavRef = ref(database, `user-favorites/${user?.uid}/${id}`)
+	// 		// set(userFavRef, `${newState}`)
+	// 		set(userFavRef, newState ? 'true' : null)
+	// 		// console.log('SET', { id, newState })
+	// 	},
+	// 	[database, user]
+	// )
 
 	// ============================================================
 
 	// All Favorites Resp
-	const allFavRef = ref(database, `temp-favorites`)
+	const allFavRef = ref(database, `user-favorites`)
 	const allFavResp = useDatabaseListData(allFavRef, {
 		idField: 'id',
 	})
@@ -84,14 +100,22 @@ const Temp = () => {
 	// ============================================================
 
 	// HELPERS
-	const log = useCallback(() => {
-		console.log('allFavResp.data', allFavResp)
-	}, [allFavResp])
+	// const log = useCallback(() => {
+	// 	console.log('allFavResp.data', allFavResp)
+	// }, [allFavResp])
 
 	return (
 		<NonScrollWrapper>
+			{Object.keys(allFaves).map(e => {
+				const count = allFaves[e] ?? 0
+				return (
+					<Row key={e}>
+						<Lunk to={`/event/${e}`}>{`${count} - [${e}] ${allEvents?.find(x => x.id === e).summary}`}</Lunk>
+					</Row>
+				)
+			})}
 			{/*  */}
-			<Row>
+			{/* <Row>
 				{users.map(u => (
 					<Button key={u} onClick={() => setUser(u)}>
 						{u === user && '### '}
@@ -99,29 +123,25 @@ const Temp = () => {
 						{u === user && ' ###'}
 					</Button>
 				))}
-			</Row>
+			</Row> */}
 			{/*  */}
-			<Divider />
+			{/* <Divider /> */}
 			{/*  */}
-			<Row>
-				{events.map(e => {
+			{/* <Row>
+				{Object.keys(allFaves).map(e => {
 					const isFavorited = userFaves.includes(e)
 					const count = allFaves[e] ?? 0
-					return (
-						<Button key={e} onClick={() => toggleFavorite(e, !isFavorited)}>
-							{isFavorited ? `### ${e} (${count}) ###` : `${e} (${count})`}
-						</Button>
-					)
+					return <Button key={e}>{`${e} (${count})`}</Button>
 				})}
-			</Row>
+			</Row> */}
 			{/*  */}
-			<Divider />
+			{/* <Divider /> */}
 			{/*  */}
-			<Button onClick={log}>Print Log</Button>
-			<div>
-				{/* <pre>{JSON.stringify(allFavResp.data, null, 2)}</pre> */}
-				<pre>{JSON.stringify(allFaves, null, 2)}</pre>
-			</div>
+			{/* <Button onClick={log}>Print Log</Button> */}
+			{/* <div> */}
+			{/* <pre>{JSON.stringify(allFavResp.data, null, 2)}</pre> */}
+			{/* <pre>{JSON.stringify(allFaves, null, 2)}</pre> */}
+			{/* </div> */}
 		</NonScrollWrapper>
 	)
 }
