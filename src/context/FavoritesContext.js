@@ -1,130 +1,91 @@
-import React, { createContext, memo, useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { useDatabase, useDatabaseListData, useUser } from 'reactfire'
-import * as Panelbear from '@panelbear/panelbear-js'
-import { query, ref, set } from 'firebase/database'
+import React, { createContext, memo, useCallback, useContext, useEffect, useMemo } from 'react'
+import { useDatabase, useDatabaseObjectData, useSigninCheck, useUser } from 'reactfire'
+import { equalTo, orderByValue, query, ref, set } from 'firebase/database'
 
 import useLocalStorage from 'hooks/useLocalStorage'
-import Event from 'utils/events'
 
 const favoritesStorageKey = 'SWC.Favorites'
 
 const initialState = {
 	favorites: [],
-	addFavorite: () => {},
-	removeFavorite: () => {},
+	toggleFavorite: () => {},
 }
 
 const FavoritesContext = createContext(initialState)
 
 const FavoritesProvider = ({ children }) => {
-	const [updated, setUpdated] = useState(false)
-
 	// Non-Auth Storage
 	const [favorites, setFavorites] = useLocalStorage(favoritesStorageKey, [])
 
+	// ============================================================
+
 	// Firebase
+	const { status: signinStatus, data: signInCheckResult } = useSigninCheck()
 	const { data: user } = useUser()
 	const database = useDatabase()
-	// Firebase User Favorites
-	const userFavoritesRef = ref(database, `favorites/${user?.uid}`)
-	const userFavoritesQuery = query(userFavoritesRef)
-	const {
-		status,
-		data: favoritesListResponse,
-		// ...rest
-	} = useDatabaseListData(userFavoritesQuery, {
-		idField: 'id',
-	})
 
-	// SYNC FIREBASE WITH LOCALSTORAGE
-	useEffect(() => {
-		if (!user || status !== 'success' || updated) {
-			// console.log('Effect.SKIP', { status, updated })
-			return
-		}
-		// console.log('Effect.GO')
-		const initStorageIds = favorites
-		const initFireIds = favoritesListResponse.map(x => x.id)
-		const shouldUpdate =
-			initStorageIds.length !== initFireIds.length ||
-			initStorageIds.some(x => !initFireIds.includes(x)) ||
-			initFireIds.some(x => !initStorageIds.includes(x))
+	// ============================================================
 
-		if (!shouldUpdate) {
-			// console.log('IN SYNC. NO UPDATE')
-			return
-		}
+	// User Favorites Query
+	const userFavQ = useMemo(() => {
+		const userFavRef = ref(database, `user-favorites/${user?.uid}`)
+		const userFavQuery = query(userFavRef, orderByValue())
+		return query(userFavQuery, equalTo('true'))
+	}, [database, user])
 
-		const finalFavoriteIds = [...new Set([...initStorageIds, ...initFireIds])]
-		// console.log('OUT OF SYNC. UPDATING', { initStorageIds, initFireIds, finalFavoriteIds })
+	// User Favorites Resp
+	const userFavResp = useDatabaseObjectData(userFavQ, {})
 
-		const pending = {}
-		finalFavoriteIds.forEach(id => {
-			pending[id] = {
-				id,
-				favorited: true,
+	// User Favorite
+	const userFaves = useMemo(() => {
+		if (userFavResp?.status !== 'success' || !userFavResp?.data) return []
+		return Object.keys(userFavResp?.data) || []
+	}, [userFavResp?.data, userFavResp?.status])
+
+	// ============================================================
+
+	// Add/Remove User Favorite
+	const toggleFavorite = useCallback(
+		(id, newState) => {
+			if (signinStatus === 'success' && signInCheckResult?.signedIn) {
+				const userFavRef = ref(database, `user-favorites/${user?.uid}/${id}`)
+				set(userFavRef, newState ? 'true' : null)
+				console.log('UPDATING FIREBASE WITH FAVORITE')
+			} else {
+				const existing = JSON.parse(localStorage.getItem(favoritesStorageKey) || '[]')
+				if (newState) {
+					console.log('ADDING NEW FAVORITE TO STORAGE')
+					setFavorites([...existing, id])
+				} else {
+					console.log('REMOVING FAVORITE FROM STORAGE')
+					setFavorites(existing.filter(x => x !== id))
+				}
 			}
-		})
-		set(userFavoritesRef, pending)
-		setFavorites(finalFavoriteIds)
-		setUpdated(true)
-	}, [favorites, favoritesListResponse, setFavorites, status, updated, user, userFavoritesRef])
-
-	// POST-LOAD UPDATES
-	useEffect(() => {
-		if (updated && status === 'success') {
-			const fireIds = favoritesListResponse.map(x => x.id)
-			// console.log('MORE', { status, favoritesListResponse, rest })
-			if (fireIds.length !== favorites.length) {
-				setFavorites(fireIds)
-			}
-		}
-		// TODO Figure this shit out
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [favoritesListResponse, setFavorites])
-
-	//
-	const addFavorite = useCallback(
-		id => {
-			//
-			Panelbear.track(Event.AddFavorite)
-			//
-			if (user?.uid) {
-				const tRef = ref(database, `favorites/${user?.uid}/${id}`)
-				set(tRef, {
-					id: id,
-					favorited: true,
-				})
-			}
-
-			setFavorites([...favorites, id])
 		},
-		[database, user?.uid, setFavorites, favorites]
+		[database, setFavorites, signInCheckResult?.signedIn, signinStatus, user?.uid]
 	)
 
-	//
-	const removeFavorite = useCallback(
-		id => {
-			//
-			Panelbear.track(Event.RemoveFavorite)
-			//
-			if (user?.uid) {
-				const tRef = ref(database, `favorites/${user?.uid}/${id}`)
-				set(tRef, null)
-			}
-			//
-			setFavorites(favorites.filter(f => f !== id))
-		},
-		[database, user?.uid, setFavorites, favorites]
-	)
+	// ============================================================
+
+	// Authenticated Persistence
+	useEffect(() => {
+		if (signinStatus === 'success' && signInCheckResult?.signedIn && userFavResp.status === 'success') {
+			// console.log('USER FAVES CHANGED', userFaves)
+			console.log('FIREBASE CHANGED. UPDATING STORAGE')
+			setFavorites(userFaves)
+		}
+	}, [setFavorites, signInCheckResult?.signedIn, signinStatus, userFavResp.status, userFaves])
+
+	// ============================================================
+
+	// console.log({ userFaves, user })
 
 	const value = useMemo(() => {
 		return {
 			favorites,
-			addFavorite,
-			removeFavorite,
+			toggleFavorite,
 		}
-	}, [addFavorite, favorites, removeFavorite])
+	}, [favorites, toggleFavorite])
 
 	return <FavoritesContext.Provider value={value}>{children}</FavoritesContext.Provider>
 }

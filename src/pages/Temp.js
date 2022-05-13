@@ -4,6 +4,7 @@ import { equalTo, orderByValue, query, ref, set } from 'firebase/database'
 import { styled } from 'linaria/react'
 
 import Button from 'components/Button'
+// import { useEventContext } from 'context/EventContext'
 import { NonScrollWrapper } from 'components/styles'
 
 const Row = styled.div`
@@ -24,6 +25,7 @@ const Temp = () => {
 	// const { data: user } = useUser()
 
 	const [user, setUser] = useState(users[0])
+	// const [state] = useEventContext()
 
 	const database = useDatabase()
 

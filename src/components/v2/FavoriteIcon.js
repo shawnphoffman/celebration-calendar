@@ -16,27 +16,28 @@ const IconButton = styled.div`
 `
 
 const FavoriteIcon = ({ event }) => {
-	const { addFavorite, removeFavorite, favorites } = useFavoritesContext()
+	const { toggleFavorite, favorites } = useFavoritesContext()
 
 	const handleAdd = useCallback(
 		e => {
 			e.stopPropagation()
-			addFavorite(event.id)
+			toggleFavorite(event.id, true)
 			Panelbear.track(Event.AddFavorite)
 		},
-		[addFavorite, event]
+		[toggleFavorite, event]
 	)
 
 	const handleRemove = useCallback(
 		e => {
 			e.stopPropagation()
-			removeFavorite(event.id)
+			toggleFavorite(event.id, false)
 			Panelbear.track(Event.RemoveFavorite)
 		},
-		[event, removeFavorite]
+		[event, toggleFavorite]
 	)
 
 	const isFavorite = useMemo(() => {
+		// console.log({ favorites, id: event.id })
 		return favorites.includes(event.id)
 	}, [event.id, favorites])
 
