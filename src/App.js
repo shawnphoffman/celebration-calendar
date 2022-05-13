@@ -1,5 +1,6 @@
 import { memo, Suspense } from 'react'
 import { AppCheckProvider, AuthProvider, DatabaseProvider, useFirebaseApp } from 'reactfire'
+import * as Sentry from '@sentry/react'
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check'
 import { getAuth } from 'firebase/auth'
 import { getDatabase } from 'firebase/database'
@@ -42,24 +43,26 @@ function App() {
 	const themeClass = themeConditional(theme)
 
 	return (
-		<ThemeProvider>
-			<AppWrapper className={themeClass}>
-				<Suspense fallback={<Loading />}>
-					<AppCheckProvider sdk={appCheck}>
-						<AuthProvider sdk={auth}>
-							<Nav />
-							<DatabaseProvider sdk={database}>
-								<EventProvider>
-									<FavoritesProvider>
-										<AppRoutes />
-									</FavoritesProvider>
-								</EventProvider>
-							</DatabaseProvider>
-						</AuthProvider>
-					</AppCheckProvider>
-				</Suspense>
-			</AppWrapper>
-		</ThemeProvider>
+		<Sentry.ErrorBoundary fallback={<div>Uh Oh!</div>}>
+			<ThemeProvider>
+				<AppWrapper className={themeClass}>
+					<Suspense fallback={<Loading />}>
+						<AppCheckProvider sdk={appCheck}>
+							<AuthProvider sdk={auth}>
+								<Nav />
+								<DatabaseProvider sdk={database}>
+									<EventProvider>
+										<FavoritesProvider>
+											<AppRoutes />
+										</FavoritesProvider>
+									</EventProvider>
+								</DatabaseProvider>
+							</AuthProvider>
+						</AppCheckProvider>
+					</Suspense>
+				</AppWrapper>
+			</ThemeProvider>
+		</Sentry.ErrorBoundary>
 	)
 }
 
