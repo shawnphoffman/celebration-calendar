@@ -31,7 +31,7 @@ const APP_CHECK_TOKEN = process.env.REACT_APP_RECAPTCHA_SITE_KEY
 
 function App() {
 	// Firebase
-	const firebaseApp = useFirebaseApp('wow')
+	const firebaseApp = useFirebaseApp()
 	const appCheck = initializeAppCheck(firebaseApp, {
 		provider: new ReCaptchaV3Provider(APP_CHECK_TOKEN),
 		isTokenAutoRefreshEnabled: true,
