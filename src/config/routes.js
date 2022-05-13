@@ -9,7 +9,6 @@ const LazyPreload = importStatement => {
 const Schedule = LazyPreload(() => import('../pages/Schedule'))
 const Faq = LazyPreload(() => import('../pages/Faq'))
 const Favorites = LazyPreload(() => import('../pages/Favorites'))
-const Resources = LazyPreload(() => import('../pages/Resources'))
 const Search = LazyPreload(() => import('../pages/Search'))
 const Login = LazyPreload(() => import('../pages/Login'))
 const Temp = LazyPreload(() => import('../pages/Temp'))
@@ -37,12 +36,6 @@ const Routes = {
 		component: Search,
 		icon: 'fa-magnifying-glass',
 		title: 'Search',
-	},
-	Resources: {
-		path: '/resources',
-		component: Resources,
-		icon: 'fa-link',
-		title: 'Resources',
 	},
 	Favorites: {
 		path: '/favorites',
@@ -83,7 +76,6 @@ const Routes = {
 export const RegisteredRoutes = [
 	Routes.FAQ,
 	Routes.Favorites,
-	Routes.Resources,
 	Routes.Search,
 	Routes.Login,
 	Routes.Temp,
@@ -92,6 +84,6 @@ export const RegisteredRoutes = [
 	Routes.Home,
 ]
 
-export const NavRoutes = [Routes.Home, Routes.Search, Routes.Favorites, Routes.Resources, Routes.FAQ]
+export const NavRoutes = [Routes.Home, Routes.Search, Routes.Favorites, Routes.FAQ]
 
 export default Routes

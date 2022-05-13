@@ -48,8 +48,6 @@ const Link = styled(NavLink)`
 	}
 `
 
-// TODO Change favorites context to store IDs and not the object
-
 const Favorites = () => {
 	const [state] = useEventContext()
 	const { favorites: ids } = useFavoritesContext()
@@ -72,9 +70,9 @@ const Favorites = () => {
 
 	return (
 		<Container>
+			<PageTitle>Your Favorites</PageTitle>
 			{showLoginPrompt && (
 				<>
-					<PageTitle>Favorites</PageTitle>
 					<LoginPrompt>
 						If you <Link to={Routes.Login.path}>log in</Link>, we'll save your favorites across your devices!
 					</LoginPrompt>

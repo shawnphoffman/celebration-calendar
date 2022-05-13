@@ -14,10 +14,40 @@ const Link = styled.a`
 		color: var(--linkHover);
 	}
 `
+const LinkItem = memo(({ href, children }) => {
+	return (
+		<ListItem>
+			<Link href={href} target="_blank" rel="noreferrer">
+				{children} <i className="fa-solid fa-up-right-from-square"></i>
+			</Link>
+		</ListItem>
+	)
+})
 
 const Faq = () => {
 	return (
 		<NonScrollWrapper>
+			{/*  */}
+			<PageTitle>Additional Resources</PageTitle>
+			<Section>
+				<List>
+					<LinkItem href="https://www.starwarscelebration.com/en-us/explore-the-show.html">Official Show Info</LinkItem>
+					<LinkItem href="https://github.com/shawnphoffman/celebration-calendar">Project Source</LinkItem>
+					<LinkItem href="https://twitter.com/iceplanethoff">
+						<i className="fa-brands fa-twitter"></i> Follow me on Twitter
+					</LinkItem>
+				</List>
+			</Section>
+			{/*  */}
+			<PageTitle>Recommendations</PageTitle>
+			<Section>
+				<List>
+					<ListItem>
+						<i>Coming Soon...</i>
+					</ListItem>
+				</List>
+			</Section>
+			{/*  */}
 			<PageTitle>FAQ</PageTitle>
 			<Section>
 				<SectionTitle>Why can't I download events on Chrome iOS?</SectionTitle>
@@ -34,20 +64,10 @@ const Faq = () => {
 				</div>
 			</Section>
 			<Section>
-				<SectionTitle>What are the show hours?</SectionTitle>
-				<List>
-					<ListItem>Thursday, May 26: 10:00 AM* – 7:00 PM</ListItem>
-					<ListItem>Friday, May 27: 10:00 AM* – 7:00 PM</ListItem>
-					<ListItem>Saturday, May 28: 10:00 AM* – 7:00 PM</ListItem>
-					<ListItem>Sunday, May 29: 10:00 AM* – 5:00 PM</ListItem>
-					<ListItem>*Jedi Master VIP tickets may access the Exhibit Hall at 9:30 AM.</ListItem>
-				</List>
-			</Section>
-			<Section>
-				<SectionTitle>What events does this site capture?</SectionTitle>
+				<SectionTitle>What data does this site capture or track?</SectionTitle>
 				<div>
-					This site doesn't capture personal information. The only data that is recorded is event data based on usage. We use PanelBear to
-					track the following events without PII attached. <strong>{Object.keys(Event).join(', ')}</strong>
+					This site doesn't record any personal information. The only data that is recorded is event data to help me understand what people
+					are using. I use PanelBear to track the following events without PII attached. <strong>{Object.keys(Event).join(', ')}</strong>
 				</div>
 			</Section>
 		</NonScrollWrapper>
