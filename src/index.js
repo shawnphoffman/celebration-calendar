@@ -24,10 +24,21 @@ if (process.env.REACT_APP_PANELBEAR_SITE_ID) {
 Sentry.init({
 	dsn: 'https://2941a46d82da4cfd9f8347bfb284defe@o508348.ingest.sentry.io/6400519',
 	integrations: [new BrowserTracing()],
-	// Set tracesSampleRate to 1.0 to capture 100%
-	// of transactions for performance monitoring.
+	autoSessionTracking: true,
+	environment: process.env.NODE_ENV,
 	// We recommend adjusting this value in production
 	tracesSampleRate: 1.0,
+	beforeSend(event, hint) {
+		// Check if it is an exception, and if so, show the report dialog
+		if (event.exception) {
+			Sentry.showReportDialog({
+				eventId: event.event_id,
+				title: 'Uh oh! Looks like something went wrong.',
+				subtitle: 'I have been notified about the issue.',
+			})
+		}
+		return event
+	},
 })
 
 const root = ReactDOM.createRoot(document.getElementById('root'))

@@ -3,13 +3,13 @@
 // import { useDatabase, useDatabaseListData, useDatabaseObjectData, useUser } from 'reactfire'
 // import { equalTo, orderByValue, query, ref, set } from 'firebase/database'
 // import { styled } from 'linaria/react'
-import { memo, useMemo } from 'react'
+import { memo, useCallback, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useDatabase, useDatabaseListData } from 'reactfire'
 import { ref } from 'firebase/database'
 import { styled } from 'linaria/react'
 
-// import Button from 'components/Button'
+import Button from 'components/Button'
 import { NonScrollWrapper } from 'components/styles'
 import { useEventContext } from 'context/EventContext'
 
@@ -100,9 +100,10 @@ const Temp = () => {
 	// ============================================================
 
 	// HELPERS
-	// const log = useCallback(() => {
-	// 	console.log('allFavResp.data', allFavResp)
-	// }, [allFavResp])
+	const log = useCallback(() => {
+		console.log('allFavResp.data', allFavResp)
+		throw new Error('test')
+	}, [allFavResp])
 
 	return (
 		<NonScrollWrapper>
@@ -137,7 +138,7 @@ const Temp = () => {
 			{/*  */}
 			{/* <Divider /> */}
 			{/*  */}
-			{/* <Button onClick={log}>Print Log</Button> */}
+			<Button onClick={log}>Print Log</Button>
 			{/* <div> */}
 			{/* <pre>{JSON.stringify(allFavResp.data, null, 2)}</pre> */}
 			{/* <pre>{JSON.stringify(allFaves, null, 2)}</pre> */}
