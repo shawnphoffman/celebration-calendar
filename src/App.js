@@ -1,5 +1,5 @@
 import { memo, Suspense } from 'react'
-import { AppCheckProvider, AuthProvider, DatabaseProvider, useFirebaseApp } from 'reactfire'
+import { AppCheckProvider, AuthProvider, DatabaseProvider, preloadUser, useFirebaseApp } from 'reactfire'
 import * as Sentry from '@sentry/react'
 import { initializeAppCheck, ReCaptchaV3Provider } from 'firebase/app-check'
 import { getAuth } from 'firebase/auth'
@@ -38,6 +38,8 @@ function App() {
 	})
 	const auth = getAuth(firebaseApp)
 	const database = getDatabase(firebaseApp)
+	preloadUser(getAuth)
+
 	// Theme
 	const theme = useDeviceTheme()
 	const themeClass = themeConditional(theme)

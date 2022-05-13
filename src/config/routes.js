@@ -14,6 +14,7 @@ const Search = LazyPreload(() => import('../pages/Search'))
 const Login = LazyPreload(() => import('../pages/Login'))
 const Temp = LazyPreload(() => import('../pages/Temp'))
 const EventDetails = LazyPreload(() => import('../pages/EventDetails'))
+const VenueDetails = LazyPreload(() => import('../pages/VenueDetails'))
 
 // Change to conform to API?
 // https://reactrouter.com/docs/en/v6/api#useroutes
@@ -73,6 +74,10 @@ const Routes = {
 		path: '/event/:id',
 		component: EventDetails,
 	},
+	VenueDetails: {
+		path: '/venue/:venue',
+		component: VenueDetails,
+	},
 }
 
 export const RegisteredRoutes = [
@@ -83,6 +88,7 @@ export const RegisteredRoutes = [
 	Routes.Login,
 	Routes.Temp,
 	Routes.EventDetails,
+	Routes.VenueDetails,
 	Routes.Home,
 ]
 

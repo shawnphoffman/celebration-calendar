@@ -72,11 +72,13 @@ const Favorites = () => {
 
 	return (
 		<Container>
-			<PageTitle>Favorites</PageTitle>
 			{showLoginPrompt && (
-				<LoginPrompt>
-					If you <Link to={Routes.Login.path}>log in</Link>, we'll save your favorites across your devices!
-				</LoginPrompt>
+				<>
+					<PageTitle>Favorites</PageTitle>
+					<LoginPrompt>
+						If you <Link to={Routes.Login.path}>log in</Link>, we'll save your favorites across your devices!
+					</LoginPrompt>
+				</>
 			)}
 			<ScrollBox>
 				{!hasFavorites && <NoFavorites>No favorites to display...</NoFavorites>}
