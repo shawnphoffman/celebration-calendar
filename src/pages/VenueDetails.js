@@ -24,14 +24,6 @@ const ScrollBox = styled.div`
 		background: var(--transparent);
 	}
 `
-const Invalid = styled.div`
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	flex: 0;
-	margin-top: 16px;
-	font-weight: bold;
-`
 
 const VenueDetails = () => {
 	const [state] = useEventContext()
@@ -55,13 +47,7 @@ const VenueDetails = () => {
 		<Container>
 			<PageTitle>Events in "{venue}"</PageTitle>
 			<ScrollBox>
-				{isLoading ? (
-					<Loading />
-				) : hasEvents ? (
-					events.map(e => <EventListItem event={e} key={e.id} forceOpen />)
-				) : (
-					<Invalid>Invalid Venue</Invalid>
-				)}
+				{isLoading ? <Loading /> : hasEvents ? events.map(e => <EventListItem event={e} key={e.id} forceOpen />) : <Loading />}
 			</ScrollBox>
 		</Container>
 	)
