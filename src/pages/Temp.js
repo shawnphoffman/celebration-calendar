@@ -53,7 +53,7 @@ const Temp = () => {
 			const userFavRef = ref(database, `temp-favorites/${user}/${id}`)
 			// set(userFavRef, `${newState}`)
 			set(userFavRef, newState ? 'true' : null)
-			console.log('SET', { id, newState })
+			// console.log('SET', { id, newState })
 		},
 		[database, user]
 	)
@@ -69,7 +69,7 @@ const Temp = () => {
 	const allFaves = useMemo(() => {
 		if (allFavResp?.status !== 'success' || !allFavResp?.data) return []
 		return allFavResp.data.reduce((memo, user) => {
-			console.log('USER', { user })
+			// console.log('USER', { user })
 			Object.keys(user).forEach(key => {
 				if (user[key] === 'true') {
 					memo[key] = Number(memo[key] ?? null) + 1

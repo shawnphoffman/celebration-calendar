@@ -4,6 +4,7 @@ import { styled } from 'linaria/react'
 import { dayColor, dayName, formatTime } from 'utils/eventUtils'
 
 import DownloadIcon from './DownloadIcon'
+import EventLinkIcon from './EventLinkIcon'
 import FavoriteIcon from './FavoriteIcon'
 
 const Container = styled.div`
@@ -128,8 +129,14 @@ const EventListItem = ({ event, forceOpen = false }) => {
 			<ActionWrapper>
 				{/* Favorite */}
 				<FavoriteIcon event={event} />
-				{/* Download */}
-				<DownloadIcon event={event} />
+				{expanded && (
+					<>
+						{/* Download */}
+						<DownloadIcon event={event} />
+						{/* Open URL */}
+						<EventLinkIcon event={event} />
+					</>
+				)}
 			</ActionWrapper>
 		</Container>
 	)

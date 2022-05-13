@@ -7,5 +7,6 @@ const Event = {
 	RemoveFavorite: 'RemoveFavorite',
 	LogIn: 'LogIn',
 	LogOut: 'LogOut',
+	LinkOpened: 'LinkOpened',
 }
 export default Event

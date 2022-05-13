@@ -8,6 +8,8 @@ import Event from 'utils/events'
 export const Button = styled(ICalendarLink)`
 	color: var(--download);
 	font-size: 26px;
+	margin-top: 4px;
+	display: block;
 
 	&:hover {
 		color: var(--linkHover);
