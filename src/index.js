@@ -31,7 +31,7 @@ Sentry.init({
 	beforeSend(event, hint) {
 		console.log({ event, hint })
 		const error = hint.originalException
-		if (error && error.message && error.message.match(/rejection/i)) {
+		if (error && error.match(/cancelled/i)) {
 			return event
 		}
 		// Check if it is an exception, and if so, show the report dialog
