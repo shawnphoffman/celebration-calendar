@@ -35,7 +35,7 @@ const FaveListLinkIcon = () => {
 			e.stopPropagation()
 			copy(url)
 			setCopied(true)
-			Panelbear.track(Event.LinkOpened)
+			Panelbear.track(Event.FavoritesLinkCopied)
 		},
 		[url]
 	)

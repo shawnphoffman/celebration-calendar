@@ -29,7 +29,7 @@ const EventLinkIcon = ({ event }) => {
 			e.stopPropagation()
 			copy(url)
 			setCopied(true)
-			Panelbear.track(Event.LinkOpened)
+			Panelbear.track(Event.EventLinkCopied)
 		},
 		[url]
 	)
