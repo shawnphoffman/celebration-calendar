@@ -5,6 +5,7 @@ import { styled } from 'linaria/react'
 
 import { PageTitle } from 'components/styles'
 import EventListItem from 'components/v2/EventListItem'
+import FaveListLinkIcon from 'components/v2/FaveListLinkIcon'
 import Routes from 'config/routes'
 import { useEventContext } from 'context/EventContext'
 import { useFavoritesContext } from 'context/FavoritesContext'
@@ -58,7 +59,7 @@ const Favorites = () => {
 	}, [ids])
 
 	const showLoginPrompt = useMemo(() => {
-		return status === 'success' && !signInCheckResult.signedIn
+		return status === 'success' && !signInCheckResult?.signedIn
 	}, [status, signInCheckResult])
 
 	const favorites = useMemo(() => {
@@ -70,7 +71,9 @@ const Favorites = () => {
 
 	return (
 		<Container>
-			<PageTitle>Your Favorites</PageTitle>
+			<PageTitle>
+				Your Favorites <FaveListLinkIcon />
+			</PageTitle>
 			{showLoginPrompt && (
 				<>
 					<LoginPrompt>

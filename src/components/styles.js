@@ -13,6 +13,7 @@ export const NonScrollWrapper = styled.div`
 export const PageTitle = styled.h2`
 	margin: 8px 0px 16px 0px;
 	color: var(--linkAlt);
+	display: flex;
 `
 
 export const List = styled.ul`

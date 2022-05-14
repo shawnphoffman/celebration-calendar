@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from 'react'
 import { generatePath } from 'react-router-dom'
+import { useSigninCheck, useUser } from 'reactfire'
 import { styled } from '@linaria/react'
 import * as Panelbear from '@panelbear/panelbear-js'
 import copy from 'copy-to-clipboard'
@@ -9,20 +10,25 @@ import Event from 'utils/events'
 
 export const Button = styled.div`
 	color: ${p => (p.copied ? 'var(--green)' : 'var(--linkAlt)')};
-	font-size: 26px;
-	margin-top: 4px;
 	transition: all 0.5s;
 	cursor: pointer;
+	margin-left: 8px;
 
 	&:hover {
 		color: ${p => (p.copied ? 'var(--green)' : 'var(--linkHover)')};
 	}
 `
 
-const EventLinkIcon = ({ event }) => {
+const FaveListLinkIcon = () => {
 	const [copied, setCopied] = useState(false)
+	const { status, data: signInCheckResult } = useSigninCheck()
+	const { data: user } = useUser()
 
-	const url = useMemo(() => `${window.location.origin}/#${generatePath(Routes.EventDetails.path, { id: event.id })}`, [event.id])
+	console.log('ICON', { status, signInCheckResult, user })
+
+	const uid = useMemo(() => (user ? user.uid : null), [user])
+
+	const url = useMemo(() => (!uid ? null : `${window.location.origin}/#${generatePath(Routes.FavoritesList.path, { uid })}`), [uid])
 
 	const logCopy = useCallback(
 		e => {
@@ -44,13 +50,15 @@ const EventLinkIcon = ({ event }) => {
 		return () => t
 	}, [copied])
 
-	if (!event) return null
+	if (status !== 'success' || !signInCheckResult?.signedIn || !uid) {
+		return null
+	}
 
 	return (
-		<Button copied={copied} key={`link-${event.id}-${copied}`} onClickCapture={logCopy} title="Copy Link to Event">
+		<Button copied={copied} key={`link-${uid}-${copied}`} onClickCapture={logCopy} title="Copy Link to Share">
 			{copied ? <i className="fa-light fa-clipboard-check fa-beat-fade"></i> : <i className="fa-light fa-clipboard"></i>}
 		</Button>
 	)
 }
 
-export default memo(EventLinkIcon)
+export default memo(FaveListLinkIcon)

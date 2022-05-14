@@ -8,12 +8,13 @@ const LazyPreload = importStatement => {
 
 const Schedule = LazyPreload(() => import('../pages/Schedule'))
 const Faq = LazyPreload(() => import('../pages/Faq'))
-const Favorites = LazyPreload(() => import('../pages/Favorites'))
+const Favorites = LazyPreload(() => import('../pages/UserFavorites'))
 const Search = LazyPreload(() => import('../pages/Search'))
 const Login = LazyPreload(() => import('../pages/Login'))
 const Temp = LazyPreload(() => import('../pages/Temp'))
 const EventDetails = LazyPreload(() => import('../pages/EventDetails'))
 const VenueDetails = LazyPreload(() => import('../pages/VenueDetails'))
+const FavoritesList = LazyPreload(() => import('../pages/FavoritesList'))
 
 // Change to conform to API?
 // https://reactrouter.com/docs/en/v6/api#useroutes
@@ -71,6 +72,10 @@ const Routes = {
 		path: '/venue/:venue',
 		component: VenueDetails,
 	},
+	FavoritesList: {
+		path: '/favorites/:uid',
+		component: FavoritesList,
+	},
 }
 
 export const RegisteredRoutes = [
@@ -81,6 +86,7 @@ export const RegisteredRoutes = [
 	Routes.Temp,
 	Routes.EventDetails,
 	Routes.VenueDetails,
+	Routes.FavoritesList,
 	Routes.Home,
 ]
 
