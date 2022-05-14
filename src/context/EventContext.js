@@ -10,6 +10,8 @@ const EventContext = createContext()
 
 export const EventAction = {
 	TOGGLE_VENUE: 'TOGGLE_VENUE',
+	ALL_VENUES_ON: 'ALL_VENUES_ON',
+	ALL_VENUES_OFF: 'ALL_VENUES_OFF',
 	SET_EVENTS: 'SET_EVENTS',
 }
 
@@ -46,6 +48,16 @@ const reducer = (state, action) => {
 					...state,
 					disabledVenues: newVenues,
 				}
+			}
+		case EventAction.ALL_VENUES_ON:
+			return {
+				...state,
+				disabledVenues: [],
+			}
+		case EventAction.ALL_VENUES_OFF:
+			return {
+				...state,
+				disabledVenues: [...state.allVenues],
 			}
 		default:
 			return state

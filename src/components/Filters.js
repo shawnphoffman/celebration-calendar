@@ -69,9 +69,10 @@ const Filters = memo(() => {
 
 	const handleClick = useCallback(name => () => dispatch({ type: EventAction.TOGGLE_VENUE, name }), [dispatch])
 
-	if (!state?.allVenues) return null
+	const handleAllOn = useCallback(() => dispatch({ type: EventAction.ALL_VENUES_ON }), [dispatch])
+	const handleAllOff = useCallback(() => dispatch({ type: EventAction.ALL_VENUES_OFF }), [dispatch])
 
-	// console.log('Filters.Render')
+	if (!state?.allVenues) return null
 
 	return (
 		<Wrapper>
@@ -80,6 +81,22 @@ const Filters = memo(() => {
 					<Venue enabled={!state.disabledVenues.includes(v)} name={v} />
 				</div>
 			))}
+			<div onClick={handleAllOn}>
+				<VenueWrapper enabled>
+					<Indicator enabled>
+						<i className="fa-solid fa-check" />
+					</Indicator>
+					<VenueName enabled>All On</VenueName>
+				</VenueWrapper>
+			</div>
+			<div onClick={handleAllOff}>
+				<VenueWrapper enabled>
+					<Indicator enabled>
+						<i className="fa-solid fa-close" />
+					</Indicator>
+					<VenueName enabled>All Off</VenueName>
+				</VenueWrapper>
+			</div>
 		</Wrapper>
 	)
 })
