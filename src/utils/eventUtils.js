@@ -98,6 +98,23 @@ const customEvents = [
 		url: 'https://www.showclix.com/event/swca2022thebash43tgv/listing',
 		address: 'Platinum Ballroom - Anaheim Marriott 700 West Convention Way Anaheim, CA 92802',
 	},
+	{
+		id: 'disney-1',
+		summary: 'Disneyland After Dark: Star Wars Nite',
+		description: `TICKETED EVENT: Travel from Tomorrowland to Batuu and back as lands and “planets” converge for an otherworldly adventure like none other!
+
+		This May, Disneyland After Dark: Star Wars Nite, 3 separately ticketed after-hours events, will grant Guests of all ages special access to Disneyland Park—including Character experiences, fireworks, photo opportunities, dancing, event-themed menu selections, entertainment—including March of the First Order featuring Captain Phasma, Star Wars-themed merchandise, attractions, commemorative keepsakes, décor and more.
+
+		Availability is limited—don't miss this opportunity to be immersed in a Star Wars experience you'll never forget!`,
+		venue: ' After Hours',
+		timezoneStartAt: 'America/Los_Angeles',
+		startDate: new Date('2022-05-27T21:00:00'),
+		endDate: new Date('2022-05-28T01:00:00'),
+		startAt: convertDate(new Date('2022-05-27T21:00:00').toISOString()),
+		endAt: convertDate(new Date('2022-05-28T01:00:00').toISOString()),
+		color: 'var(--linkHover)',
+		url: 'https://disneyland.disney.go.com/events-tours/disneyland/after-dark-star-wars-nite/',
+	},
 ]
 
 export const processApiData = data => {
