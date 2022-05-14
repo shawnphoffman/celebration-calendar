@@ -4,7 +4,7 @@ import * as Panelbear from '@panelbear/panelbear-js'
 import Event from 'utils/events'
 import { processApiData } from 'utils/eventUtils'
 
-const disabledVenueStorageKey = 'SWC.DisabledVenues'
+const disabledVenueStorageKey = 'SWC.DisabledVenues.2'
 
 const EventContext = createContext()
 
