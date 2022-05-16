@@ -24,7 +24,7 @@ const FaveListLinkIcon = () => {
 	const { status, data: signInCheckResult } = useSigninCheck()
 	const { data: user } = useUser()
 
-	console.log('ICON', { status, signInCheckResult, user })
+	// console.log('ICON', { status, signInCheckResult, user })
 
 	const uid = useMemo(() => (user ? user.uid : null), [user])
 

@@ -45,11 +45,15 @@ const UserProfile = ({ user }) => {
 		})
 	}, [auth])
 
-	// console.log({ user })
+	console.log({ user })
 
 	const provider = useMemo(() => {
 		return user?.providerData[0]?.providerId
 	}, [user?.providerData])
+
+	const photoUrl = useMemo(() => {
+		return user?.providerData[0]?.photoURL || user?.photoURL
+	}, [user?.photoURL, user?.providerData])
 
 	return (
 		<Wrapper>
@@ -61,7 +65,7 @@ const UserProfile = ({ user }) => {
 			) : (
 				<>
 					<Username>{user.displayName}</Username>
-					<Avatar className="fa-beat" src={user.photoURL} alt="pfp" />
+					<Avatar className="fa-beat" src={photoUrl} alt="pfp" />
 				</>
 			)}
 			<div>
