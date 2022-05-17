@@ -174,7 +174,9 @@ export const processApiVendors = data => {
 			booth: processBooth(s.booth),
 			exclusives: s.exclusives,
 			specials: s.specials,
-			images: s.image,
+			images: {
+				small: s.image.small,
+			},
 			tags: s.tags,
 			url: processUrl(s.store_url),
 			featured: s.featured,

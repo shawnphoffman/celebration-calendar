@@ -77,9 +77,9 @@ const VendorList = () => {
 			</InputWrapper>
 			<ScrollBox>
 				<Suspense fallback={<Loading />}>
-					{(!search || search.length < 3) && state.allVendors.map(v => <VendorListItem key={v.id} venue={v} />)}
+					{(!search || search.length < 3) && state.allVendors.map(v => <VendorListItem key={v.id} vendor={v} />)}
 					{results.map(r => {
-						return <VendorListItem key={r.item.id} venue={r.item} />
+						return <VendorListItem key={r.item.id} vendor={r.item} />
 					})}
 				</Suspense>
 			</ScrollBox>

@@ -15,42 +15,42 @@ const IconButton = styled.div`
 	}
 `
 
-const FavoriteVendorIcon = ({ venue }) => {
+const FavoriteVendorIcon = ({ vendor }) => {
 	const { toggleFavorite, favorites } = useFavoriteVendorsContext()
 
 	const handleAdd = useCallback(
 		e => {
 			e.stopPropagation()
-			toggleFavorite(venue.id, true)
+			toggleFavorite(vendor.id, true)
 			Panelbear.track(Event.AddFavorite)
 		},
-		[toggleFavorite, venue]
+		[toggleFavorite, vendor]
 	)
 
 	const handleRemove = useCallback(
 		e => {
 			e.stopPropagation()
-			toggleFavorite(venue.id, false)
+			toggleFavorite(vendor.id, false)
 			Panelbear.track(Event.RemoveFavorite)
 		},
-		[venue, toggleFavorite]
+		[vendor, toggleFavorite]
 	)
 
 	const isFavorite = useMemo(() => {
-		// console.log({ favorites, id: venue.id })
-		return favorites.includes(venue.id)
-	}, [venue.id, favorites])
+		// console.log({ favorites, id: vendor.id })
+		return favorites.includes(vendor.id)
+	}, [vendor.id, favorites])
 
 	if (isFavorite) {
 		return (
-			<IconButton key={`${venue.id}.bookmark-solid`} onClick={handleRemove} title="Remove Bookmark">
+			<IconButton key={`${vendor.id}.bookmark-solid`} onClick={handleRemove} title="Remove Bookmark">
 				<i className="fa-solid fa-bookmark"></i>
 			</IconButton>
 		)
 	}
 
 	return (
-		<IconButton key={`${venue.id}-bookmark`} onClick={handleAdd} title="Add Bookmark">
+		<IconButton key={`${vendor.id}-bookmark`} onClick={handleAdd} title="Add Bookmark">
 			<i className="fa-light fa-bookmark"></i>
 		</IconButton>
 	)
