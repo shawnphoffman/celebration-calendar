@@ -12,6 +12,10 @@ const Expanded = styled.div`
 	display: flex;
 	flex-direction: row;
 	align-items: flex-start;
+
+	@media (max-width: 600px) {
+		flex-direction: column;
+	}
 `
 
 const Container = styled.div`
