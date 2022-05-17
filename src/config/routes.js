@@ -15,6 +15,7 @@ const Temp = LazyPreload(() => import('../pages/Temp'))
 const EventDetails = LazyPreload(() => import('../pages/EventDetails'))
 const VenueDetails = LazyPreload(() => import('../pages/VenueDetails'))
 const FavoritesList = LazyPreload(() => import('../pages/FavoritesList'))
+const Vendors = LazyPreload(() => import('../pages/Vendors'))
 
 // Change to conform to API?
 // https://reactrouter.com/docs/en/v6/api#useroutes
@@ -63,6 +64,7 @@ const Routes = {
 	Temp: {
 		path: '/temp',
 		component: Temp,
+		icon: 'fa-flask-vial',
 	},
 	EventDetails: {
 		path: '/event/:id',
@@ -76,6 +78,18 @@ const Routes = {
 		path: '/favorites/:uid',
 		component: FavoritesList,
 	},
+	Vendors: {
+		path: '/vendors',
+		component: Vendors,
+		icon: 'fa-store',
+		title: 'Vendors',
+	},
+	Map: {
+		path: '/map',
+		component: () => <div>MAP</div>,
+		icon: 'fa-map',
+		title: 'Map',
+	},
 }
 
 export const RegisteredRoutes = [
@@ -87,9 +101,18 @@ export const RegisteredRoutes = [
 	Routes.EventDetails,
 	Routes.VenueDetails,
 	Routes.FavoritesList,
+	Routes.Vendors,
+	Routes.Map,
 	Routes.Home,
 ]
 
-export const NavRoutes = [Routes.Home, Routes.Search, Routes.Favorites, Routes.FAQ]
+export const NavRoutes = [
+	Routes.Home,
+	Routes.Search,
+	Routes.Favorites,
+	Routes.Vendors,
+	...(process.env.NODE_ENV === 'development' && [Routes.Temp, Routes.Map]),
+	Routes.FAQ,
+]
 
 export default Routes

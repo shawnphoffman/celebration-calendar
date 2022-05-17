@@ -146,6 +146,12 @@ export const processApiData = data => {
 	}
 }
 
+export const processApiVendors = data => {
+	return {
+		vendors: [],
+	}
+}
+
 const colorList = [
 	'#FF8C00',
 	'#ffab00',

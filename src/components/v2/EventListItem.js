@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useMemo, useState } from 'react'
 import { styled } from 'linaria/react'
 
-import { dayColor, dayName, formatTime } from 'utils/eventUtils'
+import { dayColor, dayName, formatTime } from 'utils/dataUtils'
 
 import DownloadIcon from './DownloadIcon'
 import EventLinkIcon from './EventLinkIcon'
