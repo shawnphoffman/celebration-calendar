@@ -59,7 +59,7 @@ const Routes = {
 	User: {
 		path: '/login',
 		component: Login,
-		icon: 'fa-user-astronaut',
+		icon: 'fa-user-bounty-hunter',
 		title: 'User Info',
 	},
 	Temp: {

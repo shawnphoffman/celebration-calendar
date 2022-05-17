@@ -28,7 +28,7 @@ export const AuthNavIcon = memo(() => {
 					key="nav-user"
 					onMouseEnter={() => preloadRouteComponent(Routes.Login.component)}
 				>
-					<i className={`fa-solid ${Routes.User.icon}`}></i>
+					<i className={`fa-regular ${Routes.User.icon}`}></i>
 				</NavIcon>
 				<NavIcon to={Routes.Logout.path} title={Routes.Logout.title} as="span" onClick={handleLogout}>
 					<i className={`fa-solid ${Routes.Logout.icon}`}></i>
