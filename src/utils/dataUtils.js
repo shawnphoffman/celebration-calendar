@@ -147,8 +147,41 @@ export const processApiData = data => {
 }
 
 export const processApiVendors = data => {
+	if (!data || !data.space_orders) return
+
+	const vendors = []
+	const tattooArtists = []
+
+	const processBooth = booth => {
+		if (booth.startsWith('TAT')) return ['TAT*']
+
+		return booth.split(', ')
+	}
+
+	data.space_orders.forEach(s => {
+		const vendor = {
+			id: s.id,
+			company: decodeEntities(s.company).trim(),
+			description: decodeEntities(s.description).trim(),
+			booth: processBooth(s.booth),
+			exclusives: s.exclusives,
+			specials: s.specials,
+			images: s.image,
+			tags: s.tags,
+			url: s.store_url,
+			featured: s.featured,
+		}
+		if (s.booth === 'Tattoo Pavilion') {
+			tattooArtists.push(vendor)
+			return
+		}
+
+		vendors.push(vendor)
+	})
+
 	return {
-		vendors: [],
+		vendors,
+		tattooArtists,
 	}
 }
 
@@ -219,7 +252,7 @@ const transformEvent = rawEvent => {
 	}
 }
 
-function decodeEntities(encodedString) {
+export function decodeEntities(encodedString) {
 	var translate_re = /&(nbsp|amp|quot|lt|gt);/g
 	var translate = {
 		nbsp: ' ',

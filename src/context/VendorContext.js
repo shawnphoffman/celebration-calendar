@@ -17,6 +17,7 @@ export const VendorAction = {
 
 const initialReducerState = {
 	allVendors: [],
+	allTattoos: [],
 	// allVenues: [],
 	// disabledVenues: JSON.parse(localStorage.getItem(disabledVenueStorageKey)),
 }
@@ -31,6 +32,7 @@ const reducer = (state, action) => {
 			return {
 				...state,
 				allVendors: action.vendors,
+				allTattoos: action.tattooArtists,
 			}
 		default:
 			return state
@@ -44,14 +46,14 @@ const VendorProvider = ({ children }) => {
 		fetch(process.env.REACT_APP_VENDOR_ENDPOINT)
 			.then(res => res.json())
 			.then(data => {
-				const { vendors } = processApiVendors(data)
-				dispatch({ type: VendorAction.SET_VENDORS, vendors })
+				const { vendors, tattooArtists } = processApiVendors(data)
+				dispatch({ type: VendorAction.SET_VENDORS, vendors, tattooArtists })
 			})
 			.catch(e => {
 				// Panelbear.track(Vendor.FetchFailure)
 				import('../data/vendors.json').then(rawVendors => {
-					const { vendors } = processApiVendors(rawVendors)
-					dispatch({ type: VendorAction.SET_VENDORS, vendors })
+					const { vendors, tattooArtists } = processApiVendors(rawVendors)
+					dispatch({ type: VendorAction.SET_VENDORS, vendors, tattooArtists })
 				})
 			})
 	}, [])

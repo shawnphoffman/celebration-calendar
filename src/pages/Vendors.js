@@ -4,13 +4,13 @@ import VendorProvider from 'context/VendorContext'
 
 // import Agenda from 'components/v2/Agenda'
 
-// const Filters = lazy(() => import('components/Filters'))
+const VendorList = lazy(() => import('components/vendors/VendorList'))
 
 const Vendors = () => {
 	return (
 		<VendorProvider>
 			{/* <Filters /> */}
-			{/* <Agenda /> */}
+			<VendorList />
 		</VendorProvider>
 	)
 }

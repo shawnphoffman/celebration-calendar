@@ -4,9 +4,9 @@ import { useDatabase, useDatabaseObjectData } from 'reactfire'
 import { equalTo, orderByValue, query, ref } from 'firebase/database'
 import { styled } from 'linaria/react'
 
+import EventListItem from 'components/events/EventListItem'
 import Loading from 'components/Loading'
 import { PageTitle } from 'components/styles'
-import EventListItem from 'components/v2/EventListItem'
 import { useEventContext } from 'context/EventContext'
 
 const NoFavorites = styled.div`

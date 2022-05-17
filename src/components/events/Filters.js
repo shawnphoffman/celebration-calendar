@@ -3,7 +3,7 @@ import { styled } from 'linaria/react'
 
 import { EventAction, useEventContext } from 'context/EventContext'
 
-import { cleanVenueName, colorMap } from '../utils/dataUtils'
+import { cleanVenueName, colorMap } from '../../utils/dataUtils'
 
 const Wrapper = styled.div`
 	display: flex;

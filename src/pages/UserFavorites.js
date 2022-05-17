@@ -3,9 +3,9 @@ import { NavLink } from 'react-router-dom'
 import { useSigninCheck } from 'reactfire'
 import { styled } from 'linaria/react'
 
+import CopyUrlIcon from 'components/events/CopyUrlIcon'
+import EventListItem from 'components/events/EventListItem'
 import { PageTitle } from 'components/styles'
-import EventListItem from 'components/v2/EventListItem'
-import FaveListLinkIcon from 'components/v2/FaveListLinkIcon'
 import Routes from 'config/routes'
 import { useEventContext } from 'context/EventContext'
 import { useFavoritesContext } from 'context/FavoritesContext'
@@ -72,7 +72,7 @@ const Favorites = () => {
 	return (
 		<Container>
 			<PageTitle>
-				Your Favorites <FaveListLinkIcon />
+				Your Favorites <CopyUrlIcon />
 			</PageTitle>
 			{showLoginPrompt && (
 				<>

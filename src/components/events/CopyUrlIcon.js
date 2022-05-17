@@ -19,7 +19,7 @@ export const Button = styled.div`
 	}
 `
 
-const FaveListLinkIcon = () => {
+const CopyUrlIcon = () => {
 	const [copied, setCopied] = useState(false)
 	const { status, data: signInCheckResult } = useSigninCheck()
 	const { data: user } = useUser()
@@ -61,4 +61,4 @@ const FaveListLinkIcon = () => {
 	)
 }
 
-export default memo(FaveListLinkIcon)
+export default memo(CopyUrlIcon)

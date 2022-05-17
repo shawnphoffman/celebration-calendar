@@ -2,9 +2,9 @@ import { memo, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { styled } from 'linaria/react'
 
+import EventListItem from 'components/events/EventListItem'
 import Loading from 'components/Loading'
 import { PageTitle } from 'components/styles'
-import EventListItem from 'components/v2/EventListItem'
 import { useEventContext } from 'context/EventContext'
 
 const Container = styled.div`

@@ -1,8 +1,8 @@
 import { lazy, memo } from 'react'
 
-import Agenda from 'components/v2/Agenda'
+import Agenda from 'components/events/Agenda'
 
-const Filters = lazy(() => import('components/Filters'))
+const Filters = lazy(() => import('components/events/Filters'))
 
 const Schedule = () => {
 	return (
