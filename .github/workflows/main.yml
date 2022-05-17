@@ -27,7 +27,8 @@ jobs:
           REACT_APP_FIREBASE_messagingSenderId: ${{ secrets.REACT_APP_FIREBASE_messagingSenderId }}
           REACT_APP_FIREBASE_appId: ${{ secrets.REACT_APP_FIREBASE_appId }}
           REACT_APP_FIREBASE_databaseURL: ${{ secrets.REACT_APP_FIREBASE_databaseURL }}
-          REACT_APP_RECAPTCHA_SITE_KEY: ${{ secrets.REACT_APP_RECAPTCHA_SITE_KEY }}
+          REACT_APP_RECAPTCHA_SITE_KEY: ${{ secrets.REACT_APP_RECAPTCHA_SITE_KEY }}REACT_APP_VENDOR_ENDPOINT
+          REACT_APP_VENDOR_ENDPOINT: ${{ secrets.REACT_APP_VENDOR_ENDPOINT }}
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@3.7.1
