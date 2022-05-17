@@ -32,19 +32,25 @@ const Faq = () => {
 			<Section>
 				<List>
 					<LinkItem href="https://www.starwarscelebration.com/en-us/explore-the-show.html">Official Show Info</LinkItem>
-					<LinkItem href="https://github.com/shawnphoffman/celebration-calendar">Project Source</LinkItem>
-					<LinkItem href="https://twitter.com/iceplanethoff">
-						<i className="fa-brands fa-twitter"></i> Follow me on Twitter
+					<LinkItem href="https://celebratingstarwars.blogspot.com/p/celebration-fan-events-2022.html">Additional Fan Events</LinkItem>
+					<LinkItem href="https://www.reddit.com/r/StarWarsCelebration">Celebration Subreddit</LinkItem>
+					<LinkItem href="https://discord.com/invite/XKa9E3Z">Celebration Discord Server</LinkItem>
+					<LinkItem href="https://www.starwars.com/news/star-wars-celebration-anaheim-2022-store-exclusives">
+						Celebration Store Exclusives
 					</LinkItem>
 				</List>
 			</Section>
 			{/*  */}
-			<PageTitle>Recommendations</PageTitle>
+			<PageTitle>Podcast Recommendations</PageTitle>
 			<Section>
 				<List>
-					<ListItem>
-						<i>Coming Soon...</i>
-					</ListItem>
+					<LinkItem href="https://twitter.com/BlueHarvestPod">Blue Harvest</LinkItem>
+					<LinkItem href="https://twitter.com/SteeleWars">Steele Wars</LinkItem>
+					<LinkItem href="https://twitter.com/bad_motivators">The Bad Motivators</LinkItem>
+					<LinkItem href="https://twitter.com/TheSithList">The Sith List</LinkItem>
+					<LinkItem href="https://twitter.com/cantobightpod">The Canto Bight Dispatch</LinkItem>
+					<LinkItem href="https://twitter.com/StarWarsSpelt">Star Wars Spelt Out</LinkItem>
+					<LinkItem href="https://twitter.com/ScruffyPodcast">Scruffy Lookin' Podcasters</LinkItem>
 				</List>
 			</Section>
 			{/*  */}
@@ -69,6 +75,16 @@ const Faq = () => {
 					This site doesn't record any personal information. The only data that is recorded is event data to help me understand what people
 					are using. I use PanelBear to track the following events without PII attached. <strong>{Object.keys(Event).join(', ')}</strong>
 				</div>
+			</Section>
+			{/*  */}
+			<PageTitle>Technical Stuff</PageTitle>
+			<Section>
+				<List>
+					<LinkItem href="https://github.com/shawnphoffman/celebration-calendar">Project Source Code</LinkItem>
+					<LinkItem href="https://twitter.com/iceplanethoff">
+						<i className="fa-brands fa-twitter"></i> Follow me on Twitter
+					</LinkItem>
+				</List>
 			</Section>
 		</NonScrollWrapper>
 	)

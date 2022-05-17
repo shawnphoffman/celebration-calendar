@@ -115,6 +115,40 @@ const customEvents = [
 		color: 'var(--linkHover)',
 		url: 'https://disneyland.disney.go.com/events-tours/disneyland/after-dark-star-wars-nite/',
 	},
+	{
+		id: 'game-1',
+		summary: 'Los Angeles Angels Star Wars Night',
+		description: `TICKETED EVENT: It's Star Wars Night for the Los Angeles Angels.
+
+		With Celebration in town the Angels have a special Star Wars giveaway for their game against the Toronto Blue Jays on Friday, May 27.
+
+		The first 25,000 fans in attendance will receive an exclusive Ohtani-Wan Kenobi bobblehead figure.`,
+		venue: ' After Hours',
+		timezoneStartAt: 'America/Los_Angeles',
+		startDate: new Date('2022-05-27T18:38:00'),
+		endDate: new Date('2022-05-27T21:00:00'),
+		startAt: convertDate(new Date('2022-05-27T18:38:00').toISOString()),
+		endAt: convertDate(new Date('2022-05-27T21:00:00').toISOString()),
+		color: 'var(--linkHover)',
+		url: 'https://www.mlb.com/app/ballpark/angels/tickets/single-game-tickets/home-game-26/public',
+		address: '2000 E Gene Autry Way Anaheim, CA 92806',
+	},
+	{
+		id: 'auction-1',
+		summary: 'Make a Wish Charity Auction',
+		description: `Open to the public charity auction with Cliff Cramp. There will be Star Wars prints to win and an online auction for a one-of-a-kind NFT. NFT bids can be placed here:
+
+		https://discover.viewsonic.com/colorpro-nft/`,
+		venue: ' After Hours',
+		timezoneStartAt: 'America/Los_Angeles',
+		startDate: new Date('2022-05-27T18:00:00'),
+		endDate: new Date('2022-05-27T20:00:00'),
+		startAt: convertDate(new Date('2022-05-27T18:00:00').toISOString()),
+		endAt: convertDate(new Date('2022-05-27T20:00:00').toISOString()),
+		color: 'var(--linkHover)',
+		url: 'https://www.facebook.com/groups/759403824161539/posts/4565378396897377/',
+		address: 'Anaheim Marriott 700 West Convention Way Anaheim, CA 92802',
+	},
 ]
 
 export const processApiData = data => {
