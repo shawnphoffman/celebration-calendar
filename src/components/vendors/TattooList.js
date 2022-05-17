@@ -71,9 +71,9 @@ const VendorList = () => {
 
 	return (
 		<Container>
-			<PageTitle>Search Tattoo Artists</PageTitle>
+			<PageTitle>Search Artists</PageTitle>
 			<InputWrapper>
-				<Input onChange={handleChange} type="text" placeholder="Search tattoo artists..." />
+				<Input onChange={handleChange} type="text" placeholder="Search artists..." />
 			</InputWrapper>
 			<ScrollBox>
 				<Suspense fallback={<Loading />}>

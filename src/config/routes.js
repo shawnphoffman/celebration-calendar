@@ -92,7 +92,7 @@ const Routes = {
 	Tattoos: {
 		path: '/tattoos',
 		component: Tattoos,
-		icon: 'fa-skull',
+		icon: 'fa-paintbrush',
 		title: 'Tattoos',
 	},
 	Map: {
@@ -123,7 +123,8 @@ export const NavRoutes = [
 	Routes.Search,
 	Routes.Favorites,
 	Routes.Vendors,
-	...(process.env.NODE_ENV === 'development' ? [Routes.Tattoos] : []),
+	Routes.Tattoos,
+	// ...(process.env.NODE_ENV === 'development' ? [Routes.Tattoos] : []),
 	Routes.FAQ,
 ]
 
