@@ -3,7 +3,7 @@ import Fuse from 'fuse.js'
 import { styled } from 'linaria/react'
 
 import Loading from 'components/Loading'
-import { Input, InputWrapper } from 'components/styles'
+import { Input, InputWrapper, PageTitle } from 'components/styles'
 import { useVendorContext } from 'context/VendorContext'
 
 import VendorListItem from './VendorListItem'
@@ -71,6 +71,7 @@ const VendorList = () => {
 
 	return (
 		<Container>
+			<PageTitle>Search Vendors</PageTitle>
 			<InputWrapper>
 				<Input onChange={handleChange} type="text" placeholder="Search vendors..." />
 			</InputWrapper>

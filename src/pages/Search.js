@@ -3,7 +3,7 @@ import Fuse from 'fuse.js'
 import { styled } from 'linaria/react'
 
 import EventListItem from 'components/events/EventListItem'
-import { Input, InputWrapper } from 'components/styles'
+import { Input, InputWrapper, PageTitle } from 'components/styles'
 import { useEventContext } from 'context/EventContext'
 
 const options = {
@@ -66,6 +66,7 @@ const Search = () => {
 
 	return (
 		<Container>
+			<PageTitle>Search Events</PageTitle>
 			<InputWrapper>
 				<Input onChange={handleChange} type="text" placeholder="Search panels..." />
 			</InputWrapper>

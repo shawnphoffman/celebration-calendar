@@ -158,6 +158,14 @@ export const processApiVendors = data => {
 		return booth.split(', ')
 	}
 
+	const processUrl = url => {
+		if (!url) return url
+		if (url.startsWith('www')) {
+			return `https://${url}`
+		}
+		return url
+	}
+
 	data.space_orders.forEach(s => {
 		const vendor = {
 			id: s.id,
@@ -168,7 +176,7 @@ export const processApiVendors = data => {
 			specials: s.specials,
 			images: s.image,
 			tags: s.tags,
-			url: s.store_url,
+			url: processUrl(s.store_url),
 			featured: s.featured,
 		}
 		if (s.booth === 'Tattoo Pavilion') {

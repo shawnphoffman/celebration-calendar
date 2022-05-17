@@ -4,22 +4,15 @@ import React, { createContext, memo, useContext, useEffect, useReducer } from 'r
 // import Vendor from 'utils/events'
 import { processApiVendors } from 'utils/dataUtils'
 
-// const disabledVenueStorageKey = 'SWC.DisabledVenues.2'
-
 const VendorContext = createContext()
 
 export const VendorAction = {
-	// TOGGLE_VENUE: 'TOGGLE_VENUE',
-	// ALL_VENUES_ON: 'ALL_VENUES_ON',
-	// ALL_VENUES_OFF: 'ALL_VENUES_OFF',
 	SET_VENDORS: 'SET_VENDORS',
 }
 
 const initialReducerState = {
 	allVendors: [],
 	allTattoos: [],
-	// allVenues: [],
-	// disabledVenues: JSON.parse(localStorage.getItem(disabledVenueStorageKey)),
 }
 
 const reducer = (state, action) => {
@@ -57,10 +50,6 @@ const VendorProvider = ({ children }) => {
 				})
 			})
 	}, [])
-
-	// useEffect(() => {
-	// 	localStorage.setItem(disabledVenueStorageKey, JSON.stringify(state.disabledVenues))
-	// }, [state.disabledVenues])
 
 	return <VendorContext.Provider value={[state, dispatch]}>{children}</VendorContext.Provider>
 }

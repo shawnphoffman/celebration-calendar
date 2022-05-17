@@ -72,7 +72,7 @@ const Favorites = () => {
 	return (
 		<Container>
 			<PageTitle>
-				Your Favorites <CopyUrlIcon />
+				Your Favorited Events <CopyUrlIcon />
 			</PageTitle>
 			{showLoginPrompt && (
 				<>

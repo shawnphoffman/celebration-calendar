@@ -1,13 +1,34 @@
 import React, { memo, useCallback, useMemo, useState } from 'react'
 import { styled } from 'linaria/react'
 
+import FavoriteVendorIcon from './FavoriteVendorIcon'
+
+const Details = styled.div`
+	display: flex;
+	flex-direction: column;
+`
+
+const Photo = styled.img`
+	margin-top: 8px;
+	margin-right: 8px;
+	border-radius: 16px;
+	max-width: 120px;
+`
+
+const Expanded = styled.div`
+	display: flex;
+	flex-direction: row;
+	align-items: flex-start;
+`
 const UrlIcon = styled.i`
 	margin-left: 4px;
 `
 
 const ExpandIcon = styled.span`
 	color: var(--linkHover);
-	margin-left: 16px;
+	margin-top: 4px;
+	font-size: 20px;
+	cursor: pointer;
 `
 
 const Container = styled.div`
@@ -96,45 +117,28 @@ const VendorListItem = ({ venue, forceOpen = false }) => {
 			<ColorBlock color={venue.featured ? 'var(--fallback)' : null} />
 			<Booth>{venue.booth.join('\n')}</Booth>
 			<Event>
-				<Title>
-					{venue.company}
-					{canExpand && (
-						<ExpandIcon>
-							<i className="fa-solid fa-arrows-from-line"></i>
-						</ExpandIcon>
-					)}
-				</Title>
-				{/* TAGS */}
-				{/* <div>
-					{venue.tags.map(t => (
-						<div key={t.id}>{decodeEntities(t.tag)}</div>
-					))}
-				</div> */}
-				{/* <Details>
-					<NoWrap>
-						{time.start} - {time.end}
-					</NoWrap>
-					<NoWrap>({event.venue.trim()})</NoWrap>
-				</Details> */}
+				<Title>{venue.company}</Title>
 				{expanded && (
-					<>
-						<Description>{venue.description}</Description>
-						{venue.url && (
-							<EventLink href={venue.url} target="_blank" rel="noreferrer">
-								Visit store URL <UrlIcon className="fa-solid fa-up-right-from-square"></UrlIcon>
-							</EventLink>
-						)}
-					</>
+					<Expanded>
+						<Photo src={venue.images.small} alt="" />
+						<Details>
+							<Description>{venue.description}</Description>
+							{venue.url && (
+								<EventLink href={venue.url} target="_blank" rel="noreferrer">
+									Visit store URL <UrlIcon className="fa-solid fa-up-right-from-square"></UrlIcon>
+								</EventLink>
+							)}
+						</Details>
+					</Expanded>
 				)}
 			</Event>
 			<ActionWrapper>
-				{/* <FavoriteIcon event={event} />
-				{expanded && (
-					<>
-						<DownloadIcon event={event} />
-						<EventLinkIcon event={event} />
-					</>
-				)} */}
+				<FavoriteVendorIcon venue={venue} />
+				{canExpand && (
+					<ExpandIcon>
+						<i className="fa-solid fa-arrows-from-line"></i>
+					</ExpandIcon>
+				)}
 			</ActionWrapper>
 		</Container>
 	)

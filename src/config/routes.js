@@ -123,7 +123,7 @@ export const NavRoutes = [
 	Routes.Search,
 	Routes.Favorites,
 	Routes.Vendors,
-	...(process.env.NODE_ENV === 'development' ? [Routes.Temp, Routes.Map, Routes.Tattoos] : []),
+	...(process.env.NODE_ENV === 'development' ? [Routes.Tattoos] : []),
 	Routes.FAQ,
 ]
 

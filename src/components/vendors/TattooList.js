@@ -3,7 +3,7 @@ import Fuse from 'fuse.js'
 import { styled } from 'linaria/react'
 
 import Loading from 'components/Loading'
-import { Input, InputWrapper } from 'components/styles'
+import { Input, InputWrapper, PageTitle } from 'components/styles'
 import { useVendorContext } from 'context/VendorContext'
 
 import TattooListItem from './TattooListItem'
@@ -71,8 +71,9 @@ const VendorList = () => {
 
 	return (
 		<Container>
+			<PageTitle>Search Tattoo Artists</PageTitle>
 			<InputWrapper>
-				<Input onChange={handleChange} type="text" placeholder="Search vendors..." />
+				<Input onChange={handleChange} type="text" placeholder="Search tattoo artists..." />
 			</InputWrapper>
 			<ScrollBox>
 				<Suspense fallback={<Loading />}>
