@@ -1,4 +1,5 @@
-import React, { memo, useMemo } from 'react'
+// import React, { memo, useMemo } from 'react'
+import React, { memo } from 'react'
 import { styled } from 'linaria/react'
 
 import FavoriteVendorIcon from './FavoriteVendorIcon'
@@ -41,12 +42,12 @@ const UrlIcon = styled.i`
 	margin-left: 4px;
 `
 
-const ExpandIcon = styled.span`
-	color: var(--linkHover);
-	margin-top: 4px;
-	font-size: 20px;
-	cursor: pointer;
-`
+// const ExpandIcon = styled.span`
+// 	color: var(--linkHover);
+// 	margin-top: 4px;
+// 	font-size: 20px;
+// 	cursor: pointer;
+// `
 
 const Container = styled.div`
 	display: flex;
@@ -125,9 +126,9 @@ const VendorListItem = ({ vendor, forceOpen = true }) => {
 	// 	}
 	// }, [forceOpen, vendor.description])
 
-	const canExpand = useMemo(() => {
-		return vendor.description || vendor.url
-	}, [vendor])
+	// const canExpand = useMemo(() => {
+	// 	return vendor.description || vendor.url
+	// }, [vendor])
 
 	return (
 		// <Container onClick={handleClick}>
@@ -163,11 +164,11 @@ const VendorListItem = ({ vendor, forceOpen = true }) => {
 			</Event>
 			<ActionWrapper>
 				<FavoriteVendorIcon vendor={vendor} />
-				{canExpand && (
+				{/* {canExpand && (
 					<ExpandIcon>
 						<i className="fa-solid fa-arrows-from-line"></i>
 					</ExpandIcon>
-				)}
+				)} */}
 			</ActionWrapper>
 		</Container>
 	)
