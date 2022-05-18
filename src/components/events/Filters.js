@@ -14,13 +14,15 @@ const Wrapper = styled.div`
 	margin-bottom: 4px;
 	max-width: 1200px;
 	flex: 0;
+	margin-right: -6px;
+	margin-left: -6px;
 `
 
 const VenueWrapper = styled.div`
 	padding: 4px 8px;
 	font-size: 12px;
 	white-space: nowrap;
-	margin: 2px 4px;
+	margin: 2px;
 	border-radius: 4px;
 	display: flex;
 	flex-direction: row;
@@ -39,7 +41,8 @@ const VenueName = styled.span`
 `
 
 const Indicator = styled.div`
-	margin-right: 8px;
+	font-size: 8px;
+	margin-right: 4px;
 	filter: none;
 	color: ${props => (props.enabled ? colorMap[props.name] ?? 'var(--text)' : 'var(--text)')};
 
@@ -56,7 +59,7 @@ const Venue = memo(({ enabled, name }) => {
 	return (
 		<VenueWrapper enabled={enabled}>
 			<Indicator name={cleanName} enabled={enabled} key={`i-${name}-${enabled}`}>
-				<i className={`fa-solid ${enabled ? 'fa-circle' : 'fa-circle-dashed'}`}></i>
+				<i className={`fa-solid ${enabled ? 'fa-square' : 'fa-square-dashed'}`}></i>
 			</Indicator>
 			<VenueName enabled={enabled}>{cleanName.trim()}</VenueName>
 		</VenueWrapper>
