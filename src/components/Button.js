@@ -20,14 +20,13 @@ const StyledButton = styled(Link)`
 		color: var(--inputBg);
 		background: var(--linkHover);
 	}
+	text-decoration: none;
+	cursor: pointer;
 
 	margin: 8px;
 	font-size: 20px;
 	padding: 8px 16px;
 	min-width: 175px;
-
-	text-decoration: none;
-	cursor: pointer;
 `
 
 const Button = props => {

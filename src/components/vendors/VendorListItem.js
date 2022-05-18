@@ -1,5 +1,4 @@
-// import React, { memo, useMemo } from 'react'
-import React, { memo } from 'react'
+import React, { memo, useCallback, useMemo, useState } from 'react'
 import { styled } from 'linaria/react'
 
 import FavoriteVendorIcon from './FavoriteVendorIcon'
@@ -46,12 +45,12 @@ const UrlIcon = styled.i`
 	margin-left: 4px;
 `
 
-// const ExpandIcon = styled.span`
-// 	color: var(--linkHover);
-// 	margin-top: 4px;
-// 	font-size: 20px;
-// 	cursor: pointer;
-// `
+const ExpandIcon = styled.span`
+	color: var(--linkHover);
+	margin-top: 4px;
+	font-size: 20px;
+	cursor: pointer;
+`
 
 const Container = styled.div`
 	display: flex;
@@ -121,58 +120,57 @@ const ActionWrapper = styled.div`
 	}
 `
 
-const VendorListItem = ({ vendor, forceOpen = true }) => {
-	// const [expanded, setExpanded] = useState(forceOpen)
+const VendorListItem = ({ vendor, forceOpen }) => {
+	const [expanded, setExpanded] = useState(forceOpen)
 
-	// const handleClick = useCallback(() => {
-	// 	if (!forceOpen && vendor.description) {
-	// 		setExpanded(prev => !prev)
-	// 	}
-	// }, [forceOpen, vendor.description])
+	const handleClick = useCallback(() => {
+		if (!forceOpen && vendor.description) {
+			setExpanded(prev => !prev)
+		}
+	}, [forceOpen, vendor.description])
 
-	// const canExpand = useMemo(() => {
-	// 	return vendor.description || vendor.url
-	// }, [vendor])
+	const canExpand = useMemo(() => {
+		return vendor.description || vendor.url
+	}, [vendor])
 
 	return (
-		// <Container onClick={handleClick}>
-		<Container>
+		<Container onClick={handleClick}>
 			<ColorBlock color={vendor.featured ? 'var(--fallback)' : null} />
 			<Booth>{vendor.booth.join('\n')}</Booth>
 			<Event>
 				<Title>{vendor.company}</Title>
-				{/* {expanded && ( */}
-				<Expanded>
-					{vendor.images.small && <Photo src={vendor.images.small} alt="" />}
-					<Details>
-						<Description>{vendor.description}</Description>
-						{vendor.specials && (
-							<Exclusives>
-								<div>Vendor Exclusives:</div>
-								{vendor.specials.map(e => (
-									<ExclusiveLink as={e.link ? 'a' : 'div'} href={e.link} key={e.id}>
-										{'- '}
-										{e.title} ${e.price || '?'}
-									</ExclusiveLink>
-								))}
-							</Exclusives>
-						)}
-						{vendor.url && (
-							<EventLink href={vendor.url} target="_blank" rel="noreferrer">
-								Visit store URL <UrlIcon className="fa-solid fa-up-right-from-square"></UrlIcon>
-							</EventLink>
-						)}
-					</Details>
-				</Expanded>
-				{/* )} */}
+				{expanded && (
+					<Expanded>
+						{vendor.images.small && <Photo src={vendor.images.small} alt="" />}
+						<Details>
+							<Description>{vendor.description}</Description>
+							{vendor.specials && (
+								<Exclusives>
+									<div>Vendor Exclusives:</div>
+									{vendor.specials.map(e => (
+										<ExclusiveLink as={e.link ? 'a' : 'div'} href={e.link} key={e.id}>
+											{'- '}
+											{e.title} ${e.price || '?'}
+										</ExclusiveLink>
+									))}
+								</Exclusives>
+							)}
+							{vendor.url && (
+								<EventLink href={vendor.url} target="_blank" rel="noreferrer">
+									Visit store URL <UrlIcon className="fa-solid fa-up-right-from-square"></UrlIcon>
+								</EventLink>
+							)}
+						</Details>
+					</Expanded>
+				)}
 			</Event>
 			<ActionWrapper>
 				<FavoriteVendorIcon vendor={vendor} />
-				{/* {canExpand && (
+				{canExpand && (
 					<ExpandIcon>
 						<i className="fa-solid fa-arrows-from-line"></i>
 					</ExpandIcon>
-				)} */}
+				)}
 			</ActionWrapper>
 		</Container>
 	)
