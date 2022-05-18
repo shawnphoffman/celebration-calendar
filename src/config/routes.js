@@ -49,7 +49,7 @@ const Routes = {
 	Login: {
 		path: '/login',
 		component: Login,
-		icon: 'fa-right-to-bracket',
+		icon: 'fa-user',
 		title: 'Login',
 	},
 	Logout: {
