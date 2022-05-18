@@ -3,6 +3,7 @@ import Fuse from 'fuse.js'
 import { styled } from 'linaria/react'
 
 import EventListItem from 'components/events/EventListItem'
+import Loading from 'components/Loading'
 import { Input, InputWrapper, PageTitle } from 'components/styles'
 import { useEventContext } from 'context/EventContext'
 
@@ -44,7 +45,7 @@ const Search = () => {
 	const [state] = useEventContext()
 	const [search, setSearch] = useState('')
 	const [results, setResults] = useState([])
-	const [, startTransition] = useTransition()
+	const [isPending, startTransition] = useTransition()
 
 	const fuse = useMemo(() => {
 		return new Fuse(state.allEvents, options)
@@ -66,7 +67,10 @@ const Search = () => {
 
 	return (
 		<Container>
-			<PageTitle>Search Events</PageTitle>
+			<PageTitle>
+				Search Events
+				{isPending && <Loading inline />}
+			</PageTitle>
 			<InputWrapper>
 				<Input onChange={handleChange} type="text" placeholder="Search panels..." />
 			</InputWrapper>

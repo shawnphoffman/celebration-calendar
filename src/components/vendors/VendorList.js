@@ -47,7 +47,7 @@ const VendorList = () => {
 	const [state] = useVendorContext()
 	const [search, setSearch] = useState('')
 	const [results, setResults] = useState([])
-	const [, startTransition] = useTransition()
+	const [isPending, startTransition] = useTransition()
 
 	const fuse = useMemo(() => {
 		return new Fuse(state.allVendors, options)
@@ -71,7 +71,10 @@ const VendorList = () => {
 
 	return (
 		<Container>
-			<PageTitle>Search Vendors</PageTitle>
+			<PageTitle>
+				Search Vendors
+				{isPending && <Loading inline />}
+			</PageTitle>
 			<InputWrapper>
 				<Input onChange={handleChange} type="text" placeholder="Search vendors..." />
 			</InputWrapper>
