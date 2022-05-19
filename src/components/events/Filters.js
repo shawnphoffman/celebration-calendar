@@ -1,9 +1,16 @@
 import { memo, useCallback, useMemo } from 'react'
+import { NavLink } from 'react-router-dom'
 import { styled } from 'linaria/react'
 
+import Routes from 'config/routes'
 import { EventAction, useEventContext } from 'context/EventContext'
 
 import { cleanVenueName, colorMap } from '../../utils/dataUtils'
+
+const PrintLink = styled(NavLink)`
+	text-decoration: none;
+	color: var(--text);
+`
 
 const Wrapper = styled.div`
 	display: flex;
@@ -100,6 +107,14 @@ const Filters = memo(() => {
 					<VenueName enabled>All Off</VenueName>
 				</VenueWrapper>
 			</div>
+			<PrintLink to={Routes.PrintSchedule.path}>
+				<VenueWrapper enabled>
+					<Indicator enabled>
+						<i className="fa-solid fa-print" />
+					</Indicator>
+					<VenueName enabled>Print</VenueName>
+				</VenueWrapper>
+			</PrintLink>
 		</Wrapper>
 	)
 })

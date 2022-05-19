@@ -87,6 +87,7 @@ const Routes = {
 	PrintSchedule: {
 		path: '/print',
 		component: PrintSchedule,
+		icon: 'fa-print',
 		title: 'Print',
 	},
 	Vendors: {
