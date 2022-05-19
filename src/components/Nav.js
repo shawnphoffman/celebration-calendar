@@ -12,11 +12,17 @@ const Nav = styled.div`
 	justify-content: center;
 	flex-wrap: wrap;
 	display: flex;
+
+	@media print {
+		display: none;
+		background: none;
+		border: none;
+	}
 `
 
 const NavBar = () => {
 	return (
-		<Nav>
+		<Nav id="nav">
 			{NavRoutes.map(r => (
 				<NavIcon to={r.path} title={r.title} key={r.title} onMouseEnter={() => preloadRouteComponent(r.component)}>
 					<i className={`fa-solid ${r.icon}`}></i>

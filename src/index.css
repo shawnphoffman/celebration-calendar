@@ -19,3 +19,12 @@ html body {
 	margin-left: auto;
 	margin-right: auto;
 }
+
+@media print {
+	html,
+	html body,
+	#root {
+		background: none !important;
+		height: auto;
+	}
+}

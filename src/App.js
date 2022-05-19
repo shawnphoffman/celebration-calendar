@@ -25,6 +25,15 @@ const AppWrapper = styled.div`
 	align-items: center;
 	padding: 0 8px 8px 8px;
 	background: var(--bg);
+
+	@media print {
+		background: none;
+		color: black;
+		padding: 0;
+		height: auto;
+		position: relative;
+		display: block;
+	}
 `
 
 const APP_CHECK_TOKEN = process.env.REACT_APP_RECAPTCHA_SITE_KEY
