@@ -2,6 +2,7 @@ import React, { memo, useCallback, useMemo, useState } from 'react'
 import { styled } from 'linaria/react'
 
 import DeleteEventIcon from 'components/auth/DeleteEventIcon'
+import EditEventIcon from 'components/auth/EditEventIcon'
 import { dayColor, dayName, formatTime } from 'utils/dataUtils'
 
 import DownloadIcon from './DownloadIcon'
@@ -99,7 +100,7 @@ const ActionWrapper = styled.div`
 	}
 `
 
-const EventListItem = ({ event, forceOpen = false }) => {
+const EventListItem = ({ event, forceOpen = false, onEdit }) => {
 	const [expanded, setExpanded] = useState(forceOpen)
 
 	const handleClick = useCallback(() => {
@@ -161,6 +162,8 @@ const EventListItem = ({ event, forceOpen = false }) => {
 						{!isUserEvent && <EventLinkIcon event={event} />}
 						{/* Delete */}
 						{isUserEvent && <DeleteEventIcon event={event} />}
+						{/* Edit */}
+						{isUserEvent && onEdit && <EditEventIcon event={event} onEdit={onEdit} />}
 					</>
 				)}
 			</ActionWrapper>

@@ -1,4 +1,4 @@
-import { memo, useCallback, useMemo, useRef, useState } from 'react'
+import { memo, useCallback, useMemo, useState } from 'react'
 import { useDatabase, useDatabaseObjectData } from 'reactfire'
 // import * as Panelbear from '@panelbear/panelbear-js'
 import { ref, set } from 'firebase/database'
@@ -168,15 +168,16 @@ const Wrapper = styled.div`
 `
 
 const UserEventForm = ({ user }) => {
-	const formRef = useRef()
-	const [error, setError] = useState()
-	const [title, setTitle] = useState()
-	const [description, setDescription] = useState()
-	const [startTime, setStartTime] = useState()
-	const [endTime, setEndTime] = useState()
-	const [url, setUrl] = useState()
-	const [address, setAddress] = useState()
-	const [imageUrl, setImageUrl] = useState()
+	const [error, setError] = useState('')
+	const [id, setId] = useState(uuidv4())
+	const [title, setTitle] = useState('')
+	const [description, setDescription] = useState('')
+	const [venue, setVenue] = useState('My Events')
+	const [startTime, setStartTime] = useState(new Date().toISOString().substring(0, 16))
+	const [endTime, setEndTime] = useState(new Date().toISOString().substring(0, 16))
+	const [url, setUrl] = useState('')
+	const [address, setAddress] = useState('')
+	const [imageUrl, setImageUrl] = useState('')
 
 	// ============================================================
 	const database = useDatabase()
@@ -231,15 +232,17 @@ const UserEventForm = ({ user }) => {
 
 	//
 	const handleReset = useCallback(() => {
-		setTitle(null)
-		setDescription(null)
-		setStartTime(null)
-		setEndTime(null)
-		setUrl(null)
-		setAddress(null)
-		setImageUrl(null)
-		setError(null)
-		formRef.current.reset()
+		console.log()
+		setId(uuidv4())
+		setTitle('')
+		setDescription('')
+		setVenue('')
+		setStartTime(new Date().toISOString().substring(0, 16))
+		setEndTime(new Date().toISOString().substring(0, 16))
+		setUrl('')
+		setAddress('')
+		setImageUrl('')
+		setError('')
 	}, [])
 
 	//
@@ -258,8 +261,14 @@ const UserEventForm = ({ user }) => {
 		setDescription(value)
 	}, [])
 	//
+	const handleVenueChange = useCallback(e => {
+		const value = e.target.value
+		setVenue(value)
+	}, [])
+	//
 	const handleStartChange = useCallback(e => {
 		const value = e.target.value
+		console.log({ value })
 		setStartTime(value)
 		if (!value) {
 			setError('Missing start time')
@@ -316,6 +325,11 @@ const UserEventForm = ({ user }) => {
 			return
 		}
 
+		if (!venue) {
+			setError('Missing venue')
+			return
+		}
+
 		if (!startTime) {
 			setError('Missing start time')
 			return
@@ -337,10 +351,10 @@ const UserEventForm = ({ user }) => {
 		}
 
 		const newEvent = {
-			id: uuidv4(),
+			id: id,
 			summary: title,
 			description: description ?? null,
-			venue: 'My Events',
+			venue: venue,
 			timezoneStartAt: 'America/Los_Angeles',
 			startDate: startTime,
 			endDate: endTime,
@@ -354,80 +368,110 @@ const UserEventForm = ({ user }) => {
 			private: true,
 		}
 
-		console.log({
-			newEvent,
-			title,
-			description,
-			startTime,
-			endTime,
-			url,
-			address,
-			imageUrl,
-		})
-
 		addUserEvent(newEvent.id, newEvent)
 		handleReset()
-	}, [addUserEvent, address, description, endTime, error, handleReset, imageUrl, startTime, title, url])
+	}, [addUserEvent, address, description, endTime, error, handleReset, id, imageUrl, startTime, title, url, venue])
+
+	const handleEdit = useCallback(event => {
+		// console.log('EDIT', event)
+		setId(event.id)
+		setTitle(event.summary)
+		setDescription(event.description)
+		setVenue(event.venue)
+		setStartTime(event.startDate)
+		setEndTime(event.endDate)
+		setUrl(event.url)
+		setAddress(event.address)
+		setImageUrl(event.imageUrl)
+	}, [])
 
 	return (
 		<Wrapper>
 			<Instructions>Custom events are private and not visible to other users.</Instructions>
 			{error && <Error>{error}</Error>}
 			{/*  */}
-			<form ref={formRef}>
+			{process.env.NODE_ENV === 'development' && (
 				<InputWrapper>
-					<Label>Title*:</Label>
+					<Label>ID:</Label>
 					<InputContainer>
-						<TextInput type="text" placeholder="Event title" onChange={handleTitleChange} />
+						<TextInput type="text" readOnly disabled value={id} />
 					</InputContainer>
 				</InputWrapper>
-				{/*  */}
-				<InputWrapper>
-					<Label>Description:</Label>
-					<InputContainer>
-						<TextArea type="text" placeholder="Event description" onChange={handleDescriptionChange} />
-					</InputContainer>
-				</InputWrapper>
-				{/*  */}
-				<InputWrapper>
-					<Label>Start Time*:</Label>
-					<InputContainer>
-						<DateTimeInput type="datetime-local" min="2022-05-23T12:00" max="2022-05-31T12:00" step="300" onChange={handleStartChange} />
-					</InputContainer>
-				</InputWrapper>
-				{/*  */}
-				<InputWrapper>
-					<Label>End Time*:</Label>
-					<InputContainer>
-						<DateTimeInput type="datetime-local" min="2022-05-23T12:00" max="2022-05-31T12:00" step="300" onChange={handleEndChange} />
-					</InputContainer>
-				</InputWrapper>
-				{/*  */}
-				<InputWrapper>
-					<Label>URL:</Label>
-					<InputContainer>
-						<TextInput type="text" placeholder="URL with event info (e.g. https://starwars.com)" onChange={handleUrlChange} />
-					</InputContainer>
-				</InputWrapper>
-				{/*  */}
-				<InputWrapper>
-					<Label>Physical Address:</Label>
-					<InputContainer>
-						<TextArea type="textarea" placeholder="Address of the venue" onChange={handleAddressChange} />
-					</InputContainer>
-				</InputWrapper>
-				{/*  */}
-				<InputWrapper>
-					<Label>Image URL:</Label>
-					<InputContainer>
-						<TextInput
-							type="text"
-							placeholder="Image URL to display (e.g. https://starwars.com/cool.png)"
-							onChange={handleImageUrlChange}
-						/>
-					</InputContainer>
-				</InputWrapper>
-			</form>
+			)}
+			<InputWrapper>
+				<Label>Title*:</Label>
+				<InputContainer>
+					<TextInput type="text" placeholder="Event title" onChange={handleTitleChange} value={title} />
+				</InputContainer>
+			</InputWrapper>
+			{/*  */}
+			<InputWrapper>
+				<Label>Description:</Label>
+				<InputContainer>
+					<TextArea type="text" placeholder="Event description" onChange={handleDescriptionChange} value={description} />
+				</InputContainer>
+			</InputWrapper>
+			{/*  */}
+			<InputWrapper>
+				<Label>Venue*:</Label>
+				<InputContainer>
+					<TextInput type="text" placeholder="Event venue" onChange={handleVenueChange} value={venue} />
+				</InputContainer>
+			</InputWrapper>
+			{/*  */}
+			<InputWrapper>
+				<Label>Start Time*:</Label>
+				<InputContainer>
+					<DateTimeInput
+						type="datetime-local"
+						min="2022-05-21T12:00"
+						max="2022-05-31T12:00"
+						step="300"
+						onChange={handleStartChange}
+						value={startTime}
+					/>
+				</InputContainer>
+			</InputWrapper>
+			{/*  */}
+			<InputWrapper>
+				<Label>End Time*:</Label>
+				<InputContainer>
+					<DateTimeInput
+						type="datetime-local"
+						min="2022-05-21T12:00"
+						max="2022-05-31T12:00"
+						step="300"
+						onChange={handleEndChange}
+						value={endTime}
+					/>
+				</InputContainer>
+			</InputWrapper>
+			{/*  */}
+			<InputWrapper>
+				<Label>URL:</Label>
+				<InputContainer>
+					<TextInput type="text" placeholder="URL with event info (e.g. https://starwars.com)" onChange={handleUrlChange} value={url} />
+				</InputContainer>
+			</InputWrapper>
+			{/*  */}
+			<InputWrapper>
+				<Label>Physical Address:</Label>
+				<InputContainer>
+					<TextArea type="textarea" placeholder="Address of the venue" onChange={handleAddressChange} value={address} />
+				</InputContainer>
+			</InputWrapper>
+			{/*  */}
+			<InputWrapper>
+				<Label>Image URL:</Label>
+				<InputContainer>
+					<TextInput
+						type="text"
+						placeholder="Image URL to display (e.g. https://starwars.com/cool.png)"
+						onChange={handleImageUrlChange}
+						value={imageUrl}
+					/>
+				</InputContainer>
+			</InputWrapper>
 			<ButtonWrapper>
 				<Button as="button" disabled={!!error} onClick={handleSubmit}>
 					Save Event
@@ -437,8 +481,7 @@ const UserEventForm = ({ user }) => {
 				</Button>
 			</ButtonWrapper>
 			{/*  */}
-			{/*  */}
-			<div>{userEvents && Object.values(userEvents).map(e => <EventListItem event={e} key={e.id} forceOpen />)}</div>
+			<div>{userEvents && Object.values(userEvents).map(e => <EventListItem event={e} key={e.id} onEdit={handleEdit} forceOpen />)}</div>
 		</Wrapper>
 	)
 }
