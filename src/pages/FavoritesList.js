@@ -40,6 +40,8 @@ const Favorites = () => {
 	const { uid } = useParams()
 	const database = useDatabase()
 
+	// ============================================================
+
 	// Shared Favorites Query
 	const sharedFavQ = useMemo(() => {
 		const sharedFavRef = ref(database, `user-favorites/${uid}`)
@@ -55,6 +57,8 @@ const Favorites = () => {
 		if (sharedFavResp?.status !== 'success' || !sharedFavResp?.data) return []
 		return Object.keys(sharedFavResp?.data) || []
 	}, [sharedFavResp?.data, sharedFavResp?.status])
+
+	// ============================================================
 
 	const hasFavorites = useMemo(() => {
 		return !!sharedFaveIds.length && sharedFavResp?.status === 'success'

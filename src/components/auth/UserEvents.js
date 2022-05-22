@@ -192,7 +192,30 @@ const UserEventForm = ({ user }) => {
 	// User Events
 	const userEvents = useMemo(() => {
 		if (userEventsRep?.status !== 'success' || !userEventsRep?.data) return null
-		return userEventsRep?.data
+		if (!userEventsRep?.data) {
+			return null
+		} else {
+			return Object.values(userEventsRep.data).sort((a, b) => {
+				const aStart = new Date(a.startDate)
+				const bStart = new Date(b.startDate)
+				const aEnd = new Date(a.endDate)
+				const bEnd = new Date(b.endDate)
+
+				if (aStart > bStart) return 1
+
+				if (aStart < bStart) return -1
+
+				if (aEnd > bEnd) return 1
+
+				if (aEnd < bEnd) return -1
+
+				if (a.summary > b.summary) return 1
+
+				if (a.summary < b.summary) return -1
+
+				return 0
+			})
+		}
 	}, [userEventsRep?.data, userEventsRep?.status])
 
 	// Add User Event
@@ -343,7 +366,8 @@ const UserEventForm = ({ user }) => {
 		})
 
 		addUserEvent(newEvent.id, newEvent)
-	}, [addUserEvent, address, description, endTime, error, imageUrl, startTime, title, url])
+		handleReset()
+	}, [addUserEvent, address, description, endTime, error, handleReset, imageUrl, startTime, title, url])
 
 	return (
 		<Wrapper>

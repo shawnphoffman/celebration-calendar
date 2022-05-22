@@ -1,6 +1,7 @@
 import { memo, useMemo } from 'react'
 import { NavLink } from 'react-router-dom'
-import { useSigninCheck } from 'reactfire'
+import { useDatabase, useDatabaseObjectData, useSigninCheck, useUser } from 'reactfire'
+import { ref } from 'firebase/database'
 import { styled } from 'linaria/react'
 
 import CopyUrlIcon from 'components/events/CopyUrlIcon'
@@ -10,6 +11,10 @@ import Routes from 'config/routes'
 import { useEventContext } from 'context/EventContext'
 import { useFavoritesContext } from 'context/FavoritesContext'
 
+const Divider = styled.hr`
+	width: 100%;
+	border-color: red;
+`
 const NoFavorites = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -18,7 +23,6 @@ const NoFavorites = styled.div`
 	margin-top: 16px;
 	font-weight: bold;
 `
-
 const Container = styled.div`
 	width: 100%;
 	display: flex;
@@ -53,6 +57,8 @@ const Favorites = () => {
 	const [state] = useEventContext()
 	const { favorites: ids } = useFavoritesContext()
 	const { status, data: signInCheckResult } = useSigninCheck()
+	const database = useDatabase()
+	const { data: user } = useUser()
 
 	const hasFavorites = useMemo(() => {
 		return !!ids.length
@@ -69,6 +75,47 @@ const Favorites = () => {
 		})
 	}, [ids, state.allEvents])
 
+	// ============================================================
+
+	// User Events Ref
+	const userEventsRef = useMemo(() => {
+		return ref(database, `user-events/${user?.uid}`)
+	}, [database, user])
+
+	// User Events Resp
+	const userEventsRep = useDatabaseObjectData(userEventsRef, {})
+
+	// User Events
+	const userEvents = useMemo(() => {
+		if (userEventsRep?.status !== 'success' || !userEventsRep?.data) return null
+		if (!userEventsRep?.data) {
+			return null
+		} else {
+			return Object.values(userEventsRep.data).sort((a, b) => {
+				const aStart = new Date(a.startDate)
+				const bStart = new Date(b.startDate)
+				const aEnd = new Date(a.endDate)
+				const bEnd = new Date(b.endDate)
+
+				if (aStart > bStart) return 1
+
+				if (aStart < bStart) return -1
+
+				if (aEnd > bEnd) return 1
+
+				if (aEnd < bEnd) return -1
+
+				if (a.summary > b.summary) return 1
+
+				if (a.summary < b.summary) return -1
+
+				return 0
+			})
+		}
+	}, [userEventsRep?.data, userEventsRep?.status])
+
+	// ============================================================
+
 	return (
 		<Container>
 			<PageTitle>
@@ -82,7 +129,9 @@ const Favorites = () => {
 				</>
 			)}
 			<ScrollBox>
-				{!hasFavorites && <NoFavorites>No favorites to display...</NoFavorites>}
+				{!hasFavorites && !userEvents && <NoFavorites>No favorites to display...</NoFavorites>}
+				{userEvents && userEvents.map(event => <EventListItem event={event} key={event.id} forceOpen />)}
+				{hasFavorites && userEvents && <Divider />}
 				{favorites.map(event => (
 					<EventListItem event={event} key={event.id} forceOpen />
 				))}
