@@ -1,12 +1,13 @@
 import { memo, useCallback, useMemo, useState } from 'react'
 import { useDatabase, useDatabaseObjectData } from 'reactfire'
-// import * as Panelbear from '@panelbear/panelbear-js'
+import * as Panelbear from '@panelbear/panelbear-js'
 import { ref, set } from 'firebase/database'
 import { styled } from 'linaria/react'
 import { v4 as uuidv4 } from 'uuid'
 
 import Button from 'components/Button'
 import EventListItem from 'components/events/EventListItem'
+import Event from 'utils/events'
 
 const Instructions = styled.div`
 	margin: 8px 0px 16px 0px;
@@ -236,7 +237,7 @@ const UserEventForm = ({ user }) => {
 		setId(uuidv4())
 		setTitle('')
 		setDescription('')
-		setVenue('')
+		setVenue('My Events')
 		setStartTime(new Date().toISOString().substring(0, 16))
 		setEndTime(new Date().toISOString().substring(0, 16))
 		setUrl('')
@@ -264,6 +265,11 @@ const UserEventForm = ({ user }) => {
 	const handleVenueChange = useCallback(e => {
 		const value = e.target.value
 		setVenue(value)
+		if (!value) {
+			setError('Missing venue')
+		} else {
+			setError(null)
+		}
 	}, [])
 	//
 	const handleStartChange = useCallback(e => {
@@ -370,6 +376,8 @@ const UserEventForm = ({ user }) => {
 
 		addUserEvent(newEvent.id, newEvent)
 		handleReset()
+
+		Panelbear.track(Event.AddOrEditCustomEvent)
 	}, [addUserEvent, address, description, endTime, error, handleReset, id, imageUrl, startTime, title, url, venue])
 
 	const handleEdit = useCallback(event => {
@@ -383,6 +391,7 @@ const UserEventForm = ({ user }) => {
 		setUrl(event.url)
 		setAddress(event.address)
 		setImageUrl(event.imageUrl)
+		Panelbear.track(Event.EditCustomEvent)
 	}, [])
 
 	return (

@@ -9,5 +9,9 @@ const Event = {
 	LogOut: 'LogOut',
 	EventLinkCopied: 'EventLinkCopied',
 	FavoritesLinkCopied: 'FavoritesLinkCopied',
+	DeleteCustomEvent: 'DeleteCustomEvent',
+	DeleteCustomEventConfirm: 'DeleteCustomEventConfirm',
+	AddOrEditCustomEvent: 'AddOrEditCustomEvent',
+	EditCustomEvent: 'EditCustomEvent',
 }
 export default Event
