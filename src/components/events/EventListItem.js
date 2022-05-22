@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useMemo, useState } from 'react'
 import { styled } from 'linaria/react'
 
+import DeleteEventIcon from 'components/auth/DeleteEventIcon'
 import { dayColor, dayName, formatTime } from 'utils/dataUtils'
 
 import DownloadIcon from './DownloadIcon'
@@ -158,6 +159,8 @@ const EventListItem = ({ event, forceOpen = false }) => {
 						<DownloadIcon event={event} />
 						{/* Open URL */}
 						{!isUserEvent && <EventLinkIcon event={event} />}
+						{/* Delete */}
+						{isUserEvent && <DeleteEventIcon event={event} />}
 					</>
 				)}
 			</ActionWrapper>

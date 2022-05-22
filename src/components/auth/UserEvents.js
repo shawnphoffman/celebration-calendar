@@ -414,7 +414,7 @@ const UserEventForm = ({ user }) => {
 			</ButtonWrapper>
 			{/*  */}
 			{/*  */}
-			<div>{userEvents && Object.values(userEvents).map(e => <EventListItem event={e} forceOpen />)}</div>
+			<div>{userEvents && Object.values(userEvents).map(e => <EventListItem event={e} key={e.id} forceOpen />)}</div>
 		</Wrapper>
 	)
 }
