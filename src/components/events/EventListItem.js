@@ -132,9 +132,7 @@ const EventListItem = ({ event, forceOpen = false, onEdit }) => {
 			<Event>
 				<Title>{event.summary}</Title>
 				<Details>
-					<NoWrap>
-						{time.start} - {time.end}
-					</NoWrap>
+					<NoWrap>{time.start === time.end ? time.start : `${time.start} - ${time.end}`}</NoWrap>
 					<NoWrap>({event.venue.trim()})</NoWrap>
 				</Details>
 				{expanded && (
