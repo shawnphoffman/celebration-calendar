@@ -10,7 +10,7 @@ import UserEvents from './UserEvents'
 
 const Divider = styled.hr`
 	width: 100%;
-	border-color: red;
+	border-color: var(--text);
 `
 const Wrapper = styled.div`
 	display: flex;
@@ -80,7 +80,6 @@ const UserProfile = ({ user }) => {
 			{/*  */}
 			<Divider />
 			<UserEvents user={user} />
-			<Divider />
 			{/*  */}
 		</Wrapper>
 	)

@@ -13,7 +13,7 @@ import { useFavoritesContext } from 'context/FavoritesContext'
 
 const Divider = styled.hr`
 	width: 100%;
-	border-color: red;
+	border-color: var(--text);
 `
 const NoFavorites = styled.div`
 	display: flex;
