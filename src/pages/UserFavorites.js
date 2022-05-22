@@ -79,6 +79,7 @@ const Favorites = () => {
 
 	// User Events Ref
 	const userEventsRef = useMemo(() => {
+		if (!user) return ref(database, `wow`)
 		return ref(database, `user-events/${user?.uid}`)
 	}, [database, user])
 
