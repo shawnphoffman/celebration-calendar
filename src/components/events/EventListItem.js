@@ -7,11 +7,25 @@ import DownloadIcon from './DownloadIcon'
 import EventLinkIcon from './EventLinkIcon'
 import FavoriteIcon from './FavoriteIcon'
 
+const EventImage = styled.img`
+	max-width: 120px;
+	max-height: 120px;
+`
+
 const Container = styled.div`
 	display: flex;
 	flex-direction: row;
 	border-bottom: 2px solid var(--bg);
 	cursor: pointer;
+`
+const ImageWrapper = styled.div`
+	background: var(--outline);
+	align-items: center;
+	display: flex;
+
+	${Container}:hover & {
+		background: var(--outlineHover);
+	}
 `
 const Event = styled.div`
 	padding: 16px;
@@ -97,6 +111,10 @@ const EventListItem = ({ event, forceOpen = false }) => {
 		return dayName[new Date(event.startAt).getDay()]
 	}, [event.startAt])
 
+	const isUserEvent = useMemo(() => {
+		return event?.type === 'userEvent'
+	}, [event])
+
 	const time = useMemo(
 		() => ({
 			start: formatTime(event.startAt),
@@ -126,15 +144,20 @@ const EventListItem = ({ event, forceOpen = false }) => {
 					</>
 				)}
 			</Event>
+			{event.imageUrl && (
+				<ImageWrapper>
+					<EventImage alt="" src={event.imageUrl} />
+				</ImageWrapper>
+			)}
 			<ActionWrapper>
 				{/* Favorite */}
-				<FavoriteIcon event={event} />
+				{!isUserEvent && <FavoriteIcon event={event} />}
 				{expanded && (
 					<>
 						{/* Download */}
 						<DownloadIcon event={event} />
 						{/* Open URL */}
-						<EventLinkIcon event={event} />
+						{!isUserEvent && <EventLinkIcon event={event} />}
 					</>
 				)}
 			</ActionWrapper>

@@ -27,6 +27,10 @@ const StyledButton = styled(Link)`
 	font-size: 20px;
 	padding: 8px 16px;
 	min-width: 175px;
+
+	&:disabled {
+		background: green !important;
+	}
 `
 
 const Button = props => {

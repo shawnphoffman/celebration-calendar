@@ -6,10 +6,18 @@ import { styled } from 'linaria/react'
 import Button from 'components/Button'
 import Event from 'utils/events'
 
+import UserEvents from './UserEvents'
+
+const Divider = styled.hr`
+	width: 100%;
+	border-color: red;
+`
 const Wrapper = styled.div`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	width: 100%;
+	max-width: 600px;
 `
 const Username = styled.div`
 	font-size: 32px;
@@ -45,8 +53,6 @@ const UserProfile = ({ user }) => {
 		})
 	}, [auth])
 
-	console.log({ user })
-
 	const provider = useMemo(() => {
 		return user?.providerData[0]?.providerId
 	}, [user?.providerData])
@@ -71,6 +77,11 @@ const UserProfile = ({ user }) => {
 			<div>
 				<Button onClick={handleLogout}>Logout</Button>
 			</div>
+			{/*  */}
+			<Divider />
+			<UserEvents user={user} />
+			<Divider />
+			{/*  */}
 		</Wrapper>
 	)
 }
