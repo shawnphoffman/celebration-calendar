@@ -9,6 +9,12 @@ import DownloadIcon from './DownloadIcon'
 import EventLinkIcon from './EventLinkIcon'
 import FavoriteIcon from './FavoriteIcon'
 
+const PrivacyIcon = styled.div`
+	font-size: 20px;
+	margin-top: 4px;
+	color: ${p => (p.private ? '#87cefa' : '#ff0')};
+`
+
 const EventImage = styled.img`
 	max-width: 120px;
 	max-height: 120px;
@@ -138,9 +144,11 @@ const EventListItem = ({ event, forceOpen = false, onEdit }) => {
 				{expanded && (
 					<>
 						<Description>{event.description}</Description>
-						<EventLink href={event.url} target="_blank" rel="noreferrer">
-							View details on the official site <i className="fa-solid fa-up-right-from-square"></i>
-						</EventLink>
+						{event.url && (
+							<EventLink href={event.url} target="_blank" rel="noreferrer">
+								View details on the official site <i className="fa-solid fa-up-right-from-square"></i>
+							</EventLink>
+						)}
 					</>
 				)}
 			</Event>
@@ -162,6 +170,15 @@ const EventListItem = ({ event, forceOpen = false, onEdit }) => {
 						{isUserEvent && <DeleteEventIcon event={event} />}
 						{/* Edit */}
 						{isUserEvent && onEdit && <EditEventIcon event={event} onEdit={onEdit} />}
+						{isUserEvent && (
+							<PrivacyIcon private={event.private}>
+								{event.private ? (
+									<i className="fa-solid fa-eye-slash" title="Private Event" />
+								) : (
+									<i className="fa-solid fa-eye" title="Public Event" />
+								)}
+							</PrivacyIcon>
+						)}
 					</>
 				)}
 			</ActionWrapper>
