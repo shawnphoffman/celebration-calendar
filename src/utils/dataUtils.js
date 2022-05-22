@@ -271,10 +271,10 @@ export const cleanVenueName = v => {
 export const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 
 export const dayColor = {
-	[dayName[0]]: 'var(--inactive)',
-	[dayName[1]]: 'var(--inactive)',
-	[dayName[2]]: 'var(--inactive)',
-	[dayName[3]]: 'var(--inactive)',
+	[dayName[0]]: 'var(--outline)',
+	[dayName[1]]: 'var(--outline)',
+	[dayName[2]]: 'var(--outline)',
+	[dayName[3]]: 'var(--outline)',
 	[dayName[4]]: 'var(--day1)',
 	[dayName[5]]: 'var(--day2)',
 	[dayName[6]]: 'var(--day3)',

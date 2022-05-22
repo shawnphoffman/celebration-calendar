@@ -64,6 +64,11 @@ const Title = styled.div`
 const ColorBlock = styled.div`
 	width: 12px;
 	background-color: ${e => e.color ?? `var(--fallback)`};
+	background-image: ${e =>
+		e.userEvent
+			? `linear-gradient(135deg, var(--linkHover) 25%, var(--outlineHover) 25%, var(--outlineHover) 50%, var(--linkHover) 50%, var(--linkHover) 75%, var(--outlineHover) 75%, var(--outlineHover) 100%)`
+			: 'none'};
+	background-size: ${e => (e.userEvent ? `28.28px 28.28px` : 'auto')};
 `
 const Description = styled.div`
 	font-size: 12px;
@@ -134,7 +139,7 @@ const EventListItem = ({ event, forceOpen = false, onEdit }) => {
 	return (
 		<Container onClick={handleClick}>
 			<DayName bg={dayColor[eventDay]}>{eventDay}</DayName>
-			<ColorBlock color={event.color} />
+			<ColorBlock color={event.color} userEvent={event.type === 'userEvent'} />
 			<Event>
 				<Title>{event.summary}</Title>
 				<Details>

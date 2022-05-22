@@ -68,13 +68,6 @@ const Favorites = () => {
 		return status === 'success' && !signInCheckResult?.signedIn
 	}, [status, signInCheckResult])
 
-	const favorites = useMemo(() => {
-		if (!state?.allEvents) return []
-		return state.allEvents.filter(e => {
-			return ids.includes(e.id)
-		})
-	}, [ids, state.allEvents])
-
 	// ============================================================
 
 	// User Events Ref
@@ -88,34 +81,51 @@ const Favorites = () => {
 
 	// User Events
 	const userEvents = useMemo(() => {
-		if (userEventsRep?.status !== 'success' || !userEventsRep?.data) return null
+		if (userEventsRep?.status !== 'success' || !userEventsRep?.data) return []
 		if (!userEventsRep?.data) {
-			return null
+			return []
 		} else {
 			return Object.values(userEventsRep.data).sort((a, b) => {
 				const aStart = new Date(a.startDate)
 				const bStart = new Date(b.startDate)
 				const aEnd = new Date(a.endDate)
 				const bEnd = new Date(b.endDate)
-
 				if (aStart > bStart) return 1
-
 				if (aStart < bStart) return -1
-
 				if (aEnd > bEnd) return 1
-
 				if (aEnd < bEnd) return -1
-
 				if (a.summary > b.summary) return 1
-
 				if (a.summary < b.summary) return -1
-
 				return 0
 			})
 		}
 	}, [userEventsRep?.data, userEventsRep?.status])
 
 	// ============================================================
+
+	const favorites = useMemo(() => {
+		if (!state?.allEvents) return []
+
+		const savedFavorites = state.allEvents.filter(e => {
+			return ids.includes(e.id)
+		})
+
+		const rawFavorites = [...savedFavorites, ...userEvents]
+
+		return rawFavorites.sort((a, b) => {
+			const aStart = new Date(a.startDate)
+			const bStart = new Date(b.startDate)
+			const aEnd = new Date(a.endDate)
+			const bEnd = new Date(b.endDate)
+			if (aStart > bStart) return 1
+			if (aStart < bStart) return -1
+			if (aEnd > bEnd) return 1
+			if (aEnd < bEnd) return -1
+			if (a.summary > b.summary) return 1
+			if (a.summary < b.summary) return -1
+			return 0
+		})
+	}, [ids, state.allEvents, userEvents])
 
 	return (
 		<Container>
@@ -131,7 +141,7 @@ const Favorites = () => {
 			)}
 			<ScrollBox>
 				{!hasFavorites && !userEvents && <NoFavorites>No favorites to display...</NoFavorites>}
-				{userEvents && userEvents.map(event => <EventListItem event={event} key={event.id} forceOpen />)}
+				{/* {userEvents && userEvents.map(event => <EventListItem event={event} key={event.id} forceOpen />)} */}
 				{hasFavorites && userEvents && <Divider />}
 				{favorites.map(event => (
 					<EventListItem event={event} key={event.id} forceOpen />
