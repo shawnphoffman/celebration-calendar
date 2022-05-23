@@ -60,16 +60,60 @@ const Favorites = () => {
 
 	// ============================================================
 
+	// Custom Events Ref
+	const customEventsRef = useMemo(() => {
+		return ref(database, `custom-events`)
+	}, [database])
+
+	// Custom Events Resp
+	const customEventsRep = useDatabaseObjectData(customEventsRef, {})
+
+	// All Events
+	const customEvents = useMemo(() => {
+		if (!state || !state.allEvents) return []
+		if (customEventsRep?.status !== 'success' || !customEventsRep?.data) {
+			return []
+		} else {
+			return Object.keys(customEventsRep.data).reduce((memo, curr) => {
+				memo = [...memo, ...Object.values(customEventsRep.data[curr])]
+				return memo
+			}, [])
+		}
+	}, [customEventsRep.data, customEventsRep?.status, state])
+
+	// ============================================================
+
 	const hasFavorites = useMemo(() => {
 		return !!sharedFaveIds.length && sharedFavResp?.status === 'success'
 	}, [sharedFavResp?.status, sharedFaveIds.length])
 
 	const favorites = useMemo(() => {
 		if (!state?.allEvents) return []
-		return state.allEvents.filter(e => {
+
+		const savedFavorites = state.allEvents.filter(e => {
 			return sharedFaveIds.includes(e.id)
 		})
-	}, [sharedFaveIds, state.allEvents])
+
+		const savedCustomEvents = customEvents.filter(e => {
+			return sharedFaveIds.includes(e.id)
+		})
+
+		const rawFavorites = [...savedFavorites, ...savedCustomEvents]
+
+		return rawFavorites.sort((a, b) => {
+			const aStart = new Date(a.startDate)
+			const bStart = new Date(b.startDate)
+			const aEnd = new Date(a.endDate)
+			const bEnd = new Date(b.endDate)
+			if (aStart > bStart) return 1
+			if (aStart < bStart) return -1
+			if (aEnd > bEnd) return 1
+			if (aEnd < bEnd) return -1
+			if (a.summary > b.summary) return 1
+			if (a.summary < b.summary) return -1
+			return 0
+		})
+	}, [customEvents, sharedFaveIds, state.allEvents])
 
 	return (
 		<Container>
