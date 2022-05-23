@@ -167,7 +167,7 @@ const EventListItem = ({ event, forceOpen = false, onEdit }) => {
 					</>
 				)}
 			</Event>
-			{event.imageUrl && (
+			{expanded && event.imageUrl && (
 				<ImageWrapper>
 					<EventImage alt="" src={event.imageUrl} />
 				</ImageWrapper>
