@@ -59,17 +59,11 @@ const Agenda = () => {
 				const bEnd = new Date(b.endDate)
 
 				if (aStart > bStart) return 1
-
 				if (aStart < bStart) return -1
-
 				if (aEnd > bEnd) return 1
-
 				if (aEnd < bEnd) return -1
-
 				if (a.summary > b.summary) return 1
-
 				if (a.summary < b.summary) return -1
-
 				return 0
 			})
 		}
