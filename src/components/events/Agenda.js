@@ -75,7 +75,7 @@ const Agenda = () => {
 		}
 	}, [customEventsRep.data, customEventsRep?.status, state])
 
-	if (!state || state?.allVenues.length === state?.disabledVenues?.length || !allEvents) {
+	if (!state || !allEvents) {
 		return <Loading />
 	}
 
