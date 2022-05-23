@@ -63,7 +63,7 @@ const Title = styled.div`
 	font-size: 16px;
 `
 const ColorBlock = styled.div`
-	width: 12px;
+	width: 6px;
 	background-color: ${e => e.color ?? `var(--fallback)`};
 	background-image: ${e =>
 		e.userEvent

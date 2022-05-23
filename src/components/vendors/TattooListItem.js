@@ -39,7 +39,7 @@ const Title = styled.div`
 	font-size: 16px;
 `
 const ColorBlock = styled.div`
-	width: 12px;
+	width: 6px;
 	background-color: ${e => e.color ?? `var(--link)`};
 `
 const Description = styled.div`
