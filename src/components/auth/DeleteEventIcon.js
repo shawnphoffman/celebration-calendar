@@ -28,6 +28,8 @@ const DeleteEventIcon = ({ event }) => {
 		id => {
 			const deleteEventRef = ref(database, `user-events/${user?.uid}/${id}`)
 			set(deleteEventRef, null)
+			const deleteCustomEventRef = ref(database, `custom-events/${user?.uid}/${id}`)
+			set(deleteCustomEventRef, null)
 		},
 		[database, user?.uid]
 	)

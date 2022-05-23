@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useMemo, useState } from 'react'
+import { useUser } from 'reactfire'
 import { styled } from 'linaria/react'
 
 import DeleteEventIcon from 'components/auth/DeleteEventIcon'
@@ -113,6 +114,7 @@ const ActionWrapper = styled.div`
 
 const EventListItem = ({ event, forceOpen = false, onEdit }) => {
 	const [expanded, setExpanded] = useState(forceOpen)
+	const { data: user } = useUser()
 
 	const handleClick = useCallback(() => {
 		if (!forceOpen) {
@@ -124,9 +126,17 @@ const EventListItem = ({ event, forceOpen = false, onEdit }) => {
 		return dayName[new Date(event.startAt).getDay()]
 	}, [event.startAt])
 
-	const isUserEvent = useMemo(() => {
-		return event?.type === 'userEvent'
+	const isPublicUserEvent = useMemo(() => {
+		return event?.type === 'userEvent' && !event?.private
 	}, [event])
+
+	const isPrivateUserEvent = useMemo(() => {
+		return event?.type === 'userEvent' && event?.private
+	}, [event])
+
+	const isMyUserEvent = useMemo(() => {
+		return user && event?.type === 'userEvent' && event?.creator === user?.uid
+	}, [event?.creator, event?.type, user])
 
 	const time = useMemo(
 		() => ({
@@ -164,18 +174,18 @@ const EventListItem = ({ event, forceOpen = false, onEdit }) => {
 			)}
 			<ActionWrapper>
 				{/* Favorite */}
-				{!isUserEvent && <FavoriteIcon event={event} />}
+				{!isPrivateUserEvent && <FavoriteIcon event={event} />}
 				{expanded && (
 					<>
 						{/* Download */}
 						<DownloadIcon event={event} />
 						{/* Open URL */}
-						{!isUserEvent && <EventLinkIcon event={event} />}
+						{!isPrivateUserEvent && !isPublicUserEvent && <EventLinkIcon event={event} />}
 						{/* Delete */}
-						{isUserEvent && <DeleteEventIcon event={event} />}
+						{isMyUserEvent && onEdit && <DeleteEventIcon event={event} />}
 						{/* Edit */}
-						{isUserEvent && onEdit && <EditEventIcon event={event} onEdit={onEdit} />}
-						{isUserEvent && (
+						{isMyUserEvent && onEdit && <EditEventIcon event={event} onEdit={onEdit} />}
+						{isMyUserEvent && (
 							<PrivacyIcon private={event.private}>
 								{event.private ? (
 									<i className="fa-solid fa-eye-slash" title="Private Event" />

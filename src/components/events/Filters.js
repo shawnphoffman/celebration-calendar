@@ -10,6 +10,10 @@ import { cleanVenueName, colorMap } from '../../utils/dataUtils'
 const PrintLink = styled(NavLink)`
 	text-decoration: none;
 	color: var(--text);
+
+	@media (max-width: 600px) {
+		display: none;
+	}
 `
 
 const Wrapper = styled.div`
@@ -91,6 +95,14 @@ const Filters = memo(() => {
 					<Venue enabled={!state.disabledVenues.includes(v)} name={v} />
 				</div>
 			))}
+			<div onClick={handleClick('Public Events')}>
+				<VenueWrapper enabled={!state.disabledVenues.includes('Public Events')}>
+					<Indicator enabled={!state.disabledVenues.includes('Public Events')}>
+						<i className="fa-solid fa-users" />
+					</Indicator>
+					<VenueName enabled={!state.disabledVenues.includes('Public Events')}>Public Events</VenueName>
+				</VenueWrapper>
+			</div>
 			<div onClick={handleAllOn}>
 				<VenueWrapper enabled>
 					<Indicator enabled>
