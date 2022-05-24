@@ -5,8 +5,7 @@ import hallSvg from 'components/maps/hall.svg'
 import level1Svg from 'components/maps/level1.svg'
 import level2Svg from 'components/maps/level2.svg'
 import level3Svg from 'components/maps/level3.svg'
-// import { styled } from 'linaria/react'
-import { NonScrollWrapper, PageTitle, Section } from 'components/styles'
+import { NonScrollWrapper, PageTitle } from 'components/styles'
 
 const MapImage = styled.img`
 	width: 100%;
@@ -18,9 +17,6 @@ const MapImage = styled.img`
 const Map = () => {
 	return (
 		<NonScrollWrapper>
-			{/*  */}
-
-			{/* <Section> */}
 			<PageTitle>Exhibition Hall</PageTitle>
 			<MapImage alt="Exhibition Hall Map" src={hallSvg} />
 			<PageTitle>Level 1</PageTitle>
@@ -29,7 +25,6 @@ const Map = () => {
 			<MapImage alt="Level 2 Map" src={level2Svg} />
 			<PageTitle>Level 3</PageTitle>
 			<MapImage alt="Level 3 Map" src={level3Svg} />
-			{/* </Section> */}
 		</NonScrollWrapper>
 	)
 }
