@@ -5,6 +5,15 @@ import { dayColor, dayName, formatTime } from 'utils/dataUtils'
 
 import PrintFavoriteIcon from './PrintFavoriteIcon'
 
+const EventImage = styled.img`
+	max-width: 120px;
+	max-height: 120px;
+`
+const ImageWrapper = styled.div`
+	background: var(--outline);
+	align-items: center;
+	display: flex;
+`
 const EventId = styled.span`
 	font-size: 10px;
 	font-weight: normal;
@@ -141,6 +150,11 @@ const EventListItem = ({ event }) => {
 					</Details>
 					<Description>{event.description}</Description>
 				</Event>
+				{event.imageUrl && (
+					<ImageWrapper>
+						<EventImage alt="" src={event.imageUrl} />
+					</ImageWrapper>
+				)}
 				<ActionWrapper>
 					<PrintFavoriteIcon event={event} />
 				</ActionWrapper>

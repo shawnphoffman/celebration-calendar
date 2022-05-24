@@ -19,6 +19,7 @@ const Vendors = LazyPreload(() => import('../pages/Vendors'))
 const Tattoos = LazyPreload(() => import('../pages/Tattoos'))
 const PrintSchedule = LazyPreload(() => import('../pages/PrintSchedule'))
 const Map = LazyPreload(() => import('../pages/Map'))
+const PrintUserFavorites = LazyPreload(() => import('../pages/PrintUserFavorites'))
 
 // Change to conform to API?
 // https://reactrouter.com/docs/en/v6/api#useroutes
@@ -47,6 +48,12 @@ const Routes = {
 		component: Favorites,
 		icon: 'fa-heart',
 		title: 'Favorites',
+	},
+	PrintUserFavorites: {
+		path: '/favorites/print',
+		component: PrintUserFavorites,
+		icon: 'fa-print',
+		title: 'Print Favorites',
 	},
 	Login: {
 		path: '/login',
@@ -113,6 +120,7 @@ const Routes = {
 
 export const RegisteredRoutes = [
 	Routes.FAQ,
+	Routes.PrintUserFavorites,
 	Routes.Favorites,
 	Routes.Search,
 	Routes.Login,
