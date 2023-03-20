@@ -34,7 +34,7 @@ const Faq = () => {
 					<LinkItem href="https://www.starwarscelebration.com/en-us/explore-the-show.html">Official Show Info</LinkItem>
 					<LinkItem href="https://celebratingstarwars.blogspot.com/p/celebration-fan-events-2022.html">Additional Fan Events</LinkItem>
 					<LinkItem href="https://www.reddit.com/r/StarWarsCelebration">Celebration Subreddit</LinkItem>
-					<LinkItem href="https://discord.com/invite/XKa9E3Z">Celebration Discord Server</LinkItem>
+					<LinkItem href="https://discord.gg/starwarscelebration">Celebration Discord Server</LinkItem>
 					<LinkItem href="https://www.starwars.com/news/star-wars-celebration-anaheim-2022-store-exclusives">
 						Celebration Store Exclusives
 					</LinkItem>
